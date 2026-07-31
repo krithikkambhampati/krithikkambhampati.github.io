@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garbage Monitoring System — Krithik Kambhampati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script src="../interactions.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Krithik Kambhampati</a>
+    <div class="topnav">
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+    </div>
+  </div>
+</div>
+
+<main id="app">
+
+<header class="detail-hero wrap">
+  <a class="back-link" href="../index.html">← back to all projects</a>
+  <div class="eyebrow">Computer Vision · IoT · Qualcomm-aligned</div>
+  <h1 class="detail-title">Garbage Monitoring System</h1>
+  <p class="detail-sub">An on-device computer vision system for detecting garbage in real time, built as an industry-aligned project with Qualcomm.</p>
+
+  <div class="detail-meta-row">
+    <div class="detail-meta-item"><div class="k">Model</div><div class="v">YOLOv11 (fine-tuned)</div></div>
+    <div class="detail-meta-item"><div class="k">Deployment</div><div class="v">Android, on-device</div></div>
+    <div class="detail-meta-item"><div class="k">Dataset</div><div class="v">1,500 labeled images</div></div>
+  </div>
+</header>
+
+<div class="detail-body wrap">
+
+  <h2>Overview</h2>
+  <p>YOLOv11 was fine-tuned on a custom-labeled dataset of 1,500 images to recognize garbage and litter in varied real-world scenes, then packaged for on-device inference rather than a cloud round-trip — important for a detection system meant to run continuously in the field.</p>
+
+  <div class="metric-strip">
+    <div class="metric"><div class="num">0.75</div><div class="label">Mean IOU</div></div>
+    <div class="metric"><div class="num">0.69</div><div class="label">F1 Score</div></div>
+    <div class="metric"><div class="num">1,500</div><div class="label">Labeled Images</div></div>
+  </div>
+
+  <h2>On-device deployment</h2>
+  <p>The trained model was deployed directly into an <strong>Android app</strong>, running detection locally on the device with a real-time visualization overlay drawn over the camera feed — so a user sees bounding boxes update live as the camera moves, with no server dependency for inference.</p>
+
+</div>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="footer-note">© 2026 Krithik Kambhampati</div>
+    <div class="footer-links">
+      <a href="../index.html">home</a>
+      <a href="mailto:krithik3001@gmail.com">email</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">github</a>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+</body>
+</html>

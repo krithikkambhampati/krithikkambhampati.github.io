@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Management Platform — Krithik Kambhampati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script src="../interactions.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Krithik Kambhampati</a>
+    <div class="topnav">
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+    </div>
+  </div>
+</div>
+
+<main id="app">
+
+<header class="detail-hero wrap">
+  <a class="back-link" href="../index.html">← back to all projects</a>
+  <div class="eyebrow">Full-Stack · MERN</div>
+  <h1 class="detail-title">Event Management Platform</h1>
+  <p class="detail-sub">A full-stack platform for running events end-to-end — registration, merchandise, attendance, and live discussion — with role-based access throughout.</p>
+
+  <div class="detail-meta-row">
+    <div class="detail-meta-item"><div class="k">Stack</div><div class="v">MongoDB · Express · React · Node</div></div>
+    <div class="detail-meta-item"><div class="k">Auth</div><div class="v">JWT via httpOnly cookies</div></div>
+    <div class="detail-meta-item"><div class="k">Roles</div><div class="v">Admin · Organizer · Participant</div></div>
+  </div>
+</header>
+
+<div class="detail-body wrap">
+
+  <h2>Overview</h2>
+  <p>Three distinct roles — Admin, Organizer, Participant — each see a different slice of the same platform, enforced both in the UI and at the API layer so permissions can't be bypassed by hitting an endpoint directly.</p>
+
+  <div class="metric-strip">
+    <div class="metric"><div class="num">3</div><div class="label">Access Roles</div></div>
+    <div class="metric"><div class="num">0</div><div class="label">Overselling Incidents</div></div>
+    <div class="metric"><div class="num">v2/v3</div><div class="label">reCAPTCHA</div></div>
+  </div>
+
+  <h2>Merchandise &amp; payments</h2>
+  <p>A payment-approval workflow sits in front of merchandise checkout, with <strong>atomic stock decrements</strong> so two participants can't both successfully purchase the last unit of an item under concurrent load.</p>
+
+  <h2>Attendance</h2>
+  <p><strong>QR-based check-in</strong> gives organizers a live view of scan status as attendees arrive, with a one-click CSV export for post-event reporting.</p>
+
+  <h2>Community layer</h2>
+  <ul>
+    <li>A real-time, per-event discussion forum built on WebSockets, so conversation stays scoped to the event it belongs to.</li>
+    <li><strong>@everyone</strong> broadcast alerts for organizers to push announcements to every participant at once.</li>
+    <li>Two-layer bot protection via Google reCAPTCHA v2/v3 to keep the forum spam-free without adding friction for real users.</li>
+  </ul>
+
+</div>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="footer-note">© 2026 Krithik Kambhampati</div>
+    <div class="footer-links">
+      <a href="../index.html">home</a>
+      <a href="mailto:krithik3001@gmail.com">email</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">github</a>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+</body>
+</html>

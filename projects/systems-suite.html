@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systems Programming Suite — Krithik Kambhampati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script src="../interactions.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Krithik Kambhampati</a>
+    <div class="topnav">
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+    </div>
+  </div>
+</div>
+
+<main id="app">
+
+<header class="detail-hero wrap">
+  <a class="back-link" href="../index.html">← back to all projects</a>
+  <div class="eyebrow">Operating Systems · Networks</div>
+  <h1 class="detail-title">Systems Programming Suite</h1>
+  <p class="detail-sub">Two low-level tools built to understand a machine from the inside: a Unix-like shell, and a raw packet analyzer.</p>
+
+  <div class="detail-meta-row">
+    <div class="detail-meta-item"><div class="k">Stack</div><div class="v">C · POSIX · Raw Sockets</div></div>
+    <div class="detail-meta-item"><div class="k">Component 1</div><div class="v">C-Shell</div></div>
+    <div class="detail-meta-item"><div class="k">Component 2</div><div class="v">C-Shark</div></div>
+  </div>
+</header>
+
+<div class="detail-body wrap">
+
+  <h2>C-Shell</h2>
+  <p>A Unix-like shell written in C, supporting Linux shell scripting and the full set of standard Unix commands, plus two custom built-ins.</p>
+  <ul>
+    <li>Piping between commands, implemented directly over POSIX file descriptors.</li>
+    <li>Signal handling, so the shell behaves correctly under Ctrl-C, Ctrl-Z, and job termination.</li>
+    <li>Background process management — jobs can be launched, suspended, and resumed like a real shell.</li>
+  </ul>
+
+  <h2>C-Shark</h2>
+  <p>A raw-socket packet analyzer that captures live traffic and parses TCP/IP packets layer by layer, inspecting both headers and payload rather than relying on an existing library like libpcap for the parsing logic itself.</p>
+
+  <div class="metric-strip">
+    <div class="metric"><div class="num">2</div><div class="label">Tools Built</div></div>
+    <div class="metric"><div class="num">POSIX</div><div class="label">Syscall Layer</div></div>
+    <div class="metric"><div class="num">L2–L4</div><div class="label">Packet Inspection</div></div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="footer-note">© 2026 Krithik Kambhampati</div>
+    <div class="footer-links">
+      <a href="../index.html">home</a>
+      <a href="mailto:krithik3001@gmail.com">email</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">github</a>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distributed Network File System — Krithik Kambhampati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script src="../interactions.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Krithik Kambhampati</a>
+    <div class="topnav">
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+    </div>
+  </div>
+</div>
+
+<main id="app">
+
+<header class="detail-hero wrap">
+  <a class="back-link" href="../index.html">← back to all projects</a>
+  <div class="eyebrow">Systems · Distributed Computing</div>
+  <h1 class="detail-title">Distributed Network File System</h1>
+  <p class="detail-sub">A distributed file system built from scratch in C, with a centralized Name Server coordinating multiple Storage Server nodes over a custom binary protocol.</p>
+
+  <div class="detail-meta-row">
+    <div class="detail-meta-item"><div class="k">Stack</div><div class="v">C · Sockets · Multi-threading</div></div>
+    <div class="detail-meta-item"><div class="k">Core ops</div><div class="v">7 (create/read/write/delete/grant/revoke/list)</div></div>
+    <div class="detail-meta-item"><div class="k">Consistency</div><div class="v">ACID-compliant</div></div>
+  </div>
+</header>
+
+<div class="detail-body wrap">
+
+  <h2>Overview</h2>
+  <p>The system separates naming from storage: a single <strong>Name Server</strong> tracks where every file lives and routes client requests, while multiple <strong>Storage Server</strong> nodes hold and serve the actual data. Clients never talk to storage nodes directly for metadata — every operation is authorized and located through the name server first, which keeps the namespace consistent even as storage nodes join, leave, or fail.</p>
+
+  <div class="metric-strip">
+    <div class="metric"><div class="num">7</div><div class="label">Core Operations</div></div>
+    <div class="metric"><div class="num">ACID</div><div class="label">Transaction Guarantees</div></div>
+    <div class="metric"><div class="num">N+1</div><div class="label">Node Topology</div></div>
+  </div>
+
+  <h2>Concurrency &amp; correctness</h2>
+  <ul>
+    <li><strong>Sentence-level locking</strong> for concurrent writes — multiple clients can write to different parts of the same file without blocking each other, while still preventing corrupting overlaps.</li>
+    <li><strong>Access control lists (ACLs)</strong> gate every file operation, so grant/revoke semantics are enforced consistently across the cluster, not just at a single node.</li>
+    <li><strong>Automatic versioning and checkpointing</strong> with undo/redo support, so a bad write or a crashed transaction can be rolled back cleanly.</li>
+  </ul>
+
+  <h2>Reliability</h2>
+  <p>Storage nodes exchange periodic heartbeats with the name server. A missed heartbeat marks a node as degraded and reroutes future requests away from it, so the system degrades gracefully instead of failing hard when a single node goes down.</p>
+
+  <h2>Protocol</h2>
+  <p>All name-server ↔ storage-server and client ↔ server communication runs over a hand-rolled binary protocol on top of raw sockets — no serialization library, so message framing, request IDs, and error codes are all defined and parsed by hand in C.</p>
+
+</div>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="footer-note">© 2026 Krithik Kambhampati</div>
+    <div class="footer-links">
+      <a href="../index.html">home</a>
+      <a href="mailto:krithik3001@gmail.com">email</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">github</a>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+</body>
+</html>
