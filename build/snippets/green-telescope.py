@@ -1,0 +1,9 @@
+        packages = [frozenset(order[: k + 1]) for k in range(len(order))] + [frozenset(candidates)]
+        afters = self.models.energy.predict_after([clean] * len(packages), packages)
+        prev, incremental = baseline, {}
+        for r, after in zip(order, afters[:-1], strict=True):
+            incremental[r] = _saving(prev, after)
+            prev = after
+        saving = _saving(baseline, prev)
+        drift = abs(sum(s.net_kwh for s in incremental.values()) - saving.net_kwh)
+        assert drift <= _TELESCOPE_TOL_KWH, f"incremental savings drift {drift} kWh"

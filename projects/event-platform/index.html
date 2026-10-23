@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Felicity event platform: a MERN event platform, by Krithik Kambhampati</title>
+<meta name="description" content="Runs college club events end to end: registration, merchandise with payment approval, QR check-in at the door and a forum for each event.">
+<meta property="og:title" content="Felicity event platform: a MERN event platform, by Krithik Kambhampati">
+<meta property="og:description" content="Runs college club events end to end: registration, merchandise with payment approval, QR check-in at the door and a forum for each event.">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0B0D11">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Mona+Sans:wdth,wght@100..125,300..700&display=swap">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<link rel="stylesheet" href="../../assets/css/project.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+<script src="../../assets/js/project.js" defer></script>
+</head>
+<body class="project tone-violet">
+<a class="skip" href="#main">Skip to the write-up</a>
+<header class="bar">
+  <div class="bar-row">
+    <a class="wordmark" href="../../">Krithik<span class="wm-last"> Kambhampati</span></a>
+    <p class="crumb"><a href="../../#work">work</a> / <b>event-platform</b></p>
+    <nav class="bar-nav" aria-label="Site">
+      <a href="../../#work">Work</a>
+      <a href="../../#record">Record</a>
+      <a href="../../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main class="p-main" id="main">
+
+<section class="p-hero" aria-labelledby="p-title">
+  <div class="p-title-block">
+    <h1 class="p-title" id="p-title" style="view-transition-name: t-event-platform"><span class="dot" aria-hidden="true"></span>Felicity event platform</h1>
+    <p class="p-lede">Felicity runs a college club's events from start to finish. Organizers publish events and sell merchandise, participants register and pay, and the door staff scan a QR ticket. Admins, organizers and participants each get their own dashboard.</p>
+  </div>
+  <dl class="p-meta">
+    <div><dt>Project</dt><dd>Coursework, Design and Analysis of Software Systems, Feb 2026</dd></div>
+    <div><dt>Context</dt><dd>Assignment 1 of Design and Analysis of Software Systems, IIIT Hyderabad. Built on my own.</dd></div><div><dt>Deployed</dt><dd>Front end on Vercel, API on Railway, database on MongoDB</dd></div><div><dt>Built with</dt><dd>MongoDB, Express 5, React 19, Node.js</dd></div>
+    <div class="p-meta-links"><dt>Links</dt><dd class="p-links">
+      <a class="btn btn-small btn-accent" href="https://github.com/krithikkambhampati/Event-Management-System" target="_blank" rel="noopener">Source on GitHub</a>
+    </dd></div>
+  </dl>
+  <figure class="p-visual"><div class="shutter"><svg class="diagram" viewBox="0 0 1100 420" role="img" aria-label="Architecture: a React single-page app on Vercel calls an Express API on Railway with a JWT in an httpOnly cookie; the API uses MongoDB and talks to Gmail SMTP, Discord webhooks and Google reCAPTCHA.">
+  <rect x="0" y="0" width="1100" height="420" fill="#13161C"/>
+  <g>
+    <rect class="d-box-tone" x="40" y="60" width="260" height="150" rx="4"/>
+    <text x="60" y="94">React 19 + Vite</text>
+    <text x="60" y="120" class="d-muted">single-page app on Vercel</text>
+    <text x="60" y="160" class="d-muted">18 pages, ProtectedRoute</text>
+    <text x="60" y="184" class="d-muted">by role from the JWT</text>
+  </g>
+  <path class="d-line-tone" d="M300 135h130"/>
+  <path class="d-fill-tone" d="M430 129l12 6-12 6z"/>
+  <text x="312" y="122" class="d-muted">fetch + cookie</text>
+  <g>
+    <rect class="d-box-tone" x="442" y="60" width="260" height="150" rx="4"/>
+    <text x="462" y="94">Express 5 API</text>
+    <text x="462" y="120" class="d-muted">on Railway, Node 20</text>
+    <text x="462" y="160" class="d-muted">require* role guards</text>
+    <text x="462" y="184" class="d-muted">on every protected route</text>
+  </g>
+  <path class="d-line-tone" d="M702 135h130"/>
+  <path class="d-fill-tone" d="M832 129l12 6-12 6z"/>
+  <text x="714" y="122" class="d-muted">Mongoose 9</text>
+  <g>
+    <rect class="d-box-tone" x="844" y="60" width="220" height="150" rx="4"/>
+    <text x="864" y="94">MongoDB</text>
+    <text x="864" y="120" class="d-muted">7 models: Event,</text>
+    <text x="864" y="144" class="d-muted">Registration, Organizer,</text>
+    <text x="864" y="168" class="d-muted">Participant, Admin, ...</text>
+  </g>
+  <path class="d-line d-dash" d="M572 210v70M572 280H210v40M572 280h0v40M572 280h362v40"/>
+  <rect class="d-box" x="80" y="320" width="260" height="64" rx="4"/>
+  <text x="100" y="350">Gmail SMTP</text><text x="100" y="372" class="d-muted">QR ticket on approval</text>
+  <rect class="d-box" x="442" y="320" width="260" height="64" rx="4"/>
+  <text x="462" y="350">Discord webhooks</text><text x="462" y="372" class="d-muted">post when published</text>
+  <rect class="d-box" x="804" y="320" width="260" height="64" rx="4"/>
+  <text x="824" y="350">Google reCAPTCHA</text><text x="824" y="372" class="d-muted">v2 signup, v3 login</text>
+</svg></div><figcaption>How the pieces talk. The JWT lives in an httpOnly cookie, so page scripts can never read it.</figcaption></figure>
+</section>
+
+<section class="p-sec  "  aria-labelledby="the-brief-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="the-brief-h" data-reveal>The brief</h2></div>
+  <div class="p-sec-body">
+  <div class="prose" data-reveal><p>The assignment fixed the stack, MERN, and the rules: bcrypt for passwords, a JWT on every protected route, and role checks on every page except login and signup. On top of a core system worth 70 marks, students picked advanced features worth 30.</p><p>I chose merchandise payment approval and QR attendance because both close a loop in an event's life: an order is only real once someone has checked the payment, and a registration only counts once the person turns up.</p></div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="selling-the-last-t-shirt-once-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="selling-the-last-t-shirt-once-h" data-reveal>Selling the last T-shirt once</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>A merchandise order arrives with a photo of the payment and waits as pending. Stock is not touched yet, so unverified orders can't lock it up.</p><p>When the organizer approves, the stock decrement and the stock check are one MongoDB update: decrement where stock is still above zero. If the variant sold out between the order and the approval, nothing is modified and the approval is refused with a clear message. Only then does the participant get their QR ticket by email.</p></div>
+      <svg class="diagram" viewBox="0 0 720 330" role="img" aria-label="Payment approval states: an order starts Pending and Pending; approval decrements stock atomically and moves it to Registered and Approved with a QR email; rejection moves it to Cancelled and Rejected; approval is refused if the variant sold out.">
+  <rect x="0" y="0" width="720" height="330" fill="#13161C"/>
+  <rect class="d-box-tone" x="24" y="120" width="190" height="90" rx="4"/>
+  <text x="42" y="152">order placed</text><text x="42" y="176" class="d-muted">participation Pending</text><text x="42" y="196" class="d-muted">payment Pending</text>
+  <path class="d-line-tone" d="M214 150 C 300 150, 300 70, 380 70"/><path class="d-fill-tone" d="M380 64l12 6-12 6z"/>
+  <text x="246" y="96" class="d-muted">approve</text>
+  <path class="d-line" d="M214 182 C 300 182, 300 262, 380 262"/>
+  <text x="250" y="248" class="d-muted">reject</text>
+  <rect x="392" y="28" width="304" height="90" rx="4" class="d-fill-tone"/>
+  <text x="410" y="60" class="d-on-tone">Registered / Approved</text><text x="410" y="84" class="d-on-tone">stock −1 where stock &gt; 0</text><text x="410" y="104" class="d-on-tone">QR ticket emailed</text>
+  <rect class="d-box" x="392" y="218" width="304" height="90" rx="4"/>
+  <text x="410" y="250">Cancelled / Rejected</text><text x="410" y="274" class="d-muted">rejectionReason saved</text><text x="410" y="294" class="d-muted">stock untouched</text>
+  <text x="410" y="160" class="d-muted">sold out since the order?</text><text x="410" y="182" class="d-muted">approval is refused</text>
+</svg>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">registration.controller.js</span><span class="spacer"></span><span>js</span></figcaption>
+  <pre class="code" style="--start:228"><code><span class="ln">    <span class="t-k">const</span> selectedVariant = registration.registrationData?.selectedVariant;</span><span class="ln">    <span class="t-k">if</span> (registration.event.eventType === <span class="t-s">&quot;MERCH&quot;</span> &amp;&amp; selectedVariant) {</span><span class="ln">      <span class="t-k">const</span> updateResult = <span class="t-k">await</span> <span class="t-t">Event</span>.<span class="t-f">updateOne</span>(</span><span class="ln">        { _id: registration.event._id, <span class="t-s">&quot;merchandiseVariants.name&quot;</span>: selectedVariant, <span class="t-s">&quot;merchandiseVariants.stock&quot;</span>: { $gt: <span class="t-n">0</span> } },</span><span class="ln">        { $inc: { <span class="t-s">&quot;merchandiseVariants.$.stock&quot;</span>: -<span class="t-n">1</span> } }</span><span class="ln">      );</span><span class="ln">      <span class="t-k">if</span> (updateResult.modifiedCount === <span class="t-n">0</span>) {</span><span class="ln">        <span class="t-k">return</span> res.<span class="t-f">status</span>(<span class="t-n">400</span>).<span class="t-f">json</span>({ message: <span class="t-s">`Variant &quot;${selectedVariant}&quot; is now out of stock. Cannot approve.`</span> });</span><span class="ln">      }</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-c">// Update registration</span></span><span class="ln">    registration.participationStatus = <span class="t-s">&quot;Registered&quot;</span>;</span><span class="ln">    registration.paymentStatus = <span class="t-s">&quot;Approved&quot;</span>;</span><span class="ln">    <span class="t-k">await</span> registration.<span class="t-f">save</span>();</span></code></pre>
+  <p class="code-note">The check and the decrement happen in one atomic update.</p>
+</figure>
+  </div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="tickets-at-the-door-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="tickets-at-the-door-h" data-reveal>Tickets at the door</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">registration.controller.js</span><span class="spacer"></span><span>js</span></figcaption>
+  <pre class="code" style="--start:464"><code><span class="ln">    <span class="t-k">const</span> registration = <span class="t-k">await</span> <span class="t-t">Registration</span>.<span class="t-f">findOne</span>({ event: eventId, ticketId }).<span class="t-f">populate</span>(<span class="t-s">&quot;participant&quot;</span>, <span class="t-s">&quot;fName lName email&quot;</span>);</span><span class="ln"> </span><span class="ln">    <span class="t-k">if</span> (!registration) {</span><span class="ln">      <span class="t-k">return</span> res.<span class="t-f">status</span>(<span class="t-n">404</span>).<span class="t-f">json</span>({ message: <span class="t-s">&quot;Invalid ticket: Registration not found for this event&quot;</span> });</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-k">if</span> (registration.participationStatus === <span class="t-s">&quot;Cancelled&quot;</span>) {</span><span class="ln">      <span class="t-k">return</span> res.<span class="t-f">status</span>(<span class="t-n">400</span>).<span class="t-f">json</span>({ message: <span class="t-s">&quot;Ticket invalid: Registration was cancelled&quot;</span> });</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-k">if</span> (registration.paymentStatus === <span class="t-s">&quot;Pending&quot;</span>) {</span><span class="ln">      <span class="t-k">return</span> res.<span class="t-f">status</span>(<span class="t-n">400</span>).<span class="t-f">json</span>({ message: <span class="t-s">&quot;Ticket invalid: Payment is pending approval&quot;</span> });</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-k">if</span> (registration.attendanceMarked) {</span><span class="ln">      <span class="t-k">return</span> res.<span class="t-f">status</span>(<span class="t-n">400</span>).<span class="t-f">json</span>({</span><span class="ln">        message: <span class="t-s">&quot;Ticket already scanned!&quot;</span>,</span><span class="ln">        scannedAt: registration.attendedAt,</span><span class="ln">        participant: registration.participant</span><span class="ln">      });</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    registration.attendanceMarked = <span class="t-k">true</span>;</span><span class="ln">    registration.attendedAt = <span class="t-k">new</span> <span class="t-t">Date</span>();</span><span class="ln">    registration.scannedBy = organizerId;</span><span class="ln">    <span class="t-k">await</span> registration.<span class="t-f">save</span>();</span></code></pre>
+  <p class="code-note">Each refusal says exactly why the ticket isn't valid, and a scan records who scanned it and when.</p>
+</figure>
+    <div>
+      <ul class="points" data-reveal><li>The organizer scans with the phone camera through html5-qrcode, or uploads a picture of the ticket.</li><li>A camera fires the scan callback many times for one ticket, so a ref gates it and only one request goes out.</li><li>A second scan of the same ticket gets its own error, "Ticket already scanned!", with the time of the first.</li><li>Organizers can mark attendance by hand, with a reason, and export everything as CSV.</li></ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="a-forum-for-each-event-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="a-forum-for-each-event-h" data-reveal>A forum for each event</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>Each event has its own discussion. It polls every five seconds rather than holding a socket open.</p><p>Polling inside setInterval caught a stale closure: the callback kept comparing against the first list of messages it ever saw. A ref that always holds the latest list fixed it, and also made it possible to spot new @everyone posts from organizers, which notify every registered participant.</p></div>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">DiscussionForum.jsx</span><span class="spacer"></span><span>js</span></figcaption>
+  <pre class="code" style="--start:18"><code><span class="ln">    <span class="t-k">const</span> fetchMessages = <span class="t-k">async</span> () =&gt; {</span><span class="ln">        <span class="t-k">try</span> {</span><span class="ln">            <span class="t-k">const</span> { ok, data } = <span class="t-k">await</span> discussionAPI.<span class="t-f">getMessages</span>(eventId);</span><span class="ln">            <span class="t-k">if</span> (ok) {</span><span class="ln">                <span class="t-k">const</span> newMessages = data.messages || [];</span><span class="ln">                <span class="t-k">const</span> prevMessages = messagesRef.current;</span><span class="ln">                <span class="t-k">if</span> (prevMessages.length &gt; <span class="t-n">0</span>) {</span><span class="ln">                    <span class="t-k">const</span> existingIds = <span class="t-k">new</span> <span class="t-t">Set</span>(prevMessages.<span class="t-f">map</span>(m =&gt; m._id));</span><span class="ln">                    <span class="t-k">const</span> newlyAdded = newMessages.<span class="t-f">filter</span>(m =&gt; !existingIds.<span class="t-f">has</span>(m._id));</span><span class="ln">                    <span class="t-k">const</span> hasNewEveryone = newlyAdded.<span class="t-f">some</span>(m =&gt;</span><span class="ln">                        m.senderRole === <span class="t-s">&quot;Organizer&quot;</span> &amp;&amp; m.content.<span class="t-f">includes</span>(<span class="t-s">&quot;@everyone&quot;</span>)</span><span class="ln">                    );</span><span class="ln"> </span><span class="ln">                    <span class="t-k">if</span> (hasNewEveryone &amp;&amp; (!user || user.role !== <span class="t-s">&quot;ORGANIZER&quot;</span>)) {</span><span class="ln">                        <span class="t-f">setEveryoneAlert</span>(<span class="t-s">&quot;An Organizer has tagged @everyone in a new message!&quot;</span>);</span><span class="ln">                        <span class="t-f">setTimeout</span>(() =&gt; <span class="t-f">setEveryoneAlert</span>(<span class="t-s">&quot;&quot;</span>), <span class="t-n">10000</span>);</span><span class="ln">                    }</span><span class="ln">                }</span><span class="ln">                messagesRef.current = newMessages;</span><span class="ln">                <span class="t-f">setMessages</span>(newMessages);</span><span class="ln">            }</span><span class="ln">        <span class="t-c">// ...</span></span><span class="ln">    <span class="t-f">useEffect</span>(() =&gt; {</span><span class="ln">        <span class="t-f">fetchMessages</span>();</span><span class="ln">        <span class="t-c">// Poll every 5 seconds for new messages</span></span><span class="ln">        pollRef.current = <span class="t-f">setInterval</span>(fetchMessages, <span class="t-n">5000</span>);</span><span class="ln">        <span class="t-k">return</span> () =&gt; <span class="t-f">clearInterval</span>(pollRef.current);</span><span class="ln">    }, [eventId]);</span></code></pre>
+  
+</figure>
+  </div>
+</div>
+</section>
+
+<div class="p-field">
+<section class="p-sec  "  aria-labelledby="who-can-do-what-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="who-can-do-what-h" data-reveal>Who can do what</h2></div>
+  <div class="p-sec-body">
+  <ul class="points" data-reveal><li>Passwords are hashed with bcrypt in a pre-save hook. The JWT carries the user's id and role, lasts a day, and sits in an httpOnly cookie.</li><li>Every request re-checks that an organizer account is still active, so disabling one logs it out immediately.</li><li>IIIT participants must sign up with an IIIT address, and outsiders can't use those domains.</li><li>Organizers can't sign themselves up. Password resets go to an admin, who approves them and issues a generated password.</li><li>Sign-up uses a reCAPTCHA checkbox and login uses invisible, score-based reCAPTCHA, because they face different threats.</li></ul>
+  <figure class="pane" data-reveal data-ui>
+    <figcaption class="pane-bar"><span class="file">backend/routes</span><span class="spacer"></span><span>a few of the API's routes</span></figcaption>
+    <pre class="code"><code><span class="ln">POST   /api/auth/login              GET  /api/auth/me</span><span class="ln">POST   /api/participants/signup     PUT  /api/participants/:id</span><span class="ln">POST   /api/events/organizer/:id/create</span><span class="ln">POST   /api/events/:eventId/publish PATCH /api/events/:eventId</span><span class="ln">POST   /api/registrations/:eventId/register</span><span class="ln">POST   /api/registrations/:id/approve-payment</span><span class="ln">POST   /api/registrations/:id/reject-payment</span><span class="ln">POST   /api/registrations/:eventId/scan</span><span class="ln">POST   /api/registrations/:id/manual-attendance</span><span class="ln">GET    /api/discussions/:eventId/messages</span><span class="ln">POST   /api/admin/password-resets/:id/approve</span></code></pre>
+  </figure>
+</div>
+</section>
+</div>
+
+<section class="p-sec  "  aria-labelledby="what-i-d-fix-next-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="what-i-d-fix-next-h" data-reveal>What I'd fix next</h2></div>
+  <div class="p-sec-body"><div class="decisions"><div class="decision" data-reveal="row">
+    <h3>The docs drifted from the code</h3>
+    <p>The README gives ticket IDs as EVT- followed by digits, but the code takes the first three letters of the event name. The scan route moved too. Both are small, and both are the kind of thing a reader trusts.</p>
+    <p class="src">README.md vs registration.controller.js</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Polling over sockets</h3>
+    <p>Five-second polling was simple and robust for a class project. A busy event would want WebSockets or server-sent events.</p>
+    <p class="src">DiscussionForum.jsx</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Failing open on reCAPTCHA</h3>
+    <p>If the reCAPTCHA service can't be reached, verification passes so sign-ups don't break. That's a deliberate trade, and one to revisit for a public deployment.</p>
+    <p class="src">verifyCaptcha.js</p>
+  </div></div></div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="built-with-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="built-with-h" data-reveal>Built with</h2></div>
+  <div class="p-sec-body"><dl class="stack" data-reveal><div><dt>Front end</dt><dd>React 19, Vite 7, React Router 7, Fuse.js, html5-qrcode</dd></div><div><dt>API</dt><dd>Express 5, Mongoose 9, jsonwebtoken, bcryptjs, multer</dd></div><div><dt>Integrations</dt><dd>nodemailer with Gmail, Discord webhooks, reCAPTCHA v2 and v3</dd></div><div><dt>Hosting</dt><dd>Vercel, Railway with Nixpacks, MongoDB Atlas or local</dd></div></dl></div>
+</section>
+
+<nav class="pnav" aria-label="More projects">
+  <a class="pnav-cell tone-rose" href="../../projects/c-shell-c-shark/">
+      <span class="pnav-dir small muted">Previous project</span>
+      <span class="pnav-title">C-Shell and C-Shark</span>
+      <span class="pnav-what small muted">C, POSIX, libpcap</span>
+    </a>
+  <a class="pnav-cell pnav-all" href="../../#work">
+    <span class="pnav-dir small muted">Back to</span>
+    <span class="pnav-title">All work</span>
+  </a>
+  <a class="pnav-cell tone-blue" href="../../projects/network-file-system/">
+      <span class="pnav-dir small muted">Next project</span>
+      <span class="pnav-title">Distributed network file system</span>
+      <span class="pnav-what small muted">C, sockets, threads</span>
+    </a>
+</nav>
+</main>
+<footer class="tiles" aria-label="Footer">
+  <div class="tile tile-word" aria-hidden="true"><span>Kambhampati</span></div>
+  <a class="tile tile-go" href="mailto:krithik3001@gmail.com?subject=Hello%20from%20your%20site">
+    <p>Write to me</p>
+    <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" aria-hidden="true"><path d="M14 42 42 14M20 14h22v22"/></svg>
+  </a>
+  <div class="tile tile-statement">
+    <p>I build systems that keep their state straight when many things happen at once.</p>
+    <div class="small muted">
+      <p>© 2026 Krithik Kambhampati. Site built by hand in HTML, CSS and GSAP.</p>
+      
+    </div>
+  </div>
+  <nav class="tile tile-nav" aria-label="Footer">
+    <p class="tile-label">Pages</p>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../#work">Work</a></li>
+      <li><a href="../../#record">Record</a></li>
+      <li><a href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <div class="tile tile-time">
+    <p class="tile-label">Hyderabad</p>
+    <p><span class="clock" data-clock>IST</span><br><span class="small muted">India Standard Time</span></p>
+  </div>
+  <div class="tile tile-mail">
+    <p class="tile-label">Email</p>
+    <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
+  </div>
+</footer>
+</body>
+</html>

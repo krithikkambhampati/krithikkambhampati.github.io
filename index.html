@@ -2,250 +2,826 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krithik Kambhampati — Software Engineer</title>
-<meta name="description" content="Krithik Kambhampati — systems &amp; backend engineer. Distributed systems, ML infra, and real-time platforms.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Krithik Kambhampati: distributed systems, backends and ML</title>
+<meta name="description" content="Krithik Kambhampati, computer science student at IIIT Hyderabad. Distributed file systems, real-time Go servers, packet sniffers and ML pipelines, each with its own write-up.">
+<meta property="og:title" content="Krithik Kambhampati: distributed systems, backends and ML">
+<meta property="og:description" content="Krithik Kambhampati, computer science student at IIIT Hyderabad. Distributed file systems, real-time Go servers, packet sniffers and ML pipelines, each with its own write-up.">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0B0D11">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<script src="interactions.js" defer></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Mona+Sans:wdth,wght@100..125,300..700&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/home.css">
+<script>
+  // Hold the opening frames until the intro runs; never longer than 2.5s.
+  (function (r) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    r.classList.add("intro-pending");
+    setTimeout(function () { r.classList.remove("intro-pending"); }, 2500);
+  })(document.documentElement);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/home.js" defer></script>
 </head>
-<body>
-
-<div class="topbar">
-  <div class="wrap">
-    <a class="brand" href="index.html">Krithik Kambhampati</a>
-    <div class="topnav">
-      <a href="#experience">experience</a>
-      <a href="#projects">projects</a>
-      <a href="#skills">skills</a>
+<body class="home">
+<a class="skip" href="#work">Skip to the work</a>
+<main>
+<section class="hero" aria-labelledby="hero-name">
+  <div class="sheet">
+    <div class="sheet-col" aria-hidden="true"><figure class="frame tone-teal " style="--ratio:4 / 5" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The seven UK EPC bands from A to G with their SAP point ranges."><rect width="400" height="500" fill="#13161C"/><path d="M24 34h150l22 24-22 24H24z" fill="#008054"/>
+    <text x="38" y="65" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">A</text>
+    <text x="162" y="64" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 92+</text><path d="M24 96h184l22 24-22 24H24z" fill="#19B459"/>
+    <text x="38" y="127" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">B</text>
+    <text x="196" y="126" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 81–91</text><path d="M24 158h218l22 24-22 24H24z" fill="#8DCE46"/>
+    <text x="38" y="189" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">C</text>
+    <text x="230" y="188" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 69–80</text><path d="M24 220h252l22 24-22 24H24z" fill="#FFD500"/>
+    <text x="38" y="251" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">D</text>
+    <text x="264" y="250" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 55–68</text><path d="M24 282h286l22 24-22 24H24z" fill="#FCAA65"/>
+    <text x="38" y="313" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">E</text>
+    <text x="298" y="312" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 39–54</text><path d="M24 344h320l22 24-22 24H24z" fill="#EF8023"/>
+    <text x="38" y="375" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">F</text>
+    <text x="332" y="374" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 21–38</text><path d="M24 406h354l22 24-22 24H24z" fill="#E9153B"/>
+    <text x="38" y="437" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">G</text>
+    <text x="366" y="436" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 1–20</text></svg></div>
+  <figcaption class="frame-strip"><span>EnergyRating</span><span>A–G</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:3 / 4" data-ui>
+  <div class="frame-body"><pre class="code frame-code frame-text" aria-hidden="true"><span class="ln"><span class="t-c">// src/parser.c, recursive descent</span></span><span class="ln"> </span><span class="ln"><span class="t-k">shell_cmd</span> := cmd_group</span><span class="ln">   ((<span class="t-s">';'</span> | <span class="t-s">'&amp;'</span>) cmd_group)*</span><span class="ln">   <span class="t-s">'&amp;'</span>?</span><span class="ln"> </span><span class="ln"><span class="t-k">cmd_group</span> := atomic (<span class="t-s">'|'</span> atomic)*</span><span class="ln"> </span><span class="ln"><span class="t-k">atomic</span> := name</span><span class="ln">   (name | input | output)*</span><span class="ln"> </span><span class="ln"><span class="t-k">input</span>  := <span class="t-s">'&lt;'</span> name</span><span class="ln"><span class="t-k">output</span> := (<span class="t-s">'&gt;'</span> | <span class="t-s">'&gt;&gt;'</span>) name</span></pre></div>
+  <figcaption class="frame-strip"><span>parser.c</span><span>grammar</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:4 / 5">
+  <div class="frame-body"><img src="assets/img/garbage/campus-deployment.webp" alt="The model's green waste masks over a dump on the IIIT Hyderabad campus during the field test." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>field test</span><span>photo</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:16 / 9" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 480 280" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A ticket drawing showing how ticket IDs are built from the event name, a timestamp and random digits."><rect width="480" height="280" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace">
+    <rect x="20" y="40" width="440" height="200" rx="6" fill="#EDF0F3"/>
+    <circle cx="20" cy="140" r="16" fill="#13161C"/><circle cx="460" cy="140" r="16" fill="#13161C"/>
+    <path d="M330 52v176" stroke="#0B0D11" stroke-dasharray="4 6" opacity=".35"/>
+    <text x="44" y="84" font-size="13" fill="#4A5058">ticketId</text>
+    <text x="44" y="128" font-size="30" fill="#0B0D11" letter-spacing="-1">FEL-482913-0571</text>
+    <text x="44" y="168" font-size="13" fill="#4A5058">event name, first 3 letters</text>
+    <text x="44" y="188" font-size="13" fill="#4A5058">last 6 digits of Date.now()</text>
+    <text x="44" y="208" font-size="13" fill="#4A5058">4 random digits</text>
+    <text x="352" y="128" font-size="13" fill="#4A5058">QR of</text><text x="352" y="148" font-size="13" fill="#4A5058">the ticketId,</text><text x="352" y="168" font-size="13" fill="#4A5058">sent by email</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>ticketId</span><span>format</span></figcaption>
+</figure></div>
+    <div class="sheet-col" aria-hidden="true"><figure class="frame tone-blue " style="--ratio:4 / 5" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sequence diagram: the client asks the name server where a file lives, then writes a sentence directly to the storage server, which locks it."><rect width="400" height="500" fill="#13161C"/>
+    <rect x="8" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="60" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">client</text><path d="M60 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/><rect x="148" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="200" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">name server</text><path d="M200 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/><rect x="288" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="340" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">storage 2</text><path d="M340 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/>
+    <path d="M63 96H194" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M194 91l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="130" y="87" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_FILE</text>
+    <path d="M197 142H66" stroke="#7AA2FF" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <path d="M66 137l-7 5l7 5z" fill="#7AA2FF"/>
+      <text x="130" y="133" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_SS_INFO :9002</text>
+    <path d="M63 196H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 191l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="187" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_REQUEST</text>
+    <rect x="334" y="204" width="12" height="190" rx="3" fill="#232A52" stroke="#7AA2FF"/>
+    <text x="324" y="300" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#7AA2FF">sentence 3</text>
+    <text x="324" y="316" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#7AA2FF">locked</text>
+    <path d="M63 250H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 245l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="241" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_UPDATE</text>
+    <path d="M63 352H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 347l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="343" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_COMPLETE</text>
+    <text x="324" y="436" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">unlock, save version</text></svg></div>
+  <figcaption class="frame-strip"><span>write, sentence 3</span><span>protocol</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:9 / 16">
+  <div class="frame-body"><img src="assets/img/garbage/android-app.webp" alt="The Android app showing segmented waste, capture buttons and the NNAPI delegate." loading="lazy" decoding="async" style="object-position:50% 30%"></div>
+  <figcaption class="frame-strip"><span>ESW Segmentation</span><span>app</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 500 370" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The three roles, admin, organizer and participant, and what each can do."><rect width="500" height="370" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace" font-size="13">
+    
+      <rect x="20" y="28" width="148" height="300" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+      <text x="34" y="56" fill="#EDF0F3">ADMIN</text>
+      <text x="34" y="104" fill="#A0A8B3">create organizers</text><text x="34" y="122" fill="#A0A8B3"></text><text x="34" y="158" fill="#A0A8B3">approve password</text><text x="34" y="176" fill="#A0A8B3">resets</text><text x="34" y="212" fill="#A0A8B3">disable accounts</text><text x="34" y="230" fill="#A0A8B3"></text>
+    
+      <rect x="176" y="28" width="148" height="300" rx="4" fill="#B49BFF" />
+      <text x="190" y="56" fill="#0B0D11">ORGANIZER</text>
+      <text x="190" y="104" fill="#0B0D11">draft and</text><text x="190" y="122" fill="#0B0D11">publish events</text><text x="190" y="158" fill="#0B0D11">approve payments</text><text x="190" y="176" fill="#0B0D11"></text><text x="190" y="212" fill="#0B0D11">scan QR</text><text x="190" y="230" fill="#0B0D11">tickets</text>
+    
+      <rect x="332" y="28" width="148" height="300" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+      <text x="346" y="56" fill="#EDF0F3">PARTICIPANT</text>
+      <text x="346" y="104" fill="#A0A8B3">register and</text><text x="346" y="122" fill="#A0A8B3">pay</text><text x="346" y="158" fill="#A0A8B3">follow organizers</text><text x="346" y="176" fill="#A0A8B3"></text><text x="346" y="212" fill="#A0A8B3">post in</text><text x="346" y="230" fill="#A0A8B3">the forum</text>
+    
+    <text x="20" y="352" fill="#A0A8B3">require* middleware on every route</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>auth.middleware.js</span><span>roles</span></figcaption>
+</figure></div>
+    <div class="sheet-col sheet-mid">
+      <div class="sheet-pair" aria-hidden="true">
+        <div class="sheet-col"><figure class="frame tone-coral " style="--ratio:9 / 10" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 360 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A four-character room code, drawn from 32 characters that leave out O, 0, I and 1."><rect width="360" height="400" fill="#13161C"/>
+    <text x="24" y="44" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">join with a room code</text>
+    <rect x="24" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="59" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">K</text><rect x="104" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="139" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">7</text><rect x="184" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="219" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">Q</text><rect x="264" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="299" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">X</text>
+    <text x="24" y="214" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">32 characters, never O 0 I 1</text>
+    <text x="34" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">A</text><text x="71" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">B</text><text x="108" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">C</text><text x="145" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">D</text><text x="182" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">E</text><text x="219" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">F</text><text x="256" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">G</text><text x="293" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">H</text><text x="330" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">I</text><path d="M320 262h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">J</text><text x="71" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">K</text><text x="108" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">L</text><text x="145" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">M</text><text x="182" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">N</text><text x="219" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">O</text><path d="M209 296h20" stroke="#FF8E7A" stroke-width="2"/><text x="256" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">P</text><text x="293" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Q</text><text x="330" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">R</text><text x="34" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">S</text><text x="71" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">T</text><text x="108" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">U</text><text x="145" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">V</text><text x="182" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">W</text><text x="219" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">X</text><text x="256" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Y</text><text x="293" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Z</text><text x="330" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">0</text><path d="M320 330h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">1</text><path d="M24 364h20" stroke="#FF8E7A" stroke-width="2"/><text x="71" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">2</text><text x="108" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">3</text><text x="145" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">4</text><text x="182" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">5</text><text x="219" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">6</text><text x="256" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">7</text><text x="293" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">8</text><text x="330" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">9</text></svg></div>
+  <figcaption class="frame-strip"><span>generateRoomCode</span><span>go</span></figcaption>
+</figure></div>
+        <div class="sheet-col"><figure class="frame tone-rose " style="--ratio:1 / 1" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 420 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Layout of an Ethernet, IPv4 and TCP frame with the byte offsets C-Shark labels for each field."><rect width="420" height="420" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">bytes of one frame</text>
+    <rect x="24" y="56" width="10" height="76" fill="#F48FC8"/>
+        <text x="48" y="74" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">Ethernet II</text>
+        <text x="396" y="74" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0–13</text>
+        <text x="48" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst MAC 0–5</text><text x="218" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src MAC 6–11</text><text x="48" y="122" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">EtherType 12–13</text><rect x="24" y="146" width="10" height="76" fill="#7AA2FF"/>
+        <text x="48" y="164" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">IPv4</text>
+        <text x="396" y="164" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">14–33</text>
+        <text x="48" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">TTL 22</text><text x="218" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">protocol 23</text><text x="48" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src IP 26–29</text><text x="218" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst IP 30–33</text><rect x="24" y="236" width="10" height="76" fill="#4FDDC0"/>
+        <text x="48" y="254" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">TCP</text>
+        <text x="396" y="254" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">34–53</text>
+        <text x="48" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">ports 34–37</text><text x="218" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">seq 38–41</text><text x="48" y="302" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">flags 47</text><rect x="24" y="326" width="10" height="76" fill="#FFC15E"/>
+        <text x="48" y="344" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">payload</text>
+        <text x="396" y="344" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">54–…</text>
+        <text x="48" y="370" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">first 64 bytes as hex</text></svg></div>
+  <figcaption class="frame-strip"><span>inspect_packet</span><span>offsets</span></figcaption>
+</figure></div>
+      </div>
+      <div class="hero-panel">
+        <h1 class="hero-name" id="hero-name"><span class="line"><span>Krithik</span></span> <span class="line"><span>Kambhampati</span></span></h1>
+        <p class="hero-lede" data-intro>Computer science student at IIIT Hyderabad. I build distributed systems, real-time backends and ML pipelines.</p>
+        <p class="hero-where" data-intro>Researching LLM unlearning at Precog, IIIT Hyderabad.</p>
+        <div class="hero-actions" data-intro>
+          <a class="btn btn-accent" href="mailto:krithik3001@gmail.com">Email me</a>
+          <span class="hero-links">
+            <a class="link" href="#work">Work</a>
+            <a class="link" href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a>
+            <a class="link" href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a>
+          </span>
+        </div>
+      </div>
+      <div class="sheet-pair" aria-hidden="true">
+        <div class="sheet-col"><figure class="frame tone-teal " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">def</span> <span class="t-f">check</span>(text: <span class="t-t">str</span>, sheet: <span class="t-t">FactSheet</span>, *, extra_allowed: <span class="t-t">list</span>[<span class="t-t">Fact</span>] | <span class="t-k">None</span> = <span class="t-k">None</span>) -&gt; <span class="t-t">CheckReport</span>:</span><span class="ln">    <span class="t-c"># ...</span></span><span class="ln">    allowed = <span class="t-f">_allowed</span>(sheet, <span class="t-t">list</span>(extra_allowed <span class="t-k">or</span> []))</span><span class="ln">    found: <span class="t-t">list</span>[<span class="t-t">str</span>] = []</span><span class="ln">    unsupported: <span class="t-t">list</span>[<span class="t-t">str</span>] = []</span><span class="ln">    <span class="t-k">for</span> m <span class="t-k">in</span> <span class="t-f">extract_numbers</span>(text):</span><span class="ln">        found.<span class="t-f">append</span>(m.raw)</span><span class="ln">        hits = <span class="t-f">_matches</span>(m, allowed) <span class="t-k">or</span> (<span class="t-f">_hedged</span>(m, text) <span class="t-k">and</span> <span class="t-f">_matches</span>(m, allowed, approx=<span class="t-k">True</span>))</span><span class="ln">        <span class="t-k">if</span> <span class="t-k">not</span> hits:</span><span class="ln">            <span class="t-k">if</span> <span class="t-k">not</span> <span class="t-f">_structural</span>(m, text):</span><span class="ln">                unsupported.<span class="t-f">append</span>(m.raw)</span><span class="ln">            <span class="t-k">continue</span></span><span class="ln">        <span class="t-k">if</span> <span class="t-f">all</span>(h.direction == <span class="t-s">&quot;up&quot;</span> <span class="t-k">for</span> h <span class="t-k">in</span> hits) <span class="t-k">and</span> <span class="t-k">not</span> <span class="t-f">_direction_ok</span>(text, m.span):</span><span class="ln">            unsupported.<span class="t-f">append</span>(f<span class="t-s">&quot;{m.raw} (direction)&quot;</span>)</span><span class="ln">        <span class="t-k">elif</span> <span class="t-f">all</span>(h.direction == <span class="t-s">&quot;down&quot;</span> <span class="t-k">for</span> h <span class="t-k">in</span> hits) <span class="t-k">and</span> <span class="t-k">not</span> <span class="t-f">_direction_ok</span>(text, m.span, <span class="t-s">&quot;down&quot;</span>):</span><span class="ln">            unsupported.<span class="t-f">append</span>(f<span class="t-s">&quot;{m.raw} (saving)&quot;</span>)</span></pre></div>
+  <figcaption class="frame-strip"><span>llm/checker.py</span><span>python</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:16 / 9">
+  <div class="frame-body"><video muted loop playsinline preload="none" poster="assets/video/garbage-runner-poster.webp" aria-label="The desktop runner segmenting a waste pile with each of the trained models in turn." data-loop><source src="assets/video/garbage-runner.mp4" type="video/mp4"></video></div>
+  <figcaption class="frame-strip"><span>Demos/demo.mp4</span><span>video</span></figcaption>
+</figure></div>
+        <div class="sheet-col"><figure class="frame tone-amber " style="--ratio:3 / 2">
+  <div class="frame-body"><img src="assets/img/garbage/qidk-phones.webp" alt="Two Qualcomm QIDK devices running the segmentation app side by side." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>QIDK v1 · v2</span><span>photo</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">func</span> <span class="t-f">scoreForAnswer</span>(q <span class="t-t">Question</span>, answer <span class="t-t">SubmittedAnswer</span>) <span class="t-t">int</span> {</span><span class="ln">    <span class="t-k">if</span> !answer.<span class="t-t">Correct</span> {</span><span class="ln">        <span class="t-k">return</span> <span class="t-n">0</span></span><span class="ln">    }</span><span class="ln">    limit := time.<span class="t-t">Duration</span>(q.<span class="t-t">TimeLimitSec</span>) * time.<span class="t-t">Second</span></span><span class="ln">    <span class="t-k">if</span> limit &lt;= <span class="t-n">0</span> {</span><span class="ln">        <span class="t-k">return</span> answerPoints</span><span class="ln">    }</span><span class="ln">    timeTaken := time.<span class="t-t">Duration</span>(answer.<span class="t-t">TimeTakenMs</span>) * time.<span class="t-t">Millisecond</span></span><span class="ln">    fraction := <span class="t-n">1.0</span> - <span class="t-t">float64</span>(timeTaken)/<span class="t-t">float64</span>(limit)</span><span class="ln">    <span class="t-k">if</span> fraction &lt; <span class="t-n">0</span> {</span><span class="ln">        fraction = <span class="t-n">0</span></span><span class="ln">    }</span><span class="ln">    <span class="t-k">return</span> <span class="t-t">int</span>(<span class="t-t">float64</span>(answerPoints/<span class="t-n">2</span>) + fraction*<span class="t-t">float64</span>(answerPoints/<span class="t-n">2</span>))</span></pre></div>
+  <figcaption class="frame-strip"><span>game_loop.go</span><span>go</span></figcaption>
+</figure></div>
+      </div>
+    </div>
+    <div class="sheet-col" aria-hidden="true"><figure class="frame tone-amber " style="--ratio:4 / 3">
+  <div class="frame-body"><img src="assets/img/garbage/yolo-confusion.webp" alt="Normalised confusion matrix for YOLO11s-seg across animal, waste, person and background." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>confusion_matrix</span><span>plot</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 440 340" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Points for a correct answer fall in a straight line from 1000 when instant to 500 at the time limit; wrong answers score 0."><rect width="440" height="340" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">points for a correct answer</text>
+    <path d="M50 300H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="304" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0</text><path d="M50 180H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="184" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">500</text><path d="M50 60H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="64" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">1000</text>
+    <path d="M50 60L380 180" stroke="#FF8E7A" stroke-width="3"/>
+    <circle cx="50" cy="60" r="5" fill="#FF8E7A"/><circle cx="380" cy="180" r="5" fill="#FF8E7A"/>
+    <path d="M50 300H380" stroke="#A0A8B3" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="215" y="290" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">wrong or no answer: 0</text>
+    <text x="50" y="326" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">instant</text>
+    <text x="380" y="326" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">time limit</text></svg></div>
+  <figcaption class="frame-strip"><span>scoreForAnswer</span><span>1000 → 500</span></figcaption>
+</figure><figure class="frame tone-blue " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">int</span> <span class="t-f">lock_sentence</span>(<span class="t-k">const</span> <span class="t-k">char</span>* filename, <span class="t-k">int</span> sentence_index, <span class="t-k">const</span> <span class="t-k">char</span>* username) {</span><span class="ln">    <span class="t-t">pthread_mutex_lock</span>(&amp;list_mutex);</span><span class="ln">    </span><span class="ln">    <span class="t-t">SentenceLock</span>* lock = <span class="t-f">find_or_create_lock</span>(filename, sentence_index);</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (lock-&gt;is_locked) {</span><span class="ln">        <span class="t-t">pthread_mutex_unlock</span>(&amp;list_mutex);</span><span class="ln">        <span class="t-f">log_message</span>(<span class="t-t">LOG_LEVEL_WARNING</span>, <span class="t-s">&quot;Sentence %d in %s already locked by %s&quot;</span>,</span><span class="ln">                   sentence_index, filename, lock-&gt;locked_by);</span><span class="ln">        <span class="t-k">return</span> -<span class="t-n">1</span>;</span><span class="ln">    }</span><span class="ln">    </span><span class="ln">    lock-&gt;is_locked = <span class="t-k">true</span>;</span><span class="ln">    <span class="t-f">strncpy</span>(lock-&gt;locked_by, username, <span class="t-k">sizeof</span>(lock-&gt;locked_by) - <span class="t-n">1</span>);</span></pre></div>
+  <figcaption class="frame-strip"><span>sentence_lock.c</span><span>c</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 480 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Merchandise payment approval: a pending order is approved with an atomic stock decrement, or rejected."><rect width="480" height="360" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace" font-size="13">
+    <rect x="20" y="24" width="440" height="58" rx="4" fill="#1B1F27" stroke="#B49BFF"/>
+    <text x="36" y="50" fill="#EDF0F3">participant uploads payment proof</text>
+    <text x="36" y="70" fill="#A0A8B3">Pending / Pending</text>
+    <path d="M240 82v40" stroke="#A0A8B3" stroke-width="1.5"/>
+    <rect x="20" y="122" width="440" height="58" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+    <text x="36" y="148" fill="#EDF0F3">organizer opens Pending Payments</text>
+    <text x="36" y="168" fill="#A0A8B3">approve or reject</text>
+    <path d="M130 180v44M350 180v44" stroke="#A0A8B3" stroke-width="1.5"/>
+    <rect x="20" y="224" width="220" height="112" rx="4" fill="#B49BFF"/>
+    <text x="34" y="250" fill="#0B0D11">approve</text>
+    <text x="34" y="276" fill="#0B0D11">$inc stock −1</text>
+    <text x="34" y="296" fill="#0B0D11">where stock &gt; 0</text>
+    <text x="34" y="322" fill="#0B0D11">→ Registered + QR</text>
+    <rect x="250" y="224" width="210" height="112" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+    <text x="264" y="250" fill="#EDF0F3">reject</text>
+    <text x="264" y="276" fill="#A0A8B3">Cancelled</text>
+    <text x="264" y="296" fill="#A0A8B3">/ Rejected</text>
+    <text x="264" y="322" fill="#A0A8B3">stock untouched</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>approve-payment</span><span>flow</span></figcaption>
+</figure></div>
+    <div class="sheet-col"><figure class="frame capture tone-lime" style="--ratio: 9 / 16" data-capture data-ui aria-labelledby="cap-label">
+  <div class="frame-body">
+    <p class="cap-title" data-capture-title id="cap-label">Your request for this page, decoded layer by layer</p>
+    <p class="cap-total" data-capture-total aria-live="polite"></p>
+    <ul class="cap-rows" data-capture-rows></ul>
+    <p class="cap-fallback">Your browser's timings for this page appear here once it loads: DNS, TCP, TLS, the HTTP exchange and the parse, each measured live.</p>
+    <div class="cap-foot">
+      <span class="small muted">read like C-Shark reads a packet</span>
+      <button class="cap-again" type="button" data-capture-again>Capture again</button>
     </div>
   </div>
-</div>
-
-<main id="app">
-
-<header class="hero wrap">
-  <div class="eyebrow">Hyderabad, India · IIIT-H '28</div>
-  <h1 class="name">Krithik Kambhampati</h1>
-  <p class="role">Systems &amp; backend engineer, building things that stay <span class="accent-word">up</span> under load.</p>
- 
-  <div class="hero-meta">
-    <span class="meta-chip">Distributed Systems</span>
-    <span class="meta-chip">Go · C · Python</span>
-    <span class="meta-chip">ML / LLM Infra</span>
-    <span class="meta-chip meta-chip-highlight">★ CGPA 8.84</span>
+  <figcaption class="frame-strip"><span>this-request.pcap</span><span>live<span class="cap-cursor" aria-hidden="true"></span></span></figcaption>
+</figure><div aria-hidden="true"><figure class="frame tone-teal " style="--ratio:16 / 9">
+  <div class="frame-body"><img src="assets/img/green-home/retrofit-gain.webp" alt="Observed median SAP gain from single-change repeat EPCs: solid wall insulation adds the most, smart thermostats the least." loading="lazy" decoding="async" style="object-position:0% 50%"></div>
+  <figcaption class="frame-strip"><span>retrofit_delta_sap.png</span><span>plot</span></figcaption>
+</figure></div><div aria-hidden="true"><figure class="frame tone-rose " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code frame-text " aria-hidden="true"><span class="ln">========================================</span><span class="ln">Packet #1 | Length: 74 bytes | Timestamp: 2026-01-17 15:23:45</span><span class="ln">========================================</span><span class="ln">EtherType: IPv4 (0x0800)</span><span class="ln">Src MAC: aa:bb:cc:dd:ee:ff | Dst MAC: 11:22:33:44:55:66</span><span class="ln">Src IP: 192.168.1.100 | Dst IP: 142.250.185.46 | Protocol: TCP (6)</span><span class="ln">TTL: 64</span><span class="ln">ID: 0x4A2F | Total Length: 60 | Header Length: 20 bytes</span><span class="ln">Src Port: 54321 | Dst Port: 443 (HTTPS) | Seq: 1234567890 | Ack: 987654321</span></pre></div>
+  <figcaption class="frame-strip"><span>README example</span><span>output</span></figcaption>
+</figure></div></div>
   </div>
-
-  <div class="hero-links">
-    <a class="btn btn-primary" href="mailto:krithik3001@gmail.com">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M3 6l9 7 9-7"/><path d="M3 6h18v12H3z"/></svg>
-      Email me
-    </a>
-    <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.5A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
-      GitHub
-    </a>
-    <a class="btn btn-ghost" href="https://linkedin.com/" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.02 2 2 0 0 1 4 .02zM7 8.5H3V21h4V8.5zm6.32 0H9.5V21h3.82v-6.4c0-3.57 4.6-3.86 4.6 0V21H21v-7.28c0-6.5-7.13-6.26-8.68-3.06V8.5z"/></svg>
-      LinkedIn
-    </a>
-    <a class="btn btn-ghost" href="#" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>
-      Resume
-    </a>
-  </div>
-
-  <div class="pulse-track">
-    <svg class="pulse-svg" viewBox="0 0 800 44" preserveAspectRatio="none">
-      <path id="pulsePath" class="pulse-path"
-        d="M0,22 L70,22 L92,8 L150,8 L172,36 L250,36 L272,22 L360,22 L382,6 L440,6 L462,38 L540,38 L562,22 L640,22 L662,12 L720,12 L742,32 L800,32" />
-      <circle class="pulse-node-static" cx="92" cy="8" r="3"></circle>
-      <circle class="pulse-node-static" cx="272" cy="22" r="3"></circle>
-      <circle class="pulse-node-static" cx="462" cy="38" r="3"></circle>
-      <circle class="pulse-node-static" cx="662" cy="12" r="3"></circle>
-      <circle class="pulse-dot" r="3.2">
-        <animateMotion dur="7s" repeatCount="indefinite" begin="0s">
-          <mpath href="#pulsePath"></mpath>
-        </animateMotion>
-      </circle>
-      <circle class="pulse-dot" r="3.2">
-        <animateMotion dur="7s" repeatCount="indefinite" begin="2.3s">
-          <mpath href="#pulsePath"></mpath>
-        </animateMotion>
-      </circle>
-      <circle class="pulse-dot" r="3.2">
-        <animateMotion dur="7s" repeatCount="indefinite" begin="4.6s">
-          <mpath href="#pulsePath"></mpath>
-        </animateMotion>
-      </circle>
-    </svg>
-  </div>
-</header>
-
-<section class="block" id="experience">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="section-title">Experience</h2>
-      <span class="section-index">LOG // 02 ENTRIES</span>
+  <div class="sheet-phone">
+    <figure class="frame capture tone-lime" style="--ratio: 9 / 16" data-capture data-ui aria-labelledby="cap-labelphone">
+  <div class="frame-body">
+    <p class="cap-title" data-capture-title id="cap-labelphone">Your request for this page, decoded layer by layer</p>
+    <p class="cap-total" data-capture-total aria-live="polite"></p>
+    <ul class="cap-rows" data-capture-rows></ul>
+    <p class="cap-fallback">Your browser's timings for this page appear here once it loads: DNS, TCP, TLS, the HTTP exchange and the parse, each measured live.</p>
+    <div class="cap-foot">
+      <span class="small muted">read like C-Shark reads a packet</span>
+      <button class="cap-again" type="button" data-capture-again>Capture again</button>
     </div>
-
-    <div class="exp-item">
-      <div class="exp-date">Apr 2026 — Present</div>
-      <div>
-        <div class="exp-role">Undergraduate Student Researcher</div>
-        <div class="exp-org">Precog Research Lab, IIIT Hyderabad — under Prof. Ponnurangam Kumaraguru</div>
-        <ul class="exp-desc">
-          <li>Researching curriculum unlearning in LLMs — studying how models can selectively forget training data while preserving general capabilities, across 3 different curriculums.</li>
+  </div>
+  <figcaption class="frame-strip"><span>this-request.pcap</span><span>live<span class="cap-cursor" aria-hidden="true"></span></span></figcaption>
+</figure>
+    <div class="sheet-col" aria-hidden="true"><figure class="frame tone-blue " style="--ratio:4 / 5" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sequence diagram: the client asks the name server where a file lives, then writes a sentence directly to the storage server, which locks it."><rect width="400" height="500" fill="#13161C"/>
+    <rect x="8" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="60" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">client</text><path d="M60 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/><rect x="148" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="200" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">name server</text><path d="M200 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/><rect x="288" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="340" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">storage 2</text><path d="M340 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/>
+    <path d="M63 96H194" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M194 91l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="130" y="87" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_FILE</text>
+    <path d="M197 142H66" stroke="#7AA2FF" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <path d="M66 137l-7 5l7 5z" fill="#7AA2FF"/>
+      <text x="130" y="133" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_SS_INFO :9002</text>
+    <path d="M63 196H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 191l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="187" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_REQUEST</text>
+    <rect x="334" y="204" width="12" height="190" rx="3" fill="#232A52" stroke="#7AA2FF"/>
+    <text x="324" y="300" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#7AA2FF">sentence 3</text>
+    <text x="324" y="316" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#7AA2FF">locked</text>
+    <path d="M63 250H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 245l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="241" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_UPDATE</text>
+    <path d="M63 352H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 347l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="343" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_COMPLETE</text>
+    <text x="324" y="436" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">unlock, save version</text></svg></div>
+  <figcaption class="frame-strip"><span>write, sentence 3</span><span>protocol</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:16 / 9">
+  <div class="frame-body"><img src="assets/img/garbage/annotated-street.webp" alt="A CCTV frame of a roadside dump annotated into waste, person and animal masks." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>annotation</span><span>CCTV</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:9 / 10" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 360 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A four-character room code, drawn from 32 characters that leave out O, 0, I and 1."><rect width="360" height="400" fill="#13161C"/>
+    <text x="24" y="44" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">join with a room code</text>
+    <rect x="24" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="59" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">K</text><rect x="104" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="139" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">7</text><rect x="184" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="219" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">Q</text><rect x="264" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="299" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">X</text>
+    <text x="24" y="214" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">32 characters, never O 0 I 1</text>
+    <text x="34" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">A</text><text x="71" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">B</text><text x="108" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">C</text><text x="145" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">D</text><text x="182" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">E</text><text x="219" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">F</text><text x="256" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">G</text><text x="293" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">H</text><text x="330" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">I</text><path d="M320 262h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">J</text><text x="71" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">K</text><text x="108" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">L</text><text x="145" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">M</text><text x="182" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">N</text><text x="219" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">O</text><path d="M209 296h20" stroke="#FF8E7A" stroke-width="2"/><text x="256" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">P</text><text x="293" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Q</text><text x="330" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">R</text><text x="34" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">S</text><text x="71" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">T</text><text x="108" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">U</text><text x="145" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">V</text><text x="182" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">W</text><text x="219" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">X</text><text x="256" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Y</text><text x="293" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Z</text><text x="330" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">0</text><path d="M320 330h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">1</text><path d="M24 364h20" stroke="#FF8E7A" stroke-width="2"/><text x="71" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">2</text><text x="108" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">3</text><text x="145" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">4</text><text x="182" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">5</text><text x="219" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">6</text><text x="256" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">7</text><text x="293" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">8</text><text x="330" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">9</text></svg></div>
+  <figcaption class="frame-strip"><span>generateRoomCode</span><span>go</span></figcaption>
+</figure></div>
+    <div class="sheet-col" aria-hidden="true"><figure class="frame tone-teal " style="--ratio:4 / 5" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The seven UK EPC bands from A to G with their SAP point ranges."><rect width="400" height="500" fill="#13161C"/><path d="M24 34h150l22 24-22 24H24z" fill="#008054"/>
+    <text x="38" y="65" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">A</text>
+    <text x="162" y="64" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 92+</text><path d="M24 96h184l22 24-22 24H24z" fill="#19B459"/>
+    <text x="38" y="127" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">B</text>
+    <text x="196" y="126" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 81–91</text><path d="M24 158h218l22 24-22 24H24z" fill="#8DCE46"/>
+    <text x="38" y="189" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">C</text>
+    <text x="230" y="188" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 69–80</text><path d="M24 220h252l22 24-22 24H24z" fill="#FFD500"/>
+    <text x="38" y="251" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">D</text>
+    <text x="264" y="250" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 55–68</text><path d="M24 282h286l22 24-22 24H24z" fill="#FCAA65"/>
+    <text x="38" y="313" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">E</text>
+    <text x="298" y="312" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 39–54</text><path d="M24 344h320l22 24-22 24H24z" fill="#EF8023"/>
+    <text x="38" y="375" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">F</text>
+    <text x="332" y="374" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 21–38</text><path d="M24 406h354l22 24-22 24H24z" fill="#E9153B"/>
+    <text x="38" y="437" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">G</text>
+    <text x="366" y="436" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 1–20</text></svg></div>
+  <figcaption class="frame-strip"><span>EnergyRating</span><span>A–G</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:1 / 1" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 420 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Layout of an Ethernet, IPv4 and TCP frame with the byte offsets C-Shark labels for each field."><rect width="420" height="420" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">bytes of one frame</text>
+    <rect x="24" y="56" width="10" height="76" fill="#F48FC8"/>
+        <text x="48" y="74" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">Ethernet II</text>
+        <text x="396" y="74" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0–13</text>
+        <text x="48" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst MAC 0–5</text><text x="218" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src MAC 6–11</text><text x="48" y="122" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">EtherType 12–13</text><rect x="24" y="146" width="10" height="76" fill="#7AA2FF"/>
+        <text x="48" y="164" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">IPv4</text>
+        <text x="396" y="164" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">14–33</text>
+        <text x="48" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">TTL 22</text><text x="218" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">protocol 23</text><text x="48" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src IP 26–29</text><text x="218" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst IP 30–33</text><rect x="24" y="236" width="10" height="76" fill="#4FDDC0"/>
+        <text x="48" y="254" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">TCP</text>
+        <text x="396" y="254" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">34–53</text>
+        <text x="48" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">ports 34–37</text><text x="218" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">seq 38–41</text><text x="48" y="302" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">flags 47</text><rect x="24" y="326" width="10" height="76" fill="#FFC15E"/>
+        <text x="48" y="344" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">payload</text>
+        <text x="396" y="344" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">54–…</text>
+        <text x="48" y="370" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">first 64 bytes as hex</text></svg></div>
+  <figcaption class="frame-strip"><span>inspect_packet</span><span>offsets</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:9 / 16">
+  <div class="frame-body"><img src="assets/img/garbage/android-app.webp" alt="The Android app showing segmented waste, capture buttons and the NNAPI delegate." loading="lazy" decoding="async" style="object-position:50% 30%"></div>
+  <figcaption class="frame-strip"><span>ESW Segmentation</span><span>app</span></figcaption>
+</figure></div>
+  </div>
+</section>
+<section class="work" id="work" aria-labelledby="work-title">
+  <div class="work-rail">
+    <h2 class="work-title" id="work-title">Work</h2>
+    <p class="work-note">Six projects. Each opens its own page with the architecture, code and results.</p>
+    <div class="filters" role="group" aria-label="Show projects by kind">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter" type="button" data-filter="systems" aria-pressed="false">Systems</button>
+      <button class="filter" type="button" data-filter="ml" aria-pressed="false">Machine learning</button>
+      <button class="filter" type="button" data-filter="web" aria-pressed="false">Web</button>
+    </div>
+  </div>
+  <div class="strips">
+    <article class="strip tone-blue" data-strip data-kind="systems">
+  <div class="strip-frames" aria-hidden="true"><figure class="frame tone-blue " style="--ratio:4 / 5" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sequence diagram: the client asks the name server where a file lives, then writes a sentence directly to the storage server, which locks it."><rect width="400" height="500" fill="#13161C"/>
+    <rect x="8" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="60" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">client</text><path d="M60 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/><rect x="148" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="200" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">name server</text><path d="M200 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/><rect x="288" y="22" width="104" height="30" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/><text x="340" y="42" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">storage 2</text><path d="M340 52V480" stroke="rgba(237,240,243,.16)" stroke-dasharray="3 5"/>
+    <path d="M63 96H194" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M194 91l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="130" y="87" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_FILE</text>
+    <path d="M197 142H66" stroke="#7AA2FF" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <path d="M66 137l-7 5l7 5z" fill="#7AA2FF"/>
+      <text x="130" y="133" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_SS_INFO :9002</text>
+    <path d="M63 196H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 191l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="187" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_REQUEST</text>
+    <rect x="334" y="204" width="12" height="190" rx="3" fill="#232A52" stroke="#7AA2FF"/>
+    <text x="324" y="300" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#7AA2FF">sentence 3</text>
+    <text x="324" y="316" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#7AA2FF">locked</text>
+    <path d="M63 250H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 245l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="241" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_UPDATE</text>
+    <path d="M63 352H334" stroke="#7AA2FF" stroke-width="1.8" />
+      <path d="M334 347l7 5l-7 5z" fill="#7AA2FF"/>
+      <text x="200" y="343" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12.5" fill="#EDF0F3">MSG_WRITE_COMPLETE</text>
+    <text x="324" y="436" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">unlock, save version</text></svg></div>
+  <figcaption class="frame-strip"><span>write, sentence 3</span><span>protocol</span></figcaption>
+</figure><figure class="frame tone-blue " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">int</span> <span class="t-f">lock_sentence</span>(<span class="t-k">const</span> <span class="t-k">char</span>* filename, <span class="t-k">int</span> sentence_index, <span class="t-k">const</span> <span class="t-k">char</span>* username) {</span><span class="ln">    <span class="t-t">pthread_mutex_lock</span>(&amp;list_mutex);</span><span class="ln">    </span><span class="ln">    <span class="t-t">SentenceLock</span>* lock = <span class="t-f">find_or_create_lock</span>(filename, sentence_index);</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (lock-&gt;is_locked) {</span><span class="ln">        <span class="t-t">pthread_mutex_unlock</span>(&amp;list_mutex);</span><span class="ln">        <span class="t-f">log_message</span>(<span class="t-t">LOG_LEVEL_WARNING</span>, <span class="t-s">&quot;Sentence %d in %s already locked by %s&quot;</span>,</span><span class="ln">                   sentence_index, filename, lock-&gt;locked_by);</span><span class="ln">        <span class="t-k">return</span> -<span class="t-n">1</span>;</span><span class="ln">    }</span><span class="ln">    </span><span class="ln">    lock-&gt;is_locked = <span class="t-k">true</span>;</span><span class="ln">    <span class="t-f">strncpy</span>(lock-&gt;locked_by, username, <span class="t-k">sizeof</span>(lock-&gt;locked_by) - <span class="t-n">1</span>);</span></pre></div>
+  <figcaption class="frame-strip"><span>sentence_lock.c</span><span>c</span></figcaption>
+</figure><figure class="frame tone-blue " style="--ratio:3 / 4" data-ui>
+  <div class="frame-body"><pre class="code frame-code frame-text" aria-hidden="true"><span class="ln">data/</span><span class="ln">  name_server/</span><span class="ln">    file_metadata.dat</span><span class="ln">    acls/hello.txt.acl</span><span class="ln"><span class="t-c">      OWNER:kaund</span></span><span class="ln"><span class="t-c">      USER:krithik:3</span></span><span class="ln">  storage_servers/ss1/</span><span class="ln">    files/</span><span class="ln">    metadata/versions/</span><span class="ln">logs/storage_server_1.log</span></pre></div>
+  <figcaption class="frame-strip"><span>data/</span><span>on disk</span></figcaption>
+</figure><figure class="frame tone-blue " style="--ratio:16 / 9" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 480 270" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Timeline of heartbeats every five seconds; after fifteen seconds of silence a storage server is marked inactive."><rect width="480" height="270" fill="#13161C"/>
+    <text x="30" y="46" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">storage 1, as the name server sees it</text>
+    <path d="M30 120H450" stroke="rgba(237,240,243,.16)"/>
+    <circle cx="50" cy="120" r="6" fill="#7AA2FF"/><text x="50" y="150" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0s</text><circle cx="120" cy="120" r="6" fill="#7AA2FF"/><text x="120" y="150" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">5s</text><circle cx="190" cy="120" r="6" fill="#7AA2FF"/><text x="190" y="150" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">10s</text><circle cx="260" cy="120" r="6" fill="#7AA2FF"/><text x="260" y="150" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">15s</text>
+    <path d="M260 106v28" stroke="#FFC15E" stroke-width="2"/>
+    <text x="268" y="98" font-family="Fragment Mono, monospace" font-size="12" fill="#FFC15E">last heartbeat</text>
+    <path d="M260 190H420" stroke="#FFC15E" stroke-width="1.6" stroke-dasharray="4 4"/>
+    <path d="M420 184l8 6-8 6z" fill="#FFC15E"/>
+    <text x="268" y="214" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">15 000 ms with no word</text>
+    <rect x="300" y="226" width="150" height="28" rx="4" fill="#FFC15E"/>
+    <text x="312" y="245" font-family="Fragment Mono, monospace" font-size="13" fill="#0B0D11">marked inactive</text></svg></div>
+  <figcaption class="frame-strip"><span>heartbeat.c</span><span>5 s / 15 s</span></figcaption>
+</figure><figure class="frame tone-blue " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-c">// Message header structure</span></span><span class="ln"><span class="t-k">typedef</span> <span class="t-k">struct</span> {</span><span class="ln">    <span class="t-t">MessageType</span> type;</span><span class="ln">    <span class="t-t">uint32_t</span> length;</span><span class="ln">    <span class="t-t">uint32_t</span> error_code;</span><span class="ln">} <span class="t-t">MessageHeader</span>;</span><span class="ln"> </span><span class="ln"><span class="t-k">int</span> <span class="t-f">send_message</span>(<span class="t-k">int</span> sockfd, <span class="t-t">MessageType</span> type, <span class="t-k">const</span> <span class="t-k">void</span>* data, <span class="t-t">uint32_t</span> length) {</span><span class="ln">    <span class="t-t">MessageHeader</span> header;</span><span class="ln">    header.type = type;</span><span class="ln">    header.length = length;</span><span class="ln">    header.error_code = <span class="t-n">0</span>;</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (<span class="t-f">send_data</span>(sockfd, &amp;header, <span class="t-k">sizeof</span>(header)) &lt; <span class="t-n">0</span>) {</span><span class="ln">        <span class="t-k">return</span> -<span class="t-n">1</span>;</span><span class="ln">    }</span></pre></div>
+  <figcaption class="frame-strip"><span>protocol.c</span><span>c</span></figcaption>
+</figure></div>
+  <div class="strip-caption">
+    <h3><a class="strip-name" href="projects/network-file-system/" style="view-transition-name: t-network-file-system"><span class="dot" aria-hidden="true"></span>Distributed network file system</a></h3>
+    <p class="strip-desc">A file system spread across machines: one name server knows where every file lives, storage servers hold the data, and clients reach both over a protocol written by hand.</p>
+    <p class="strip-meta">C, sockets, threads</p>
+  </div>
+</article><article class="strip tone-coral" data-strip data-kind="systems web">
+  <div class="strip-frames" aria-hidden="true"><figure class="frame tone-coral " style="--ratio:9 / 10" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 360 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A four-character room code, drawn from 32 characters that leave out O, 0, I and 1."><rect width="360" height="400" fill="#13161C"/>
+    <text x="24" y="44" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">join with a room code</text>
+    <rect x="24" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="59" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">K</text><rect x="104" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="139" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">7</text><rect x="184" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="219" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">Q</text><rect x="264" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="299" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">X</text>
+    <text x="24" y="214" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">32 characters, never O 0 I 1</text>
+    <text x="34" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">A</text><text x="71" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">B</text><text x="108" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">C</text><text x="145" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">D</text><text x="182" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">E</text><text x="219" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">F</text><text x="256" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">G</text><text x="293" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">H</text><text x="330" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">I</text><path d="M320 262h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">J</text><text x="71" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">K</text><text x="108" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">L</text><text x="145" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">M</text><text x="182" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">N</text><text x="219" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">O</text><path d="M209 296h20" stroke="#FF8E7A" stroke-width="2"/><text x="256" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">P</text><text x="293" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Q</text><text x="330" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">R</text><text x="34" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">S</text><text x="71" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">T</text><text x="108" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">U</text><text x="145" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">V</text><text x="182" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">W</text><text x="219" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">X</text><text x="256" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Y</text><text x="293" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Z</text><text x="330" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">0</text><path d="M320 330h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">1</text><path d="M24 364h20" stroke="#FF8E7A" stroke-width="2"/><text x="71" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">2</text><text x="108" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">3</text><text x="145" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">4</text><text x="182" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">5</text><text x="219" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">6</text><text x="256" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">7</text><text x="293" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">8</text><text x="330" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">9</text></svg></div>
+  <figcaption class="frame-strip"><span>generateRoomCode</span><span>go</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 440 340" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Points for a correct answer fall in a straight line from 1000 when instant to 500 at the time limit; wrong answers score 0."><rect width="440" height="340" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">points for a correct answer</text>
+    <path d="M50 300H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="304" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0</text><path d="M50 180H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="184" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">500</text><path d="M50 60H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="64" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">1000</text>
+    <path d="M50 60L380 180" stroke="#FF8E7A" stroke-width="3"/>
+    <circle cx="50" cy="60" r="5" fill="#FF8E7A"/><circle cx="380" cy="180" r="5" fill="#FF8E7A"/>
+    <path d="M50 300H380" stroke="#A0A8B3" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="215" y="290" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">wrong or no answer: 0</text>
+    <text x="50" y="326" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">instant</text>
+    <text x="380" y="326" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">time limit</text></svg></div>
+  <figcaption class="frame-strip"><span>scoreForAnswer</span><span>1000 → 500</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">func</span> <span class="t-f">scoreForAnswer</span>(q <span class="t-t">Question</span>, answer <span class="t-t">SubmittedAnswer</span>) <span class="t-t">int</span> {</span><span class="ln">    <span class="t-k">if</span> !answer.<span class="t-t">Correct</span> {</span><span class="ln">        <span class="t-k">return</span> <span class="t-n">0</span></span><span class="ln">    }</span><span class="ln">    limit := time.<span class="t-t">Duration</span>(q.<span class="t-t">TimeLimitSec</span>) * time.<span class="t-t">Second</span></span><span class="ln">    <span class="t-k">if</span> limit &lt;= <span class="t-n">0</span> {</span><span class="ln">        <span class="t-k">return</span> answerPoints</span><span class="ln">    }</span><span class="ln">    timeTaken := time.<span class="t-t">Duration</span>(answer.<span class="t-t">TimeTakenMs</span>) * time.<span class="t-t">Millisecond</span></span><span class="ln">    fraction := <span class="t-n">1.0</span> - <span class="t-t">float64</span>(timeTaken)/<span class="t-t">float64</span>(limit)</span><span class="ln">    <span class="t-k">if</span> fraction &lt; <span class="t-n">0</span> {</span><span class="ln">        fraction = <span class="t-n">0</span></span><span class="ln">    }</span><span class="ln">    <span class="t-k">return</span> <span class="t-t">int</span>(<span class="t-t">float64</span>(answerPoints/<span class="t-n">2</span>) + fraction*<span class="t-t">float64</span>(answerPoints/<span class="t-n">2</span>))</span></pre></div>
+  <figcaption class="frame-strip"><span>game_loop.go</span><span>go</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 440 330" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Game states lobby, live, results and finished, with the WebSocket messages each sends."><rect width="440" height="330" fill="#13161C"/>
+    <rect x="24" y="28" width="120" height="48" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+        <text x="40" y="58" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">lobby</text>
+        <text x="164" y="58" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">player_joined</text>
+        <path d="M84 76v26" stroke="#A0A8B3" stroke-width="1.5"/><rect x="24" y="102" width="120" height="48" rx="4" fill="#FF8E7A" />
+        <text x="40" y="132" font-family="Fragment Mono, monospace" font-size="14" fill="#0B0D11">live</text>
+        <text x="164" y="132" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">question, answer_tally</text>
+        <path d="M84 150v26" stroke="#A0A8B3" stroke-width="1.5"/><rect x="24" y="176" width="120" height="48" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+        <text x="40" y="206" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">results</text>
+        <text x="164" y="206" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">question_result</text>
+        <path d="M84 224v26" stroke="#A0A8B3" stroke-width="1.5"/><rect x="24" y="250" width="120" height="48" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+        <text x="40" y="280" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">finished</text>
+        <text x="164" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">game_over</text>
+        
+    <path d="M144 190 C 200 190, 200 120, 144 120" stroke="#FF8E7A" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/>
+    <text x="206" y="160" font-family="Fragment Mono, monospace" font-size="12" fill="#FF8E7A">next_question</text></svg></div>
+  <figcaption class="frame-strip"><span>game.Status</span><span>states</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">func</span> <span class="t-f">generateRoomCode</span>() <span class="t-t">string</span> {</span><span class="ln">    <span class="t-k">const</span> chars = <span class="t-s">&quot;ABCDEFGHJKLMNPQRSTUVWXYZ23456789&quot;</span> <span class="t-c">// no O/0/I/1 to avoid confusion</span></span><span class="ln">    b := <span class="t-f">make</span>([]<span class="t-t">byte</span>, <span class="t-n">4</span>)</span><span class="ln">    <span class="t-k">for</span> i := <span class="t-k">range</span> b {</span><span class="ln">        b[i] = chars[rand.<span class="t-t">Intn</span>(<span class="t-f">len</span>(chars))]</span><span class="ln">    }</span><span class="ln">    <span class="t-k">return</span> <span class="t-t">string</span>(b)</span><span class="ln">}</span></pre></div>
+  <figcaption class="frame-strip"><span>game.go</span><span>go</span></figcaption>
+</figure></div>
+  <div class="strip-caption">
+    <h3><a class="strip-name" href="projects/livequiz/" style="view-transition-name: t-livequiz"><span class="dot" aria-hidden="true"></span>LiveQuiz</a></h3>
+    <p class="strip-desc">Kahoot-style multiplayer trivia. A host shares a four-character room code and everyone sees the same question, clock and leaderboard at the same moment.</p>
+    <p class="strip-meta">Go, Redis, WebSockets</p>
+  </div>
+</article><article class="strip tone-teal" data-strip data-kind="ml web">
+  <div class="strip-frames" aria-hidden="true"><figure class="frame tone-teal " style="--ratio:23 / 12">
+  <div class="frame-body"><img src="assets/img/green-home/architecture.webp" alt="Architecture of the Green Home Score engine: data foundation, models, core engine, LLM layer and product." loading="lazy" decoding="async" style="object-position:0% 40%"></div>
+  <figcaption class="frame-strip"><span>docs/architecture.png</span><span>diagram</span></figcaption>
+</figure><figure class="frame tone-teal " style="--ratio:4 / 5" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The seven UK EPC bands from A to G with their SAP point ranges."><rect width="400" height="500" fill="#13161C"/><path d="M24 34h150l22 24-22 24H24z" fill="#008054"/>
+    <text x="38" y="65" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">A</text>
+    <text x="162" y="64" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 92+</text><path d="M24 96h184l22 24-22 24H24z" fill="#19B459"/>
+    <text x="38" y="127" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">B</text>
+    <text x="196" y="126" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 81–91</text><path d="M24 158h218l22 24-22 24H24z" fill="#8DCE46"/>
+    <text x="38" y="189" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">C</text>
+    <text x="230" y="188" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 69–80</text><path d="M24 220h252l22 24-22 24H24z" fill="#FFD500"/>
+    <text x="38" y="251" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">D</text>
+    <text x="264" y="250" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 55–68</text><path d="M24 282h286l22 24-22 24H24z" fill="#FCAA65"/>
+    <text x="38" y="313" fill="#0B0D11" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">E</text>
+    <text x="298" y="312" fill="#0B0D11" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 39–54</text><path d="M24 344h320l22 24-22 24H24z" fill="#EF8023"/>
+    <text x="38" y="375" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">F</text>
+    <text x="332" y="374" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 21–38</text><path d="M24 406h354l22 24-22 24H24z" fill="#E9153B"/>
+    <text x="38" y="437" fill="#FFFFFF" font-size="17" font-family="Mona Sans, sans-serif" font-weight="600">G</text>
+    <text x="366" y="436" fill="#FFFFFF" font-size="13" text-anchor="end" font-family="Fragment Mono, monospace">SAP 1–20</text></svg></div>
+  <figcaption class="frame-strip"><span>EnergyRating</span><span>A–G</span></figcaption>
+</figure><figure class="frame tone-teal " style="--ratio:16 / 9">
+  <div class="frame-body"><img src="assets/img/green-home/retrofit-gain.webp" alt="Observed median SAP gain from single-change repeat EPCs: solid wall insulation adds the most, smart thermostats the least." loading="lazy" decoding="async" style="object-position:0% 50%"></div>
+  <figcaption class="frame-strip"><span>retrofit_delta_sap.png</span><span>plot</span></figcaption>
+</figure><figure class="frame tone-teal " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">def</span> <span class="t-f">check</span>(text: <span class="t-t">str</span>, sheet: <span class="t-t">FactSheet</span>, *, extra_allowed: <span class="t-t">list</span>[<span class="t-t">Fact</span>] | <span class="t-k">None</span> = <span class="t-k">None</span>) -&gt; <span class="t-t">CheckReport</span>:</span><span class="ln">    <span class="t-c"># ...</span></span><span class="ln">    allowed = <span class="t-f">_allowed</span>(sheet, <span class="t-t">list</span>(extra_allowed <span class="t-k">or</span> []))</span><span class="ln">    found: <span class="t-t">list</span>[<span class="t-t">str</span>] = []</span><span class="ln">    unsupported: <span class="t-t">list</span>[<span class="t-t">str</span>] = []</span><span class="ln">    <span class="t-k">for</span> m <span class="t-k">in</span> <span class="t-f">extract_numbers</span>(text):</span><span class="ln">        found.<span class="t-f">append</span>(m.raw)</span><span class="ln">        hits = <span class="t-f">_matches</span>(m, allowed) <span class="t-k">or</span> (<span class="t-f">_hedged</span>(m, text) <span class="t-k">and</span> <span class="t-f">_matches</span>(m, allowed, approx=<span class="t-k">True</span>))</span><span class="ln">        <span class="t-k">if</span> <span class="t-k">not</span> hits:</span><span class="ln">            <span class="t-k">if</span> <span class="t-k">not</span> <span class="t-f">_structural</span>(m, text):</span><span class="ln">                unsupported.<span class="t-f">append</span>(m.raw)</span><span class="ln">            <span class="t-k">continue</span></span><span class="ln">        <span class="t-k">if</span> <span class="t-f">all</span>(h.direction == <span class="t-s">&quot;up&quot;</span> <span class="t-k">for</span> h <span class="t-k">in</span> hits) <span class="t-k">and</span> <span class="t-k">not</span> <span class="t-f">_direction_ok</span>(text, m.span):</span><span class="ln">            unsupported.<span class="t-f">append</span>(f<span class="t-s">&quot;{m.raw} (direction)&quot;</span>)</span><span class="ln">        <span class="t-k">elif</span> <span class="t-f">all</span>(h.direction == <span class="t-s">&quot;down&quot;</span> <span class="t-k">for</span> h <span class="t-k">in</span> hits) <span class="t-k">and</span> <span class="t-k">not</span> <span class="t-f">_direction_ok</span>(text, m.span, <span class="t-s">&quot;down&quot;</span>):</span><span class="ln">            unsupported.<span class="t-f">append</span>(f<span class="t-s">&quot;{m.raw} (saving)&quot;</span>)</span></pre></div>
+  <figcaption class="frame-strip"><span>llm/checker.py</span><span>python</span></figcaption>
+</figure><figure class="frame tone-teal " style="--ratio:2 / 1">
+  <div class="frame-body"><img src="assets/img/green-home/band-mix.webp" alt="Bar chart of EPC band mix in the product sample against England and Wales." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>band_mix.png</span><span>plot</span></figcaption>
+</figure></div>
+  <div class="strip-caption">
+    <h3><a class="strip-name" href="projects/green-home-score/" style="view-transition-name: t-green-home-score"><span class="dot" aria-hidden="true"></span>Green Home Score</a></h3>
+    <p class="strip-desc">Scores how energy-efficient a UK home is and which retrofits are worth it, from models trained on 2.9 million real certificates. Team 37 at Megathon X, for Lloyds.</p>
+    <p class="strip-meta">LightGBM, FastAPI, LLM<br>Oct 2026</p>
+  </div>
+</article><article class="strip tone-amber" data-strip data-kind="ml">
+  <div class="strip-frames" aria-hidden="true"><figure class="frame tone-amber " style="--ratio:16 / 9">
+  <div class="frame-body"><video muted loop playsinline preload="none" poster="assets/video/garbage-phone-poster.webp" aria-label="The Android app on a QIDK device segmenting a photo and reporting waste coverage and NPU timings." data-loop><source src="assets/video/garbage-phone.mp4" type="video/mp4"></video></div>
+  <figcaption class="frame-strip"><span>Demos/demo.mp4</span><span>video</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:16 / 9">
+  <div class="frame-body"><img src="assets/img/garbage/annotated-street.webp" alt="A CCTV frame of a roadside dump annotated into waste, person and animal masks." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>annotation</span><span>CCTV</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:4 / 5">
+  <div class="frame-body"><img src="assets/img/garbage/campus-deployment.webp" alt="The model's green waste masks over a dump on the IIIT Hyderabad campus during the field test." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>field test</span><span>photo</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln">        <span class="t-k">for</span> (i <span class="t-k">in</span> <span class="t-n">0</span> <span class="t-k">until</span> <span class="t-n">8400</span>) {</span><span class="ln">            <span class="t-k">val</span> x = detections[<span class="t-n">0</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln">            <span class="t-k">val</span> y = detections[<span class="t-n">1</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln">            <span class="t-k">val</span> w = detections[<span class="t-n">2</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln">            <span class="t-k">val</span> h = detections[<span class="t-n">3</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln"> </span><span class="ln">            <span class="t-k">var</span> maxScore = -<span class="t-n">1.0f</span></span><span class="ln">            <span class="t-k">var</span> classId = -<span class="t-n">1</span></span><span class="ln">            <span class="t-k">for</span> (j <span class="t-k">in</span> <span class="t-n">0</span> <span class="t-k">until</span> numClasses) {</span><span class="ln">                <span class="t-k">val</span> score = detections[<span class="t-n">4</span> + j][i]</span><span class="ln">                <span class="t-k">if</span> (score &gt; maxScore) {</span><span class="ln">                    maxScore = score</span><span class="ln">                    classId = j</span><span class="ln">                }</span><span class="ln">            }</span><span class="ln"> </span><span class="ln">            <span class="t-k">if</span> (maxScore &gt; confidenceThreshold) {</span><span class="ln">                <span class="t-k">val</span> maskCoeffs = <span class="t-t">FloatArray</span>(numCoefficients) { k -&gt; detections[<span class="t-n">4</span> + numClasses + k][i] }</span><span class="ln">                detectedObjects.<span class="t-f">add</span>(<span class="t-t">Detection</span>(x, y, w, h, maxScore, classId, maskCoeffs))</span></pre></div>
+  <figcaption class="frame-strip"><span>SegmentationHelper.kt</span><span>kotlin</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:3 / 2">
+  <div class="frame-body"><img src="assets/img/garbage/qidk-phones.webp" alt="Two Qualcomm QIDK devices running the segmentation app side by side." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>QIDK v1 · v2</span><span>photo</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:4 / 3">
+  <div class="frame-body"><img src="assets/img/garbage/yolo-confusion.webp" alt="Normalised confusion matrix for YOLO11s-seg across animal, waste, person and background." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>confusion_matrix</span><span>plot</span></figcaption>
+</figure></div>
+  <div class="strip-caption">
+    <h3><a class="strip-name" href="projects/garbage-monitoring/" style="view-transition-name: t-garbage-monitoring"><span class="dot" aria-hidden="true"></span>Garbage monitoring on the edge</a></h3>
+    <p class="strip-desc">Segments waste, people and animals in CCTV frames on a Qualcomm dev kit, then measures how much of the street is covered. A four-person team project, followed by a separate comparison of two segmentation models.</p>
+    <p class="strip-meta">YOLO, Android, Qualcomm<br>Nov 2025</p>
+  </div>
+</article><article class="strip tone-rose" data-strip data-kind="systems">
+  <div class="strip-frames" aria-hidden="true"><figure class="frame tone-rose " style="--ratio:3 / 4" data-ui>
+  <div class="frame-body"><pre class="code frame-code frame-text" aria-hidden="true"><span class="ln"><span class="t-c">// src/parser.c, recursive descent</span></span><span class="ln"> </span><span class="ln"><span class="t-k">shell_cmd</span> := cmd_group</span><span class="ln">   ((<span class="t-s">';'</span> | <span class="t-s">'&amp;'</span>) cmd_group)*</span><span class="ln">   <span class="t-s">'&amp;'</span>?</span><span class="ln"> </span><span class="ln"><span class="t-k">cmd_group</span> := atomic (<span class="t-s">'|'</span> atomic)*</span><span class="ln"> </span><span class="ln"><span class="t-k">atomic</span> := name</span><span class="ln">   (name | input | output)*</span><span class="ln"> </span><span class="ln"><span class="t-k">input</span>  := <span class="t-s">'&lt;'</span> name</span><span class="ln"><span class="t-k">output</span> := (<span class="t-s">'&gt;'</span> | <span class="t-s">'&gt;&gt;'</span>) name</span></pre></div>
+  <figcaption class="frame-strip"><span>parser.c</span><span>grammar</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:1 / 1" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 420 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Layout of an Ethernet, IPv4 and TCP frame with the byte offsets C-Shark labels for each field."><rect width="420" height="420" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">bytes of one frame</text>
+    <rect x="24" y="56" width="10" height="76" fill="#F48FC8"/>
+        <text x="48" y="74" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">Ethernet II</text>
+        <text x="396" y="74" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0–13</text>
+        <text x="48" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst MAC 0–5</text><text x="218" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src MAC 6–11</text><text x="48" y="122" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">EtherType 12–13</text><rect x="24" y="146" width="10" height="76" fill="#7AA2FF"/>
+        <text x="48" y="164" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">IPv4</text>
+        <text x="396" y="164" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">14–33</text>
+        <text x="48" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">TTL 22</text><text x="218" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">protocol 23</text><text x="48" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src IP 26–29</text><text x="218" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst IP 30–33</text><rect x="24" y="236" width="10" height="76" fill="#4FDDC0"/>
+        <text x="48" y="254" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">TCP</text>
+        <text x="396" y="254" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">34–53</text>
+        <text x="48" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">ports 34–37</text><text x="218" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">seq 38–41</text><text x="48" y="302" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">flags 47</text><rect x="24" y="326" width="10" height="76" fill="#FFC15E"/>
+        <text x="48" y="344" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">payload</text>
+        <text x="396" y="344" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">54–…</text>
+        <text x="48" y="370" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">first 64 bytes as hex</text></svg></div>
+  <figcaption class="frame-strip"><span>inspect_packet</span><span>offsets</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln">        <span class="t-k">if</span> (pids[i] == <span class="t-n">0</span>)</span><span class="ln">        {</span><span class="ln">            <span class="t-c">// Child process - set up pipes</span></span><span class="ln">            <span class="t-k">if</span> (i &gt; <span class="t-n">0</span>)</span><span class="ln">            {</span><span class="ln">                <span class="t-f">dup2</span>(pipes[i - <span class="t-n">1</span>][<span class="t-n">0</span>], <span class="t-t">STDIN_FILENO</span>);</span><span class="ln">                <span class="t-f">close</span>(pipes[i - <span class="t-n">1</span>][<span class="t-n">0</span>]);</span><span class="ln">                <span class="t-f">close</span>(pipes[i - <span class="t-n">1</span>][<span class="t-n">1</span>]);</span><span class="ln">            }</span><span class="ln">            <span class="t-k">if</span> (i &lt; pipe_count)</span><span class="ln">            {</span><span class="ln">                <span class="t-f">dup2</span>(pipes[i][<span class="t-n">1</span>], <span class="t-t">STDOUT_FILENO</span>);</span><span class="ln">                <span class="t-f">close</span>(pipes[i][<span class="t-n">0</span>]);</span><span class="ln">                <span class="t-f">close</span>(pipes[i][<span class="t-n">1</span>]);</span><span class="ln">            }</span><span class="ln">            <span class="t-k">for</span> (<span class="t-k">int</span> k = <span class="t-n">0</span>; k &lt; pipe_count; k++)</span></pre></div>
+  <figcaption class="frame-strip"><span>pipeline.c</span><span>c</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code frame-text " aria-hidden="true"><span class="ln">========================================</span><span class="ln">Packet #1 | Length: 74 bytes | Timestamp: 2026-01-17 15:23:45</span><span class="ln">========================================</span><span class="ln">EtherType: IPv4 (0x0800)</span><span class="ln">Src MAC: aa:bb:cc:dd:ee:ff | Dst MAC: 11:22:33:44:55:66</span><span class="ln">Src IP: 192.168.1.100 | Dst IP: 142.250.185.46 | Protocol: TCP (6)</span><span class="ln">TTL: 64</span><span class="ln">ID: 0x4A2F | Total Length: 60 | Header Length: 20 bytes</span><span class="ln">Src Port: 54321 | Dst Port: 443 (HTTPS) | Seq: 1234567890 | Ack: 987654321</span></pre></div>
+  <figcaption class="frame-strip"><span>README example</span><span>output</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln">    <span class="t-k">if</span> (protocol == <span class="t-n">6</span>) {  <span class="t-c">// TCP</span></span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> src_port = (segment[<span class="t-n">0</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">1</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> dst_port = (segment[<span class="t-n">2</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">3</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">int</span> seq = (segment[<span class="t-n">4</span>] &lt;&lt; <span class="t-n">24</span>) | (segment[<span class="t-n">5</span>] &lt;&lt; <span class="t-n">16</span>) | (segment[<span class="t-n">6</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">7</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">int</span> ack = (segment[<span class="t-n">8</span>] &lt;&lt; <span class="t-n">24</span>) | (segment[<span class="t-n">9</span>] &lt;&lt; <span class="t-n">16</span>) | (segment[<span class="t-n">10</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">11</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">char</span> offset_reserved = segment[<span class="t-n">12</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">char</span> flags = segment[<span class="t-n">13</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> window = (segment[<span class="t-n">14</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">15</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> checksum = (segment[<span class="t-n">16</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">17</span>];</span><span class="ln"> </span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">int</span> header_len = ((offset_reserved &gt;&gt; <span class="t-n">4</span>) &amp; <span class="t-n">0xF</span>) * <span class="t-n">4</span>;</span></pre></div>
+  <figcaption class="frame-strip"><span>sniffer.c</span><span>c</span></figcaption>
+</figure></div>
+  <div class="strip-caption">
+    <h3><a class="strip-name" href="projects/c-shell-c-shark/" style="view-transition-name: t-c-shell-c-shark"><span class="dot" aria-hidden="true"></span>C-Shell and C-Shark</a></h3>
+    <p class="strip-desc">Two tools for seeing a machine from the inside: a Unix shell with pipes and job control, and a Wireshark-style sniffer that decodes packets layer by layer.</p>
+    <p class="strip-meta">C, POSIX, libpcap</p>
+  </div>
+</article><article class="strip tone-violet" data-strip data-kind="web">
+  <div class="strip-frames" aria-hidden="true"><figure class="frame tone-violet " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 480 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Merchandise payment approval: a pending order is approved with an atomic stock decrement, or rejected."><rect width="480" height="360" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace" font-size="13">
+    <rect x="20" y="24" width="440" height="58" rx="4" fill="#1B1F27" stroke="#B49BFF"/>
+    <text x="36" y="50" fill="#EDF0F3">participant uploads payment proof</text>
+    <text x="36" y="70" fill="#A0A8B3">Pending / Pending</text>
+    <path d="M240 82v40" stroke="#A0A8B3" stroke-width="1.5"/>
+    <rect x="20" y="122" width="440" height="58" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+    <text x="36" y="148" fill="#EDF0F3">organizer opens Pending Payments</text>
+    <text x="36" y="168" fill="#A0A8B3">approve or reject</text>
+    <path d="M130 180v44M350 180v44" stroke="#A0A8B3" stroke-width="1.5"/>
+    <rect x="20" y="224" width="220" height="112" rx="4" fill="#B49BFF"/>
+    <text x="34" y="250" fill="#0B0D11">approve</text>
+    <text x="34" y="276" fill="#0B0D11">$inc stock −1</text>
+    <text x="34" y="296" fill="#0B0D11">where stock &gt; 0</text>
+    <text x="34" y="322" fill="#0B0D11">→ Registered + QR</text>
+    <rect x="250" y="224" width="210" height="112" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+    <text x="264" y="250" fill="#EDF0F3">reject</text>
+    <text x="264" y="276" fill="#A0A8B3">Cancelled</text>
+    <text x="264" y="296" fill="#A0A8B3">/ Rejected</text>
+    <text x="264" y="322" fill="#A0A8B3">stock untouched</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>approve-payment</span><span>flow</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln">    <span class="t-k">const</span> selectedVariant = registration.registrationData?.selectedVariant;</span><span class="ln">    <span class="t-k">if</span> (registration.event.eventType === <span class="t-s">&quot;MERCH&quot;</span> &amp;&amp; selectedVariant) {</span><span class="ln">      <span class="t-k">const</span> updateResult = <span class="t-k">await</span> <span class="t-t">Event</span>.<span class="t-f">updateOne</span>(</span><span class="ln">        { _id: registration.event._id, <span class="t-s">&quot;merchandiseVariants.name&quot;</span>: selectedVariant, <span class="t-s">&quot;merchandiseVariants.stock&quot;</span>: { $gt: <span class="t-n">0</span> } },</span><span class="ln">        { $inc: { <span class="t-s">&quot;merchandiseVariants.$.stock&quot;</span>: -<span class="t-n">1</span> } }</span><span class="ln">      );</span><span class="ln">      <span class="t-k">if</span> (updateResult.modifiedCount === <span class="t-n">0</span>) {</span><span class="ln">        <span class="t-k">return</span> res.<span class="t-f">status</span>(<span class="t-n">400</span>).<span class="t-f">json</span>({ message: <span class="t-s">`Variant &quot;${selectedVariant}&quot; is now out of stock. Cannot approve.`</span> });</span><span class="ln">      }</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-c">// Update registration</span></span><span class="ln">    registration.participationStatus = <span class="t-s">&quot;Registered&quot;</span>;</span><span class="ln">    registration.paymentStatus = <span class="t-s">&quot;Approved&quot;</span>;</span><span class="ln">    <span class="t-k">await</span> registration.<span class="t-f">save</span>();</span></pre></div>
+  <figcaption class="frame-strip"><span>registration.controller.js</span><span>js</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:16 / 9" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 480 280" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A ticket drawing showing how ticket IDs are built from the event name, a timestamp and random digits."><rect width="480" height="280" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace">
+    <rect x="20" y="40" width="440" height="200" rx="6" fill="#EDF0F3"/>
+    <circle cx="20" cy="140" r="16" fill="#13161C"/><circle cx="460" cy="140" r="16" fill="#13161C"/>
+    <path d="M330 52v176" stroke="#0B0D11" stroke-dasharray="4 6" opacity=".35"/>
+    <text x="44" y="84" font-size="13" fill="#4A5058">ticketId</text>
+    <text x="44" y="128" font-size="30" fill="#0B0D11" letter-spacing="-1">FEL-482913-0571</text>
+    <text x="44" y="168" font-size="13" fill="#4A5058">event name, first 3 letters</text>
+    <text x="44" y="188" font-size="13" fill="#4A5058">last 6 digits of Date.now()</text>
+    <text x="44" y="208" font-size="13" fill="#4A5058">4 random digits</text>
+    <text x="352" y="128" font-size="13" fill="#4A5058">QR of</text><text x="352" y="148" font-size="13" fill="#4A5058">the ticketId,</text><text x="352" y="168" font-size="13" fill="#4A5058">sent by email</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>ticketId</span><span>format</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 500 370" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The three roles, admin, organizer and participant, and what each can do."><rect width="500" height="370" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace" font-size="13">
+    
+      <rect x="20" y="28" width="148" height="300" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+      <text x="34" y="56" fill="#EDF0F3">ADMIN</text>
+      <text x="34" y="104" fill="#A0A8B3">create organizers</text><text x="34" y="122" fill="#A0A8B3"></text><text x="34" y="158" fill="#A0A8B3">approve password</text><text x="34" y="176" fill="#A0A8B3">resets</text><text x="34" y="212" fill="#A0A8B3">disable accounts</text><text x="34" y="230" fill="#A0A8B3"></text>
+    
+      <rect x="176" y="28" width="148" height="300" rx="4" fill="#B49BFF" />
+      <text x="190" y="56" fill="#0B0D11">ORGANIZER</text>
+      <text x="190" y="104" fill="#0B0D11">draft and</text><text x="190" y="122" fill="#0B0D11">publish events</text><text x="190" y="158" fill="#0B0D11">approve payments</text><text x="190" y="176" fill="#0B0D11"></text><text x="190" y="212" fill="#0B0D11">scan QR</text><text x="190" y="230" fill="#0B0D11">tickets</text>
+    
+      <rect x="332" y="28" width="148" height="300" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+      <text x="346" y="56" fill="#EDF0F3">PARTICIPANT</text>
+      <text x="346" y="104" fill="#A0A8B3">register and</text><text x="346" y="122" fill="#A0A8B3">pay</text><text x="346" y="158" fill="#A0A8B3">follow organizers</text><text x="346" y="176" fill="#A0A8B3"></text><text x="346" y="212" fill="#A0A8B3">post in</text><text x="346" y="230" fill="#A0A8B3">the forum</text>
+    
+    <text x="20" y="352" fill="#A0A8B3">require* middleware on every route</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>auth.middleware.js</span><span>roles</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-k">if</span> (registration.attendanceMarked) {</span><span class="ln">      <span class="t-k">return</span> res.<span class="t-f">status</span>(<span class="t-n">400</span>).<span class="t-f">json</span>({</span><span class="ln">        message: <span class="t-s">&quot;Ticket already scanned!&quot;</span>,</span><span class="ln">        scannedAt: registration.attendedAt,</span><span class="ln">        participant: registration.participant</span><span class="ln">      });</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    registration.attendanceMarked = <span class="t-k">true</span>;</span><span class="ln">    registration.attendedAt = <span class="t-k">new</span> <span class="t-t">Date</span>();</span><span class="ln">    registration.scannedBy = organizerId;</span><span class="ln">    <span class="t-k">await</span> registration.<span class="t-f">save</span>();</span></pre></div>
+  <figcaption class="frame-strip"><span>scan ticket</span><span>js</span></figcaption>
+</figure></div>
+  <div class="strip-caption">
+    <h3><a class="strip-name" href="projects/event-platform/" style="view-transition-name: t-event-platform"><span class="dot" aria-hidden="true"></span>Felicity event platform</a></h3>
+    <p class="strip-desc">Runs college club events end to end: registration, merchandise with payment approval, QR check-in at the door and a forum for each event.</p>
+    <p class="strip-meta">MongoDB, Express, React<br>Feb 2026</p>
+  </div>
+</article>
+    <div class="smaller" data-reveal-group>
+      <h3 class="smaller-title" data-reveal>Smaller things, on GitHub</h3>
+      <a class="tone-blue" href="https://github.com/krithikkambhampati/3D-Car-Scene" target="_blank" rel="noopener" data-reveal="row">
+        <b>3D car scene</b>
+        <span>A drivable car in an OpenGL 3.3 city with headlights, a thunderstorm mode and five camera views. C++17.</span>
+        <em>Source on GitHub</em>
+      </a><a class="tone-amber" href="https://github.com/krithikkambhampati/AAD_Fireflies" target="_blank" rel="noopener" data-reveal="row">
+        <b>Pattern matching on a genome</b>
+        <span>Nine exact and fuzzy matchers, from KMP to Ukkonen's suffix tree, benchmarked on the 4.6 million-base E. coli genome.</span>
+        <em>Source on GitHub</em>
+      </a><a class="tone-teal" href="https://github.com/krithikkambhampati/Meta-F-A-M-I-L-Y" target="_blank" rel="noopener" data-reveal="row">
+        <b>Family knowledge graph</b>
+        <span>Community detection, rule mining and TransE link prediction on 1,316 people and 13,821 relations.</span>
+        <em>Source on GitHub</em>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="record" id="record" aria-labelledby="record-title">
+  <div class="record-row" data-reveal-group>
+    <h2 class="record-title" id="record-title" data-reveal>About me</h2>
+    <dl class="facts" data-reveal>
+      <div><dt>Based in</dt><dd>Hyderabad, India</dd></div>
+      <div><dt>Studying</dt><dd>Computer science, IIIT Hyderabad</dd></div>
+      <div><dt>Graduating</dt><dd>2028</dd></div>
+      <div><dt>CGPA</dt><dd>8.84</dd></div>
+    </dl>
+    <div>
+      <p class="record-para" data-reveal>I like the parts of software where many things happen at once and still have to agree afterwards: two clients writing the same file, a room of phones answering in the same second, a model whose numbers a language model must not make up.</p>
+      <p class="record-para" data-reveal>Right now I'm an undergraduate researcher at Precog, working on how large language models can forget chosen training data and keep everything else.</p>
+    </div>
+  </div>
+  <div class="record-row" data-reveal-group>
+    <p class="record-word" data-reveal>Record</p>
+    <div class="record-lists">
+      <div class="record-list" data-reveal>
+        <h3>Research and work</h3>
+        <ul>
+          <li><b>Undergraduate researcher, Precog</b><span class="yr">Apr 2026 to now</span>
+            <span class="sub">IIIT Hyderabad, with Prof. Ponnurangam Kumaraguru</span>
+            <p>Curriculum unlearning in LLMs: making a model forget chosen data while keeping its general abilities, compared across three curricula.</p></li>
+          <li><b>Software developer, industry collaboration</b><span class="yr">Jan to Apr 2026</span>
+            <span class="sub">Centre for Digital Technologies in Healthcare, IIIT Hyderabad</span>
+            <p>An LLM pipeline that classifies cancer risk from about 2,000 patient reports, comparing OpenAI, Gemini and Anthropic models and three prompting strategies.</p></li>
         </ul>
       </div>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-date">Jan 2026 — Apr 2026</div>
-      <div>
-        <div class="exp-role">Software Developer, Industry Collaboration</div>
-        <div class="exp-org">Centre for Digital Technologies in Healthcare, IIIT Hyderabad</div>
-        <ul class="exp-desc">
-          <li>Designed a Python-based LLM pipeline to classify cancer risk from ~2,000 patient reports, evaluating models across OpenAI, Gemini, and Anthropic providers.</li>
-          <li>Benchmarked 3 prompting strategies, comparing models on accuracy, consistency, and robustness across clinical text inputs.</li>
+      <div class="record-list" data-reveal>
+        <h3>Team projects and hackathons</h3>
+        <ul>
+          <li><b>Megathon X, Team 37</b><span class="yr">Oct 2026</span>
+            <span class="sub">Green Home Score, for a problem statement set by Lloyds</span></li>
+          <li><b>Qualcomm QIDK project, Team Phoenix</b><span class="yr">Nov 2025</span>
+            <span class="sub">Garbage monitoring on the edge, advised by Dr. Sachin Chaudari</span></li>
+          <li><b>Coursework</b><span class="yr">IIIT Hyderabad</span>
+            <span class="sub">Data structures and algorithms, operating systems and networks, databases, machine learning, software systems</span></li>
         </ul>
       </div>
+      <dl class="tools" data-reveal>
+        <div><dt>Languages</dt><dd>C, C++, Go, Python, JavaScript, TypeScript</dd></div>
+        <div><dt>Backend and web</dt><dd>FastAPI, Node.js, Express, React, WebSockets</dd></div>
+        <div><dt>Data and ML</dt><dd>PyTorch, YOLO, LightGBM, NumPy, Pandas</dd></div>
+        <div><dt>Databases</dt><dd>PostgreSQL, MySQL, MongoDB, Redis</dd></div>
+      </dl>
     </div>
   </div>
 </section>
-
-<section class="block" id="projects">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="section-title">Projects</h2>
-      <span class="section-index">6 REPOS · CLICK TO EXPAND</span>
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="contact-strip" data-drift aria-hidden="true"><figure class="frame tone-amber " style="--ratio:16 / 9">
+  <div class="frame-body"><video muted loop playsinline preload="none" poster="assets/video/garbage-phone-poster.webp" aria-label="The Android app on a QIDK device segmenting a photo and reporting waste coverage and NPU timings." data-loop><source src="assets/video/garbage-phone.mp4" type="video/mp4"></video></div>
+  <figcaption class="frame-strip"><span>Demos/demo.mp4</span><span>video</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:16 / 9">
+  <div class="frame-body"><img src="assets/img/garbage/annotated-street.webp" alt="A CCTV frame of a roadside dump annotated into waste, person and animal masks." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>annotation</span><span>CCTV</span></figcaption>
+</figure><figure class="frame tone-blue " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><pre class="code frame-code" aria-hidden="true"><span class="ln"><span class="t-k">int</span> <span class="t-f">lock_sentence</span>(<span class="t-k">const</span> <span class="t-k">char</span>* filename, <span class="t-k">int</span> sentence_index, <span class="t-k">const</span> <span class="t-k">char</span>* username) {</span><span class="ln">    <span class="t-t">pthread_mutex_lock</span>(&amp;list_mutex);</span><span class="ln">    </span><span class="ln">    <span class="t-t">SentenceLock</span>* lock = <span class="t-f">find_or_create_lock</span>(filename, sentence_index);</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (lock-&gt;is_locked) {</span><span class="ln">        <span class="t-t">pthread_mutex_unlock</span>(&amp;list_mutex);</span><span class="ln">        <span class="t-f">log_message</span>(<span class="t-t">LOG_LEVEL_WARNING</span>, <span class="t-s">&quot;Sentence %d in %s already locked by %s&quot;</span>,</span><span class="ln">                   sentence_index, filename, lock-&gt;locked_by);</span><span class="ln">        <span class="t-k">return</span> -<span class="t-n">1</span>;</span><span class="ln">    }</span><span class="ln">    </span><span class="ln">    lock-&gt;is_locked = <span class="t-k">true</span>;</span><span class="ln">    <span class="t-f">strncpy</span>(lock-&gt;locked_by, username, <span class="t-k">sizeof</span>(lock-&gt;locked_by) - <span class="t-n">1</span>);</span></pre></div>
+  <figcaption class="frame-strip"><span>sentence_lock.c</span><span>c</span></figcaption>
+</figure><figure class="frame tone-teal " style="--ratio:2 / 1">
+  <div class="frame-body"><img src="assets/img/green-home/band-mix.webp" alt="Bar chart of EPC band mix in the product sample against England and Wales." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>band_mix.png</span><span>plot</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:9 / 10" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 360 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A four-character room code, drawn from 32 characters that leave out O, 0, I and 1."><rect width="360" height="400" fill="#13161C"/>
+    <text x="24" y="44" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">join with a room code</text>
+    <rect x="24" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="59" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">K</text><rect x="104" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="139" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">7</text><rect x="184" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="219" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">Q</text><rect x="264" y="66" width="70" height="104" rx="4" fill="#FF8E7A"/><text x="299" y="140" text-anchor="middle" font-family="Mona Sans, sans-serif" font-weight="600" font-size="58" fill="#0B0D11">X</text>
+    <text x="24" y="214" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">32 characters, never O 0 I 1</text>
+    <text x="34" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">A</text><text x="71" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">B</text><text x="108" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">C</text><text x="145" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">D</text><text x="182" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">E</text><text x="219" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">F</text><text x="256" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">G</text><text x="293" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">H</text><text x="330" y="268" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">I</text><path d="M320 262h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">J</text><text x="71" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">K</text><text x="108" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">L</text><text x="145" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">M</text><text x="182" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">N</text><text x="219" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">O</text><path d="M209 296h20" stroke="#FF8E7A" stroke-width="2"/><text x="256" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">P</text><text x="293" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Q</text><text x="330" y="302" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">R</text><text x="34" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">S</text><text x="71" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">T</text><text x="108" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">U</text><text x="145" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">V</text><text x="182" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">W</text><text x="219" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">X</text><text x="256" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Y</text><text x="293" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">Z</text><text x="330" y="336" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">0</text><path d="M320 330h20" stroke="#FF8E7A" stroke-width="2"/><text x="34" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#FF8E7A">1</text><path d="M24 364h20" stroke="#FF8E7A" stroke-width="2"/><text x="71" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">2</text><text x="108" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">3</text><text x="145" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">4</text><text x="182" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">5</text><text x="219" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">6</text><text x="256" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">7</text><text x="293" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">8</text><text x="330" y="370" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="17" fill="#A0A8B3">9</text></svg></div>
+  <figcaption class="frame-strip"><span>generateRoomCode</span><span>go</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:16 / 9" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 480 280" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A ticket drawing showing how ticket IDs are built from the event name, a timestamp and random digits."><rect width="480" height="280" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace">
+    <rect x="20" y="40" width="440" height="200" rx="6" fill="#EDF0F3"/>
+    <circle cx="20" cy="140" r="16" fill="#13161C"/><circle cx="460" cy="140" r="16" fill="#13161C"/>
+    <path d="M330 52v176" stroke="#0B0D11" stroke-dasharray="4 6" opacity=".35"/>
+    <text x="44" y="84" font-size="13" fill="#4A5058">ticketId</text>
+    <text x="44" y="128" font-size="30" fill="#0B0D11" letter-spacing="-1">FEL-482913-0571</text>
+    <text x="44" y="168" font-size="13" fill="#4A5058">event name, first 3 letters</text>
+    <text x="44" y="188" font-size="13" fill="#4A5058">last 6 digits of Date.now()</text>
+    <text x="44" y="208" font-size="13" fill="#4A5058">4 random digits</text>
+    <text x="352" y="128" font-size="13" fill="#4A5058">QR of</text><text x="352" y="148" font-size="13" fill="#4A5058">the ticketId,</text><text x="352" y="168" font-size="13" fill="#4A5058">sent by email</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>ticketId</span><span>format</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:1 / 1" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 420 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Layout of an Ethernet, IPv4 and TCP frame with the byte offsets C-Shark labels for each field."><rect width="420" height="420" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">bytes of one frame</text>
+    <rect x="24" y="56" width="10" height="76" fill="#F48FC8"/>
+        <text x="48" y="74" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">Ethernet II</text>
+        <text x="396" y="74" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0–13</text>
+        <text x="48" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst MAC 0–5</text><text x="218" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src MAC 6–11</text><text x="48" y="122" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">EtherType 12–13</text><rect x="24" y="146" width="10" height="76" fill="#7AA2FF"/>
+        <text x="48" y="164" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">IPv4</text>
+        <text x="396" y="164" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">14–33</text>
+        <text x="48" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">TTL 22</text><text x="218" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">protocol 23</text><text x="48" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src IP 26–29</text><text x="218" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst IP 30–33</text><rect x="24" y="236" width="10" height="76" fill="#4FDDC0"/>
+        <text x="48" y="254" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">TCP</text>
+        <text x="396" y="254" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">34–53</text>
+        <text x="48" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">ports 34–37</text><text x="218" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">seq 38–41</text><text x="48" y="302" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">flags 47</text><rect x="24" y="326" width="10" height="76" fill="#FFC15E"/>
+        <text x="48" y="344" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">payload</text>
+        <text x="396" y="344" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">54–…</text>
+        <text x="48" y="370" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">first 64 bytes as hex</text></svg></div>
+  <figcaption class="frame-strip"><span>inspect_packet</span><span>offsets</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:3 / 2">
+  <div class="frame-body"><img src="assets/img/garbage/qidk-phones.webp" alt="Two Qualcomm QIDK devices running the segmentation app side by side." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>QIDK v1 · v2</span><span>photo</span></figcaption>
+</figure><figure class="frame tone-teal " style="--ratio:23 / 12">
+  <div class="frame-body"><img src="assets/img/green-home/architecture.webp" alt="Architecture of the Green Home Score engine: data foundation, models, core engine, LLM layer and product." loading="lazy" decoding="async" style="object-position:0% 40%"></div>
+  <figcaption class="frame-strip"><span>docs/architecture.png</span><span>diagram</span></figcaption>
+</figure><figure class="frame tone-rose " style="--ratio:3 / 4" data-ui>
+  <div class="frame-body"><pre class="code frame-code frame-text" aria-hidden="true"><span class="ln"><span class="t-c">// src/parser.c, recursive descent</span></span><span class="ln"> </span><span class="ln"><span class="t-k">shell_cmd</span> := cmd_group</span><span class="ln">   ((<span class="t-s">';'</span> | <span class="t-s">'&amp;'</span>) cmd_group)*</span><span class="ln">   <span class="t-s">'&amp;'</span>?</span><span class="ln"> </span><span class="ln"><span class="t-k">cmd_group</span> := atomic (<span class="t-s">'|'</span> atomic)*</span><span class="ln"> </span><span class="ln"><span class="t-k">atomic</span> := name</span><span class="ln">   (name | input | output)*</span><span class="ln"> </span><span class="ln"><span class="t-k">input</span>  := <span class="t-s">'&lt;'</span> name</span><span class="ln"><span class="t-k">output</span> := (<span class="t-s">'&gt;'</span> | <span class="t-s">'&gt;&gt;'</span>) name</span></pre></div>
+  <figcaption class="frame-strip"><span>parser.c</span><span>grammar</span></figcaption>
+</figure><figure class="frame tone-coral " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 440 340" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Points for a correct answer fall in a straight line from 1000 when instant to 500 at the time limit; wrong answers score 0."><rect width="440" height="340" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#EDF0F3">points for a correct answer</text>
+    <path d="M50 300H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="304" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0</text><path d="M50 180H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="184" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">500</text><path d="M50 60H390" stroke="rgba(237,240,243,.16)"/><text x="42" y="64" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">1000</text>
+    <path d="M50 60L380 180" stroke="#FF8E7A" stroke-width="3"/>
+    <circle cx="50" cy="60" r="5" fill="#FF8E7A"/><circle cx="380" cy="180" r="5" fill="#FF8E7A"/>
+    <path d="M50 300H380" stroke="#A0A8B3" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="215" y="290" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">wrong or no answer: 0</text>
+    <text x="50" y="326" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">instant</text>
+    <text x="380" y="326" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">time limit</text></svg></div>
+  <figcaption class="frame-strip"><span>scoreForAnswer</span><span>1000 → 500</span></figcaption>
+</figure><figure class="frame tone-amber " style="--ratio:4 / 5">
+  <div class="frame-body"><img src="assets/img/garbage/campus-deployment.webp" alt="The model's green waste masks over a dump on the IIIT Hyderabad campus during the field test." loading="lazy" decoding="async" style="object-position:50% 50%"></div>
+  <figcaption class="frame-strip"><span>field test</span><span>photo</span></figcaption>
+</figure><figure class="frame tone-violet " style="--ratio:4 / 3" data-ui>
+  <div class="frame-body"><svg viewBox="0 0 480 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Merchandise payment approval: a pending order is approved with an atomic stock decrement, or rejected."><rect width="480" height="360" fill="#13161C"/>
+  <g font-family="Fragment Mono, monospace" font-size="13">
+    <rect x="20" y="24" width="440" height="58" rx="4" fill="#1B1F27" stroke="#B49BFF"/>
+    <text x="36" y="50" fill="#EDF0F3">participant uploads payment proof</text>
+    <text x="36" y="70" fill="#A0A8B3">Pending / Pending</text>
+    <path d="M240 82v40" stroke="#A0A8B3" stroke-width="1.5"/>
+    <rect x="20" y="122" width="440" height="58" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+    <text x="36" y="148" fill="#EDF0F3">organizer opens Pending Payments</text>
+    <text x="36" y="168" fill="#A0A8B3">approve or reject</text>
+    <path d="M130 180v44M350 180v44" stroke="#A0A8B3" stroke-width="1.5"/>
+    <rect x="20" y="224" width="220" height="112" rx="4" fill="#B49BFF"/>
+    <text x="34" y="250" fill="#0B0D11">approve</text>
+    <text x="34" y="276" fill="#0B0D11">$inc stock −1</text>
+    <text x="34" y="296" fill="#0B0D11">where stock &gt; 0</text>
+    <text x="34" y="322" fill="#0B0D11">→ Registered + QR</text>
+    <rect x="250" y="224" width="210" height="112" rx="4" fill="#1B1F27" stroke="rgba(237,240,243,.16)"/>
+    <text x="264" y="250" fill="#EDF0F3">reject</text>
+    <text x="264" y="276" fill="#A0A8B3">Cancelled</text>
+    <text x="264" y="296" fill="#A0A8B3">/ Rejected</text>
+    <text x="264" y="322" fill="#A0A8B3">stock untouched</text>
+  </g></svg></div>
+  <figcaption class="frame-strip"><span>approve-payment</span><span>flow</span></figcaption>
+</figure></div>
+  <div class="contact-inner" data-reveal-group>
+    <h2 class="contact-title" id="contact-title" data-reveal>Say hello</h2>
+    <p class="contact-note" data-reveal>Email is the quickest way to reach me. Tell me what it's about and this writes the email for you.</p>
+    <form class="compose" data-compose data-to="krithik3001@gmail.com" data-reveal>
+      <label><span class="lbl">Your name</span><input name="name" type="text" autocomplete="name" placeholder="Ada Lovelace"></label>
+      <label><span class="lbl">What it's about</span><input name="topic" type="text" placeholder="An internship, a project, a question"></label>
+      <button type="submit">Write the email</button>
+    </form>
+    <div class="compose-print" data-reveal>
+      <p>Opens your email app with this filled in. Nothing is sent from this page.</p>
+      <p>Or write to krithik3001@gmail.com directly.</p>
     </div>
-
-    <div class="proj-grid">
-
-      <a class="proj-card" href="projects/distributed-fs.html">
-        <div class="proj-top">
-          <div class="proj-name">Distributed Network File System</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-desc">A distributed file system in C with a centralized Name Server and multiple Storage Server nodes — ACID-compliant, ACL-secured, with sentence-level locking for concurrent writes.</p>
-        <div class="proj-tags">
-          <span class="tag">C</span><span class="tag">Sockets</span><span class="tag">Multi-threading</span>
-        </div>
-        <div class="proj-stat">7 core ops · custom binary protocol · heartbeat health checks</div>
-      </a>
-
-      <a class="proj-card" href="projects/trivia-platform.html">
-        <div class="proj-top">
-          <div class="proj-name">Live Multiplayer Trivia Platform</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-desc">Real-time multiplayer trivia supporting 15+ concurrent players per room, with server-authoritative timers and race-condition-safe scoring via Redis optimistic locking.</p>
-        <div class="proj-tags">
-          <span class="tag">Go</span><span class="tag">Redis</span><span class="tag">WebSockets</span>
-        </div>
-        <div class="proj-stat">6+ quiz categories · pub/sub fan-out · live leaderboards</div>
-      </a>
-
-      <a class="proj-card" href="projects/event-platform.html">
-        <div class="proj-top">
-          <div class="proj-name">Event Management Platform</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-desc">Full-stack event platform with 3-role access control, JWT auth, a merchandise payment-approval workflow with atomic stock decrements, and QR-based attendance tracking.</p>
-        <div class="proj-tags">
-          <span class="tag">MERN</span><span class="tag">JWT</span><span class="tag">WebSockets</span>
-        </div>
-        <div class="proj-stat">real-time forum · reCAPTCHA v2/v3 · CSV export</div>
-      </a>
-
-      <a class="proj-card" href="projects/garbage-monitoring.html">
-        <div class="proj-top">
-          <div class="proj-name">Garbage Monitoring System</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-desc">Industry-aligned project with Qualcomm. Fine-tuned YOLOv11 for real-time on-device waste detection, deployed to Android with a live visualization overlay.</p>
-        <div class="proj-tags">
-          <span class="tag">YOLOv11</span><span class="tag">CV</span><span class="tag">Android</span>
-        </div>
-        <div class="proj-stat">0.75 mean IOU · 0.69 F1 · 1,500 labeled images</div>
-      </a>
-
-      <a class="proj-card" href="projects/systems-suite.html">
-        <div class="proj-top">
-          <div class="proj-name">Systems Programming Suite</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-desc">C-Shell: a Unix-like shell in C with piping, signal handling, and job control. C-Shark: a raw-socket packet analyzer parsing TCP/IP headers and payloads.</p>
-        <div class="proj-tags">
-          <span class="tag">C</span><span class="tag">OS</span><span class="tag">Networks</span>
-        </div>
-        <div class="proj-stat">POSIX syscalls · custom built-ins · layer-by-layer inspection</div>
-      </a>
-
+    <div class="direct" data-reveal>
+      <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
+      <button class="btn btn-small direct-copy" type="button" data-copy="krithik3001@gmail.com"><span data-copy-label>Copy address</span></button>
+      <a class="link" href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a>
+      <a class="link" href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>
 </section>
-
-<section class="block" id="skills">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="section-title">Skills</h2>
-    </div>
-    <div class="skills-cards">
-      <div class="skill-card">
-        <div class="skill-card-label">Languages</div>
-        <div class="skill-chips">
-          <span class="chip">Python</span><span class="chip">C</span><span class="chip">C++</span><span class="chip">Go</span><span class="chip">JavaScript</span><span class="chip">TypeScript</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-label">Web</div>
-        <div class="skill-chips">
-          <span class="chip">FastAPI</span><span class="chip">React</span><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">REST</span><span class="chip">WebSockets</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-label">ML &amp; data</div>
-        <div class="skill-chips">
-          <span class="chip">PyTorch</span><span class="chip">YOLOv11</span><span class="chip">NumPy</span><span class="chip">Pandas</span><span class="chip">LangChain</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-label">Databases</div>
-        <div class="skill-chips">
-          <span class="chip">MongoDB</span><span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-label">Systems</div>
-        <div class="skill-chips">
-          <span class="chip">Linux/Unix</span><span class="chip">Shell scripting</span><span class="chip">Git</span><span class="chip">Postman</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-label">Coursework</div>
-        <div class="skill-chips">
-          <span class="chip">DSA</span><span class="chip">DAA</span><span class="chip">OS &amp; networks</span><span class="chip">DBMS</span><span class="chip">ML</span><span class="chip">Software systems</span>
-        </div>
-      </div>
+</main>
+<footer class="tiles" aria-label="Footer">
+  <div class="tile tile-word" aria-hidden="true"><span>Kambhampati</span></div>
+  <a class="tile tile-go" href="mailto:krithik3001@gmail.com?subject=Hello%20from%20your%20site">
+    <p>Write to me</p>
+    <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" aria-hidden="true"><path d="M14 42 42 14M20 14h22v22"/></svg>
+  </a>
+  <div class="tile tile-statement">
+    <p>I build systems that keep their state straight when many things happen at once.</p>
+    <div class="small muted">
+      <p>© 2026 Krithik Kambhampati. Site built by hand in HTML, CSS and GSAP.</p>
+      
     </div>
   </div>
-</section>
-
-<footer>
-  <div class="wrap footer-row">
-    <div class="footer-note">© 2026 Krithik Kambhampati — built with HTML, CSS &amp; a bit of Go-brain.</div>
-    <div class="footer-links">
-      <a href="mailto:krithik3001@gmail.com">email</a>
-      <a href="https://github.com/" target="_blank" rel="noopener">github</a>
-      <a href="https://linkedin.com/" target="_blank" rel="noopener">linkedin</a>
-    </div>
+  <nav class="tile tile-nav" aria-label="Footer">
+    <p class="tile-label">Pages</p>
+    <ul>
+      <li><a href="">Home</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#record">Record</a></li>
+      <li><a href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <div class="tile tile-time">
+    <p class="tile-label">Hyderabad</p>
+    <p><span class="clock" data-clock>IST</span><br><span class="small muted">India Standard Time</span></p>
+  </div>
+  <div class="tile tile-mail">
+    <p class="tile-label">Email</p>
+    <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
   </div>
 </footer>
-
-</main>
-
 </body>
 </html>

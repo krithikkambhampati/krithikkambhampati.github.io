@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-Shell and C-Shark: a Unix shell and a packet sniffer in C, by Krithik Kambhampati</title>
+<meta name="description" content="Two tools for seeing a machine from the inside: a Unix shell with pipes and job control, and a Wireshark-style sniffer that decodes packets layer by layer.">
+<meta property="og:title" content="C-Shell and C-Shark: a Unix shell and a packet sniffer in C, by Krithik Kambhampati">
+<meta property="og:description" content="Two tools for seeing a machine from the inside: a Unix shell with pipes and job control, and a Wireshark-style sniffer that decodes packets layer by layer.">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0B0D11">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Mona+Sans:wdth,wght@100..125,300..700&display=swap">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<link rel="stylesheet" href="../../assets/css/project.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+<script src="../../assets/js/project.js" defer></script>
+</head>
+<body class="project tone-rose">
+<a class="skip" href="#main">Skip to the write-up</a>
+<header class="bar">
+  <div class="bar-row">
+    <a class="wordmark" href="../../">Krithik<span class="wm-last"> Kambhampati</span></a>
+    <p class="crumb"><a href="../../#work">work</a> / <b>c-shell-c-shark</b></p>
+    <nav class="bar-nav" aria-label="Site">
+      <a href="../../#work">Work</a>
+      <a href="../../#record">Record</a>
+      <a href="../../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main class="p-main" id="main">
+
+<section class="p-hero" aria-labelledby="p-title">
+  <div class="p-title-block">
+    <h1 class="p-title" id="p-title" style="view-transition-name: t-c-shell-c-shark"><span class="dot" aria-hidden="true"></span>C-Shell and C-Shark</h1>
+    <p class="p-lede">A shell and a packet sniffer, both written to understand what sits under everyday tools. C&#8209;Shell parses commands, wires pipes and runs jobs in the foreground and background. C&#8209;Shark captures live traffic and decodes every packet by hand, byte by byte.</p>
+  </div>
+  <dl class="p-meta">
+    
+    <div><dt>C-Shell</dt><dd>Operating Systems and Networks coursework. C99 and POSIX 2008, compiled with -Werror.</dd></div><div><dt>C-Shark</dt><dd>libpcap for capture; every header field parsed from raw bytes</dd></div><div><dt>Built with</dt><dd>C, POSIX system calls, libpcap</dd></div>
+    <div class="p-meta-links"><dt>Links</dt><dd class="p-links">
+      <a class="btn btn-small btn-accent" href="https://github.com/krithikkambhampati/C-Shell" target="_blank" rel="noopener">C-Shell source</a><a class="btn btn-small btn-ghost" href="https://github.com/krithikkambhampati/C-Shark" target="_blank" rel="noopener">C-Shark source</a>
+    </dd></div>
+  </dl>
+  <figure class="p-visual"><div class="tools-hero">
+  <figure class="pane term" data-ui>
+    <figcaption class="pane-bar"><span class="file">C-Shell</span><span class="spacer"></span><span>the grammar it parses</span></figcaption>
+    <pre class="code frame-code frame-text" aria-hidden="true"><span class="ln"><span class="t-c">// src/parser.c, recursive descent</span></span><span class="ln"> </span><span class="ln"><span class="t-k">shell_cmd</span> := cmd_group</span><span class="ln">   ((<span class="t-s">';'</span> | <span class="t-s">'&amp;'</span>) cmd_group)*</span><span class="ln">   <span class="t-s">'&amp;'</span>?</span><span class="ln"> </span><span class="ln"><span class="t-k">cmd_group</span> := atomic (<span class="t-s">'|'</span> atomic)*</span><span class="ln"> </span><span class="ln"><span class="t-k">atomic</span> := name</span><span class="ln">   (name | input | output)*</span><span class="ln"> </span><span class="ln"><span class="t-k">input</span>  := <span class="t-s">'&lt;'</span> name</span><span class="ln"><span class="t-k">output</span> := (<span class="t-s">'&gt;'</span> | <span class="t-s">'&gt;&gt;'</span>) name</span></pre>
+  </figure>
+  <figure class="pane" data-ui>
+    <figcaption class="pane-bar"><span class="file">C-Shark</span><span class="spacer"></span><span>what it reads in a frame</span></figcaption>
+    <div class="tools-layers"><svg viewBox="0 0 420 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Layout of an Ethernet, IPv4 and TCP frame with the byte offsets C-Shark labels for each field."><rect width="420" height="420" fill="#13161C"/>
+    <text x="24" y="38" font-family="Fragment Mono, monospace" font-size="13" fill="#A0A8B3">bytes of one frame</text>
+    <rect x="24" y="56" width="10" height="76" fill="#F48FC8"/>
+        <text x="48" y="74" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">Ethernet II</text>
+        <text x="396" y="74" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">0–13</text>
+        <text x="48" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst MAC 0–5</text><text x="218" y="100" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src MAC 6–11</text><text x="48" y="122" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">EtherType 12–13</text><rect x="24" y="146" width="10" height="76" fill="#7AA2FF"/>
+        <text x="48" y="164" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">IPv4</text>
+        <text x="396" y="164" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">14–33</text>
+        <text x="48" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">TTL 22</text><text x="218" y="190" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">protocol 23</text><text x="48" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">src IP 26–29</text><text x="218" y="212" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">dst IP 30–33</text><rect x="24" y="236" width="10" height="76" fill="#4FDDC0"/>
+        <text x="48" y="254" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">TCP</text>
+        <text x="396" y="254" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">34–53</text>
+        <text x="48" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">ports 34–37</text><text x="218" y="280" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">seq 38–41</text><text x="48" y="302" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">flags 47</text><rect x="24" y="326" width="10" height="76" fill="#FFC15E"/>
+        <text x="48" y="344" font-family="Fragment Mono, monospace" font-size="14" fill="#EDF0F3">payload</text>
+        <text x="396" y="344" text-anchor="end" font-family="Fragment Mono, monospace" font-size="12" fill="#A0A8B3">54–…</text>
+        <text x="48" y="370" font-family="Fragment Mono, monospace" font-size="12.5" fill="#A0A8B3">first 64 bytes as hex</text></svg></div>
+  </figure>
+</div></figure>
+</section>
+
+<section class="p-sec  "  aria-labelledby="c-shell-a-grammar-first-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="c-shell-a-grammar-first-h" data-reveal>C-Shell: a grammar first</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>The prompt shows your user, host and directory, with the shell's starting directory as home. Input is tokenised on whitespace and on the operators | & ; &lt; &gt; and &gt;&gt;, even without spaces around them, and then checked by a small recursive-descent parser before anything runs.</p><p>A pipe binds tighter than ; and &amp;, and a trailing &amp; sends the whole line to the background. Anything that doesn't fit prints Invalid Syntax! and runs nothing.</p></div>
+      <ul class="points" data-reveal><li>Built-ins: hop to change directory, with ~ and -; reveal to list files; log for the last 15 commands; activities, ping, fg and bg for jobs.</li><li>Built-ins work inside pipelines too. There they run in a forked child, so hop in a pipeline doesn't move the shell itself.</li></ul>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">src/parser.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:189"><code><span class="ln"><span class="t-k">static</span> <span class="t-k">int</span> <span class="t-f">parse_cmd_group</span>(<span class="t-t">TokenList</span>* list) {</span><span class="ln">    <span class="t-k">if</span> (!<span class="t-f">parse_atomic</span>(list)) {</span><span class="ln">        <span class="t-k">return</span> <span class="t-n">0</span>;</span><span class="ln">    }</span><span class="ln">    <span class="t-k">while</span> (list-&gt;pos &lt; list-&gt;count &amp;&amp; <span class="t-f">strcmp</span>(list-&gt;tokens[list-&gt;pos], <span class="t-s">&quot;|&quot;</span>) == <span class="t-n">0</span>) {</span><span class="ln">        list-&gt;pos++;</span><span class="ln">        <span class="t-k">if</span> (!<span class="t-f">parse_atomic</span>(list)) {</span><span class="ln">            <span class="t-k">return</span> <span class="t-n">0</span>;</span><span class="ln">        }</span><span class="ln">    }</span><span class="ln">    <span class="t-k">return</span> <span class="t-n">1</span>;</span><span class="ln">}</span><span class="ln"> </span><span class="ln"><span class="t-k">static</span> <span class="t-k">int</span> <span class="t-f">parse_shell_cmd_tokens</span>(<span class="t-t">TokenList</span>* list) {</span><span class="ln">    <span class="t-k">if</span> (list-&gt;pos &gt;= list-&gt;count) {</span><span class="ln">        <span class="t-k">return</span> <span class="t-n">1</span>; <span class="t-c">// Empty input is valid</span></span><span class="ln">    }</span><span class="ln">    <span class="t-c">// First cmd_group</span></span><span class="ln">    <span class="t-k">if</span> (!<span class="t-f">parse_cmd_group</span>(list)) {</span><span class="ln">        <span class="t-k">return</span> <span class="t-n">0</span>;</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-c">// Zero or more: (&amp; | ;) cmd_group</span></span><span class="ln">    <span class="t-k">while</span> (list-&gt;pos &lt; list-&gt;count) {</span><span class="ln">        <span class="t-k">if</span> (<span class="t-f">strcmp</span>(list-&gt;tokens[list-&gt;pos], <span class="t-s">&quot;;&quot;</span>) == <span class="t-n">0</span>) {</span><span class="ln">            <span class="t-c">// Semicolon MUST be followed by a cmd_group</span></span><span class="ln">            list-&gt;pos++;</span><span class="ln">            <span class="t-k">if</span> (!<span class="t-f">parse_cmd_group</span>(list)) {</span><span class="ln">                <span class="t-k">return</span> <span class="t-n">0</span>; <span class="t-c">// reject if nothing valid after ;</span></span><span class="ln">            }</span><span class="ln">        } <span class="t-k">else</span> <span class="t-k">if</span> (<span class="t-f">strcmp</span>(list-&gt;tokens[list-&gt;pos], <span class="t-s">&quot;&amp;&quot;</span>) == <span class="t-n">0</span>) {</span><span class="ln">            <span class="t-c">// Check if this is the final optional &amp;</span></span><span class="ln">            <span class="t-k">if</span> (list-&gt;pos + <span class="t-n">1</span> == list-&gt;count) {</span><span class="ln">                list-&gt;pos++;</span><span class="ln">                <span class="t-k">return</span> <span class="t-n">1</span>; <span class="t-c">// trailing &amp; is fine</span></span><span class="ln">            }</span><span class="ln">            <span class="t-c">// ...</span></span><span class="ln">        } <span class="t-k">else</span> {</span><span class="ln">            <span class="t-k">break</span>;</span><span class="ln">        }</span><span class="ln">    }</span><span class="ln"> </span><span class="ln">    <span class="t-k">return</span> <span class="t-n">1</span>;</span><span class="ln">}</span></code></pre>
+  
+</figure>
+  </div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="pipes-one-child-per-stage-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="pipes-one-child-per-stage-h" data-reveal>Pipes, one child per stage</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">src/pipeline.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:157"><code><span class="ln">        <span class="t-k">if</span> (pids[i] == <span class="t-n">0</span>)</span><span class="ln">        {</span><span class="ln">            <span class="t-c">// Child process - set up pipes</span></span><span class="ln">            <span class="t-k">if</span> (i &gt; <span class="t-n">0</span>)</span><span class="ln">            {</span><span class="ln">                <span class="t-f">dup2</span>(pipes[i - <span class="t-n">1</span>][<span class="t-n">0</span>], <span class="t-t">STDIN_FILENO</span>);</span><span class="ln">                <span class="t-f">close</span>(pipes[i - <span class="t-n">1</span>][<span class="t-n">0</span>]);</span><span class="ln">                <span class="t-f">close</span>(pipes[i - <span class="t-n">1</span>][<span class="t-n">1</span>]);</span><span class="ln">            }</span><span class="ln">            <span class="t-k">if</span> (i &lt; pipe_count)</span><span class="ln">            {</span><span class="ln">                <span class="t-f">dup2</span>(pipes[i][<span class="t-n">1</span>], <span class="t-t">STDOUT_FILENO</span>);</span><span class="ln">                <span class="t-f">close</span>(pipes[i][<span class="t-n">0</span>]);</span><span class="ln">                <span class="t-f">close</span>(pipes[i][<span class="t-n">1</span>]);</span><span class="ln">            }</span><span class="ln">            <span class="t-k">for</span> (<span class="t-k">int</span> k = <span class="t-n">0</span>; k &lt; pipe_count; k++)</span><span class="ln">            {</span><span class="ln">                <span class="t-k">if</span> (k != i &amp;&amp; k != i - <span class="t-n">1</span>)</span><span class="ln">                {</span><span class="ln">                    <span class="t-f">close</span>(pipes[k][<span class="t-n">0</span>]);</span><span class="ln">                    <span class="t-f">close</span>(pipes[k][<span class="t-n">1</span>]);</span><span class="ln">                }</span><span class="ln">            }</span><span class="ln"> </span><span class="ln">            <span class="t-c">// Handle redirection for this command</span></span><span class="ln">            <span class="t-k">if</span> (input_file)</span><span class="ln">            {</span><span class="ln">                <span class="t-k">int</span> fd = <span class="t-f">open</span>(input_file, <span class="t-t">O_RDONLY</span>);</span><span class="ln">                <span class="t-c">// ...</span></span><span class="ln">                <span class="t-f">dup2</span>(fd, <span class="t-t">STDIN_FILENO</span>);</span><span class="ln">                <span class="t-f">close</span>(fd);</span><span class="ln">            }</span><span class="ln">            <span class="t-k">if</span> (output_file)</span><span class="ln">            {</span><span class="ln">                <span class="t-k">int</span> flags = <span class="t-t">O_WRONLY</span> | <span class="t-t">O_CREAT</span> | (output_append ? <span class="t-t">O_APPEND</span> : <span class="t-t">O_TRUNC</span>);</span><span class="ln">                <span class="t-k">int</span> fd = <span class="t-f">open</span>(output_file, flags, <span class="t-n">0644</span>);</span><span class="ln">                <span class="t-c">// ...</span></span><span class="ln">                <span class="t-f">dup2</span>(fd, <span class="t-t">STDOUT_FILENO</span>);</span><span class="ln">                <span class="t-f">close</span>(fd);</span><span class="ln">            }</span></code></pre>
+  <p class="code-note">Each stage reads from the pipe before it and writes to the pipe after it, closes every other end, then applies its own redirection.</p>
+</figure>
+    <div>
+      <div class="prose" data-reveal><p>For a pipeline of n commands the shell makes n − 1 pipes and forks n children. Every child closes the pipe ends it doesn't use, otherwise a reader would never see end of file. The parent closes all of them and waits for each child.</p><p>Redirection layers on top per stage, so <span class="mono">sort &lt; in.txt | uniq &gt;&gt; out.txt</span> opens files in the stages that need them.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="ctrl-c-reaches-the-job-not-the-shell-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="ctrl-c-reaches-the-job-not-the-shell-h" data-reveal>Ctrl-C reaches the job, not the shell</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>Every job runs in its own process group, and the shell hands the terminal to the foreground group. Both parent and child set the group, so it doesn't matter which runs first.</p><p>The handlers for Ctrl-C and Ctrl-Z forward the signal to the foreground group. They're installed without SA_RESTART on purpose, so the signal also interrupts the shell's own blocking read at the prompt. Ctrl-Z prints the job as stopped and adds it to the list; fg and bg send it SIGCONT. Ctrl-D logs out and kills every tracked job.</p></div>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">src/signals.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:36"><code><span class="ln"><span class="t-k">void</span> <span class="t-f">sigint_handler</span>(<span class="t-k">int</span> sig) {</span><span class="ln">    (<span class="t-k">void</span>)sig;</span><span class="ln">    <span class="t-k">if</span> (current_fg_pgid &gt; <span class="t-n">0</span>) {</span><span class="ln">        <span class="t-c">// Send SIGINT to the foreground process group</span></span><span class="ln">        <span class="t-f">kill</span>(-current_fg_pgid, <span class="t-t">SIGINT</span>);</span><span class="ln">    } <span class="t-k">else</span> {</span><span class="ln">        <span class="t-c">// No foreground process, set flag and write newline</span></span><span class="ln">        sigint_received = <span class="t-n">1</span>;</span><span class="ln">        <span class="t-f">write</span>(<span class="t-t">STDOUT_FILENO</span>, <span class="t-s">&quot;\n&quot;</span>, <span class="t-n">1</span>);</span><span class="ln">    }</span><span class="ln">}</span><span class="ln"><span class="t-k">void</span> <span class="t-f">sigtstp_handler</span>(<span class="t-k">int</span> sig) {</span><span class="ln">    (<span class="t-k">void</span>)sig;</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (current_fg_pgid &gt; <span class="t-n">0</span>) {</span><span class="ln">        <span class="t-f">kill</span>(-current_fg_pgid, <span class="t-t">SIGTSTP</span>);</span><span class="ln"> </span><span class="ln"> </span><span class="ln">        <span class="t-k">if</span> (<span class="t-f">isatty</span>(<span class="t-t">STDIN_FILENO</span>)) {</span><span class="ln">            <span class="t-f">tcsetpgrp</span>(<span class="t-t">STDIN_FILENO</span>, <span class="t-f">getpgrp</span>());</span><span class="ln">        }</span><span class="ln"> </span><span class="ln">        sigtstp_received = <span class="t-n">1</span>;</span><span class="ln">    } <span class="t-k">else</span> {</span><span class="ln">        sigtstp_received = <span class="t-n">1</span>;</span><span class="ln">        <span class="t-f">write</span>(<span class="t-t">STDOUT_FILENO</span>, <span class="t-s">&quot;\n&quot;</span>, <span class="t-n">1</span>);</span><span class="ln">    }</span><span class="ln">}</span><span class="ln"><span class="t-c">// ...</span></span><span class="ln">    <span class="t-c">// Set up SIGINT handler - NO SA_RESTART so it interrupts read()</span></span><span class="ln">    sa_int.sa_handler = sigint_handler;</span><span class="ln">    <span class="t-f">sigemptyset</span>(&amp;sa_int.sa_mask);</span><span class="ln">    sa_int.sa_flags = <span class="t-n">0</span>;  <span class="t-c">// No SA_RESTART - we want to interrupt system calls</span></span><span class="ln">    <span class="t-f">sigaction</span>(<span class="t-t">SIGINT</span>, &amp;sa_int, <span class="t-k">NULL</span>);</span></code></pre>
+  <p class="code-note">Forward to the foreground group, and don't restart interrupted calls.</p>
+</figure>
+  </div>
+</div>
+</section>
+
+<div class="p-field">
+<section class="p-sec  "  aria-labelledby="c-shark-reading-a-packet-by-hand-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="c-shark-reading-a-packet-by-hand-h" data-reveal>C-Shark: reading a packet by hand</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>C-Shark lists the machine's interfaces, captures in promiscuous mode with libpcap, and prints every packet as it arrives: Ethernet, then IPv4, IPv6 or ARP, then TCP or UDP with its flags spelled out, then a guess at the application from the port, with the first 64 bytes of payload as hex.</p><p>libpcap only delivers bytes. Every field after that is pulled out by hand with shifts, like the EtherType from bytes 12 and 13. Ctrl-C breaks out of the capture loop and returns to the menu instead of killing the program.</p></div>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">src/sniffer.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:75"><code><span class="ln">    <span class="t-k">if</span> (protocol == <span class="t-n">6</span>) {  <span class="t-c">// TCP</span></span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> src_port = (segment[<span class="t-n">0</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">1</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> dst_port = (segment[<span class="t-n">2</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">3</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">int</span> seq = (segment[<span class="t-n">4</span>] &lt;&lt; <span class="t-n">24</span>) | (segment[<span class="t-n">5</span>] &lt;&lt; <span class="t-n">16</span>) | (segment[<span class="t-n">6</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">7</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">int</span> ack = (segment[<span class="t-n">8</span>] &lt;&lt; <span class="t-n">24</span>) | (segment[<span class="t-n">9</span>] &lt;&lt; <span class="t-n">16</span>) | (segment[<span class="t-n">10</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">11</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">char</span> offset_reserved = segment[<span class="t-n">12</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">char</span> flags = segment[<span class="t-n">13</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> window = (segment[<span class="t-n">14</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">15</span>];</span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">short</span> checksum = (segment[<span class="t-n">16</span>] &lt;&lt; <span class="t-n">8</span>) | segment[<span class="t-n">17</span>];</span><span class="ln"> </span><span class="ln">        <span class="t-k">unsigned</span> <span class="t-k">int</span> header_len = ((offset_reserved &gt;&gt; <span class="t-n">4</span>) &amp; <span class="t-n">0xF</span>) * <span class="t-n">4</span>;</span><span class="ln">        <span class="t-c">// ...</span></span><span class="ln">        <span class="t-f">printf</span>(<span class="t-s">&quot;| Seq: %u | Ack: %u | Flags: [&quot;</span>, seq, ack);</span><span class="ln">        </span><span class="ln">        <span class="t-k">int</span> first_flag = <span class="t-n">1</span>;</span><span class="ln">        <span class="t-k">if</span> (flags &amp; <span class="t-n">0x02</span>) { <span class="t-f">printf</span>(<span class="t-s">&quot;%sSYN&quot;</span>, first_flag ? <span class="t-s">&quot;&quot;</span> : <span class="t-s">&quot;,&quot;</span>); first_flag = <span class="t-n">0</span>; }</span><span class="ln">        <span class="t-k">if</span> (flags &amp; <span class="t-n">0x10</span>) { <span class="t-f">printf</span>(<span class="t-s">&quot;%sACK&quot;</span>, first_flag ? <span class="t-s">&quot;&quot;</span> : <span class="t-s">&quot;,&quot;</span>); first_flag = <span class="t-n">0</span>; }</span><span class="ln">        <span class="t-k">if</span> (flags &amp; <span class="t-n">0x01</span>) { <span class="t-f">printf</span>(<span class="t-s">&quot;%sFIN&quot;</span>, first_flag ? <span class="t-s">&quot;&quot;</span> : <span class="t-s">&quot;,&quot;</span>); first_flag = <span class="t-n">0</span>; }</span><span class="ln">        <span class="t-k">if</span> (flags &amp; <span class="t-n">0x04</span>) { <span class="t-f">printf</span>(<span class="t-s">&quot;%sRST&quot;</span>, first_flag ? <span class="t-s">&quot;&quot;</span> : <span class="t-s">&quot;,&quot;</span>); first_flag = <span class="t-n">0</span>; }</span><span class="ln">        <span class="t-k">if</span> (flags &amp; <span class="t-n">0x08</span>) { <span class="t-f">printf</span>(<span class="t-s">&quot;%sPSH&quot;</span>, first_flag ? <span class="t-s">&quot;&quot;</span> : <span class="t-s">&quot;,&quot;</span>); first_flag = <span class="t-n">0</span>; }</span><span class="ln">        <span class="t-k">if</span> (flags &amp; <span class="t-n">0x20</span>) { <span class="t-f">printf</span>(<span class="t-s">&quot;%sURG&quot;</span>, first_flag ? <span class="t-s">&quot;&quot;</span> : <span class="t-s">&quot;,&quot;</span>); first_flag = <span class="t-n">0</span>; }</span><span class="ln">        <span class="t-f">printf</span>(<span class="t-s">&quot;]\nWindow: %u | Checksum: 0x%04X | Header Length: %u bytes\n&quot;</span>, window, checksum, header_len);</span><span class="ln"> </span><span class="ln">        <span class="t-k">int</span> payload_len = l3_payload_len - header_len;</span><span class="ln">        <span class="t-k">if</span> (payload_len &gt; <span class="t-n">0</span>) {</span><span class="ln">            <span class="t-f">handle_l7</span>(segment + header_len, payload_len, src_port, dst_port);</span><span class="ln">        }</span></code></pre>
+  <p class="code-note">TCP decoded from raw bytes, big-endian, with the flag bits named.</p>
+</figure>
+  </div>
+</div>
+</section>
+</div>
+
+<section class="p-sec  "  aria-labelledby="sessions-you-can-take-apart-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="sessions-you-can-take-apart-h" data-reveal>Sessions you can take apart</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">src/sniffer.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:174"><code><span class="ln"><span class="t-k">void</span> <span class="t-f">packet_handler</span>(<span class="t-t">u_char</span> *user, <span class="t-k">const</span> <span class="t-k">struct</span> pcap_pkthdr *pkthdr, <span class="t-k">const</span> <span class="t-t">u_char</span> *packet) {</span><span class="ln">    (<span class="t-k">void</span>)user;</span><span class="ln">    <span class="t-f">printf</span>(<span class="t-s">&quot;-----------------------------------------\n&quot;</span>);</span><span class="ln">    <span class="t-f">printf</span>(<span class="t-s">&quot;Packet #%d | &quot;</span>, packet_count++);</span><span class="ln">    <span class="t-f">printf</span>(<span class="t-s">&quot;Timestamp: %ld.%06ld | Length: %d bytes\n&quot;</span>, </span><span class="ln">           pkthdr-&gt;ts.tv_sec, (<span class="t-k">long</span>)pkthdr-&gt;ts.tv_usec, pkthdr-&gt;caplen);</span><span class="ln">    </span><span class="ln">    <span class="t-k">const</span> <span class="t-t">u_char</span> *dst_mac = &amp;packet[<span class="t-n">0</span>];   <span class="t-c">// first 6 bytes</span></span><span class="ln">    <span class="t-k">const</span> <span class="t-t">u_char</span> *src_mac = &amp;packet[<span class="t-n">6</span>]; </span><span class="ln"> </span><span class="ln">    <span class="t-t">uint16_t</span> ethertype = (packet[<span class="t-n">12</span>] &lt;&lt; <span class="t-n">8</span>) | packet[<span class="t-n">13</span>];  <span class="t-c">// bytes 12-13 combined as big-endian</span></span><span class="ln"> </span><span class="ln">    <span class="t-f">printf</span>(<span class="t-s">&quot;L2 (Ethernet): &quot;</span>);</span><span class="ln">    <span class="t-f">printf</span>(<span class="t-s">&quot;Dst MAC: &quot;</span>); <span class="t-f">print_mac</span>(dst_mac); <span class="t-f">printf</span>(<span class="t-s">&quot; | &quot;</span>);</span><span class="ln">    <span class="t-f">printf</span>(<span class="t-s">&quot;Src MAC: &quot;</span>); <span class="t-f">print_mac</span>(src_mac); <span class="t-f">printf</span>(<span class="t-s">&quot; |&quot;</span>);</span><span class="ln">    <span class="t-c">// ...</span></span><span class="ln">    <span class="t-f">handle_l3</span>(ethertype, packet);</span></code></pre>
+  <p class="code-note">Each packet is printed layer by layer, then a copy is kept for inspection.</p>
+</figure>
+    <div>
+      <ul class="points" data-reveal><li>Up to 10,000 packets from a capture are kept in memory, each copied with its pcap header.</li><li>Inspecting one shows a hex dump of the whole frame, then every field labelled with the bytes it came from: source MAC from bytes 6 to 11, TTL from byte 22, source IP from 26 to 29.</li><li>Filter mode offers six presets compiled into BPF: HTTP, HTTPS, DNS, ARP, TCP and UDP.</li></ul>
+      <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">src/sniffer.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:34"><code><span class="ln"><span class="t-k">void</span> <span class="t-f">handle_sigint</span>(<span class="t-k">int</span> sig) {</span><span class="ln">    (<span class="t-k">void</span>)sig; </span><span class="ln">    <span class="t-k">if</span> (current_handle) {</span><span class="ln">        <span class="t-f">pcap_breakloop</span>(current_handle);</span><span class="ln">    }</span><span class="ln">}</span></code></pre>
+  
+</figure>
+    </div>
+  </div>
+  <figure class="pane term" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">C-Shark README</span><span class="spacer"></span><span>example session</span></figcaption>
+  <pre class="code"><code><span class="ln">[C-Shark] The Command-Line Packet Predator</span><span class="ln">==============================================</span><span class="ln">[C-Shark] Searching for available interfaces... Found!</span><span class="ln"> 1. eth0 (Ethernet)</span><span class="ln"> 2. wlan0 (Wireless)</span><span class="ln"> 3. lo (Loopback)</span><span class="ln"> </span><span class="ln">Select an interface to sniff (1-3): 1</span><span class="ln"> </span><span class="ln">[C-Shark] Interface 'eth0' selected. What's next?</span><span class="ln"> </span><span class="ln">1. Start Sniffing (All Packets)</span><span class="ln">2. Start Sniffing (With Filters)</span><span class="ln">3. Inspect Last Session</span><span class="ln">4. Exit C-Shark</span><span class="ln"> </span><span class="ln">Enter choice (1-4): 1</span><span class="ln"> </span><span class="ln">========================================</span><span class="ln">Packet #1 | Length: 74 bytes | Timestamp: 2026-01-17 15:23:45</span><span class="ln">========================================</span><span class="ln">EtherType: IPv4 (0x0800)</span><span class="ln">Src MAC: aa:bb:cc:dd:ee:ff | Dst MAC: 11:22:33:44:55:66</span><span class="ln">Src IP: 192.168.1.100 | Dst IP: 142.250.185.46 | Protocol: TCP (6)</span><span class="ln">TTL: 64</span><span class="ln">ID: 0x4A2F | Total Length: 60 | Header Length: 20 bytes</span><span class="ln">Src Port: 54321 | Dst Port: 443 (HTTPS) | Seq: 1234567890 | Ack: 987654321</span><span class="ln">Flags: [SYN, ACK] | Window Size: 65535</span></code></pre>
+  <p class="code-note">The README's example of a session. The menu matches the program exactly; the code prints each packet in a slightly different layout, layer by layer as L2, L3, L4 and L7.</p>
+</figure>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="limits-stated-plainly-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="limits-stated-plainly-h" data-reveal>Limits, stated plainly</h2></div>
+  <div class="p-sec-body"><div class="decisions"><div class="decision" data-reveal="row">
+    <h3>Application guesses come from ports</h3>
+    <p>Port 80 is HTTP, 443 is HTTPS and 53 is DNS. Nothing looks inside the payload to confirm it.</p>
+    <p class="src">src/sniffer.c, README</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Six filters, not free text</h3>
+    <p>Filters are the six presets. Typing your own BPF expression isn't supported.</p>
+    <p class="src">src/sniffer.c</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>IPv6 extension headers aren't walked</h3>
+    <p>The decoder assumes the transport header starts right after the 40-byte IPv6 header.</p>
+    <p class="src">src/ipv6.c</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>The shell has no quoting</h3>
+    <p>The tokenizer doesn't understand quotes, so an argument with spaces in it can't be passed.</p>
+    <p class="src">src/parser.c</p>
+  </div></div></div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="built-with-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="built-with-h" data-reveal>Built with</h2></div>
+  <div class="p-sec-body"><dl class="stack" data-reveal><div><dt>C-Shell</dt><dd>C99, POSIX 2008: fork, execvp, pipe, dup2, setpgid, tcsetpgrp, sigaction</dd></div><div><dt>C-Shark</dt><dd>C, libpcap: pcap_open_live, pcap_compile, pcap_setfilter, pcap_loop</dd></div><div><dt>Build</dt><dd>make, gcc with -Wall -Wextra</dd></div></dl></div>
+</section>
+
+<nav class="pnav" aria-label="More projects">
+  <a class="pnav-cell tone-amber" href="../../projects/garbage-monitoring/">
+      <span class="pnav-dir small muted">Previous project</span>
+      <span class="pnav-title">Garbage monitoring on the edge</span>
+      <span class="pnav-what small muted">YOLO, Android, Qualcomm</span>
+    </a>
+  <a class="pnav-cell pnav-all" href="../../#work">
+    <span class="pnav-dir small muted">Back to</span>
+    <span class="pnav-title">All work</span>
+  </a>
+  <a class="pnav-cell tone-violet" href="../../projects/event-platform/">
+      <span class="pnav-dir small muted">Next project</span>
+      <span class="pnav-title">Felicity event platform</span>
+      <span class="pnav-what small muted">MongoDB, Express, React</span>
+    </a>
+</nav>
+</main>
+<footer class="tiles" aria-label="Footer">
+  <div class="tile tile-word" aria-hidden="true"><span>Kambhampati</span></div>
+  <a class="tile tile-go" href="mailto:krithik3001@gmail.com?subject=Hello%20from%20your%20site">
+    <p>Write to me</p>
+    <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" aria-hidden="true"><path d="M14 42 42 14M20 14h22v22"/></svg>
+  </a>
+  <div class="tile tile-statement">
+    <p>I build systems that keep their state straight when many things happen at once.</p>
+    <div class="small muted">
+      <p>© 2026 Krithik Kambhampati. Site built by hand in HTML, CSS and GSAP.</p>
+      
+    </div>
+  </div>
+  <nav class="tile tile-nav" aria-label="Footer">
+    <p class="tile-label">Pages</p>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../#work">Work</a></li>
+      <li><a href="../../#record">Record</a></li>
+      <li><a href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <div class="tile tile-time">
+    <p class="tile-label">Hyderabad</p>
+    <p><span class="clock" data-clock>IST</span><br><span class="small muted">India Standard Time</span></p>
+  </div>
+  <div class="tile tile-mail">
+    <p class="tile-label">Email</p>
+    <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
+  </div>
+</footer>
+</body>
+</html>

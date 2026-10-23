@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distributed network file system: a distributed file system in C, by Krithik Kambhampati</title>
+<meta name="description" content="A file system spread across machines: one name server knows where every file lives, storage servers hold the data, and clients reach both over a protocol written by hand.">
+<meta property="og:title" content="Distributed network file system: a distributed file system in C, by Krithik Kambhampati">
+<meta property="og:description" content="A file system spread across machines: one name server knows where every file lives, storage servers hold the data, and clients reach both over a protocol written by hand.">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0B0D11">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Mona+Sans:wdth,wght@100..125,300..700&display=swap">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<link rel="stylesheet" href="../../assets/css/project.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+<script src="../../assets/js/project.js" defer></script>
+</head>
+<body class="project tone-blue">
+<a class="skip" href="#main">Skip to the write-up</a>
+<header class="bar">
+  <div class="bar-row">
+    <a class="wordmark" href="../../">Krithik<span class="wm-last"> Kambhampati</span></a>
+    <p class="crumb"><a href="../../#work">work</a> / <b>network-file-system</b></p>
+    <nav class="bar-nav" aria-label="Site">
+      <a href="../../#work">Work</a>
+      <a href="../../#record">Record</a>
+      <a href="../../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main class="p-main" id="main">
+
+<section class="p-hero" aria-labelledby="p-title">
+  <div class="p-title-block">
+    <h1 class="p-title" id="p-title" style="view-transition-name: t-network-file-system"><span class="dot" aria-hidden="true"></span>Distributed network file system</h1>
+    <p class="p-lede">Files live on several storage servers. One name server knows where each one is and who may touch it, and clients ask it first, then talk to the right storage server directly. Many people can edit the same file at once, one sentence each.</p>
+  </div>
+  <dl class="p-meta">
+    <div><dt>Project</dt><dd>Operating Systems and Networks course project</dd></div>
+    <div><dt>Context</dt><dd>Course project in operating systems and networking</dd></div><div><dt>Pieces</dt><dd>Three programs in C: name_server, storage_server and client</dd></div><div><dt>Built with</dt><dd>C99, POSIX sockets, pthreads, select()</dd></div>
+    <div class="p-meta-links"><dt>Links</dt><dd class="p-links">
+      <a class="btn btn-small btn-accent" href="https://github.com/krithikkambhampati/Network-File-System" target="_blank" rel="noopener">Source on GitHub</a>
+    </dd></div>
+  </dl>
+  <figure class="p-visual"><div class="nfs-live lab" data-nfs>
+  <svg class="diagram nfs-svg" viewBox="0 0 1100 470" role="img" aria-labelledby="nfs-live-cap">
+    <rect width="1100" height="470" fill="#13161C"/>
+    <g data-lanes>
+      
+      <g data-lane="0">
+        <rect class="d-box" x="15" y="20" width="190" height="40" rx="4"/>
+        <text x="110" y="46" text-anchor="middle">client</text>
+        <path class="d-line d-dash" d="M110 60V455"/>
+      </g>
+      <g data-lane="1">
+        <rect class="d-box" x="305" y="20" width="190" height="40" rx="4"/>
+        <text x="400" y="46" text-anchor="middle">name server :8080</text>
+        <path class="d-line d-dash" d="M400 60V455"/>
+      </g>
+      <g data-lane="2">
+        <rect class="d-box" x="595" y="20" width="190" height="40" rx="4"/>
+        <text x="690" y="46" text-anchor="middle">storage 1 :9001</text>
+        <path class="d-line d-dash" d="M690 60V455"/>
+      </g>
+      <g data-lane="3">
+        <rect class="d-box" x="865" y="20" width="190" height="40" rx="4"/>
+        <text x="960" y="46" text-anchor="middle">storage 2 :9002</text>
+        <path class="d-line d-dash" d="M960 60V455"/>
+      </g>
+    </g>
+    <g data-msgs>
+      <path class="d-line-tone" d="M113 110H393"/><path class="d-fill-tone" d="M393 104l10 6-10 6z"/><text x="255" y="98" text-anchor="middle">MSG_WRITE_FILE notes.txt 3</text>
+      <path class="d-line-tone d-dash" d="M397 160H120"/><path class="d-fill-tone" d="M120 154l-10 6 10 6z"/><text x="255" y="148" text-anchor="middle">MSG_SS_INFO 10.0.0.5:9001</text>
+      <path class="d-line-tone" d="M113 220H683"/><path class="d-fill-tone" d="M683 214l10 6-10 6z"/><text x="400" y="208" text-anchor="middle">MSG_WRITE_REQUEST sentence 3</text>
+      <rect x="682" y="228" width="16" height="150" rx="3" fill="#232A52" stroke="#7AA2FF"/><text x="670" y="300" text-anchor="end" class="d-muted">sentence 3 locked</text>
+      <path class="d-line-tone" d="M113 280H683"/><path class="d-fill-tone" d="M683 274l10 6-10 6z"/><text x="400" y="268" text-anchor="middle">MSG_WRITE_UPDATE 4 "is"</text>
+      <path class="d-line-tone" d="M113 360H683"/><path class="d-fill-tone" d="M683 354l10 6-10 6z"/><text x="400" y="348" text-anchor="middle">MSG_WRITE_COMPLETE</text>
+      <text x="710" y="420" class="d-muted">unlock, save notes.txt.v8</text>
+    </g>
+  </svg>
+  <div class="lab-row nfs-controls">
+    <button class="btn btn-small btn-accent" type="button" data-nfs-run="write">Write a sentence</button>
+    <button class="btn btn-small btn-ghost" type="button" data-nfs-run="read">Read the file</button>
+    <button class="btn btn-small btn-ghost" type="button" data-nfs-toggle aria-pressed="false">Take storage 1 down</button>
+    <p class="lab-out" id="nfs-live-cap" data-nfs-status aria-live="polite">A write: the name server says where the file lives, then the client writes straight to that storage server.</p>
+  </div>
+</div><figcaption>Messages use the protocol's real names. Try reading the file with storage 1 down: the name server marks a silent server inactive after 15 seconds and sends the read to a replica.</figcaption></figure>
+</section>
+
+<section class="p-sec  "  aria-labelledby="naming-apart-from-storage-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="naming-apart-from-storage-h" data-reveal>Naming apart from storage</h2></div>
+  <div class="p-sec-body">
+  <div class="prose" data-reveal><p>The design splits two jobs. The name server owns metadata: where every file lives, who owns it, who may read or write it. Storage servers own the bytes. For anything that touches content, the client gets a storage server's address from the name server and then connects to it directly, so file data never passes through the name server.</p><p>Each connection gets its own thread on both sides. The name server listens on two ports, one for clients and one, a port higher, for storage servers to register and stay in touch.</p></div>
+  <figure class="p-fig" data-reveal="mask"><svg class="diagram" viewBox="0 0 1100 430" role="img" aria-label="Components: clients connect to the name server on port 8080 for metadata and directly to storage servers on ports 9000 plus id for data; storage servers register with the name server on port 8081.">
+  <rect width="1100" height="430" fill="#13161C"/>
+  <rect class="d-box" x="30" y="150" width="230" height="130" rx="4"/>
+  <text x="50" y="182">client</text><text x="50" y="208" class="d-muted">nfs&gt; prompt</text><text x="50" y="232" class="d-muted">command parser,</text><text x="50" y="256" class="d-muted">case-insensitive</text>
+  <rect class="d-box-tone" x="430" y="30" width="270" height="170" rx="4"/>
+  <text x="450" y="62">name server</text><text x="450" y="88" class="d-muted">select() loop, a thread</text><text x="450" y="110" class="d-muted">per connection</text><text x="450" y="140" class="d-muted">ACLs, metadata, LRU cache</text><text x="450" y="164" class="d-muted">heartbeat monitor</text><text x="450" y="186" class="d-muted">replicas and failover</text>
+  <rect class="d-box" x="410" y="290" width="210" height="110" rx="4"/><text x="430" y="322">storage 1</text><text x="430" y="346" class="d-muted">port 9001</text><text x="430" y="370" class="d-muted">sentence locks, undo,</text><text x="430" y="390" class="d-muted">versions, checkpoints</text><rect class="d-box" x="640" y="290" width="210" height="110" rx="4"/><text x="660" y="322">storage 2</text><text x="660" y="346" class="d-muted">port 9002</text><text x="660" y="370" class="d-muted">sentence locks, undo,</text><text x="660" y="390" class="d-muted">versions, checkpoints</text><rect class="d-box" x="870" y="290" width="210" height="110" rx="4"/><text x="890" y="322">storage 3</text><text x="890" y="346" class="d-muted">port 9003</text><text x="890" y="370" class="d-muted">sentence locks, undo,</text><text x="890" y="390" class="d-muted">versions, checkpoints</text>
+  <path class="d-line-tone" d="M260 190 C 340 190, 340 115, 430 115"/><text x="282" y="140" class="d-muted">:8080 metadata</text>
+  <path class="d-line-tone d-dash" d="M260 240 C 340 240, 340 345, 410 345"/><text x="270" y="318" class="d-muted">direct data</text>
+  <path class="d-line" d="M565 200V290M720 200 C 720 250, 745 250, 745 290M680 200 C 680 240, 975 240, 975 290"/>
+  <text x="770" y="228" class="d-muted">:8081 register, heartbeat, commands</text>
+</svg><figcaption>Clients ask the name server, then go straight to a storage server. Storage servers keep a connection open to the name server for commands and liveness.</figcaption></figure>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="a-protocol-written-by-hand-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="a-protocol-written-by-hand-h" data-reveal>A protocol written by hand</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>Every message is a fixed header, its type, a payload length and an error code, followed by exactly that many bytes. The receiver refuses a payload bigger than its buffer. There's no serialisation library: framing, message types and error codes are all defined in C.</p><p>About fifty message types cover client to name server, name server to storage server, and storage server to client, plus responses and 21 named error codes like ERR_SENTENCE_LOCKED and ERR_STORAGE_SERVER_UNAVAILABLE.</p></div>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">common/protocol.h, protocol.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:0"><code><span class="ln"><span class="t-c">// Message header structure</span></span><span class="ln"><span class="t-k">typedef</span> <span class="t-k">struct</span> {</span><span class="ln">    <span class="t-t">MessageType</span> type;</span><span class="ln">    <span class="t-t">uint32_t</span> length;</span><span class="ln">    <span class="t-t">uint32_t</span> error_code;</span><span class="ln">} <span class="t-t">MessageHeader</span>;</span><span class="ln"> </span><span class="ln"><span class="t-k">int</span> <span class="t-f">send_message</span>(<span class="t-k">int</span> sockfd, <span class="t-t">MessageType</span> type, <span class="t-k">const</span> <span class="t-k">void</span>* data, <span class="t-t">uint32_t</span> length) {</span><span class="ln">    <span class="t-t">MessageHeader</span> header;</span><span class="ln">    header.type = type;</span><span class="ln">    header.length = length;</span><span class="ln">    header.error_code = <span class="t-n">0</span>;</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (<span class="t-f">send_data</span>(sockfd, &amp;header, <span class="t-k">sizeof</span>(header)) &lt; <span class="t-n">0</span>) {</span><span class="ln">        <span class="t-k">return</span> -<span class="t-n">1</span>;</span><span class="ln">    }</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (length &gt; <span class="t-n">0</span> &amp;&amp; data != <span class="t-k">NULL</span>) {</span><span class="ln">        <span class="t-k">if</span> (<span class="t-f">send_data</span>(sockfd, data, length) &lt; <span class="t-n">0</span>) {</span><span class="ln">            <span class="t-k">return</span> -<span class="t-n">1</span>;</span><span class="ln">        }</span><span class="ln">    }</span><span class="ln">    </span><span class="ln">    <span class="t-k">return</span> <span class="t-n">0</span>;</span><span class="ln">}</span></code></pre>
+  <p class="code-note">The header and the send side of the framing.</p>
+</figure>
+  </div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="one-sentence-at-a-time-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="one-sentence-at-a-time-h" data-reveal>One sentence at a time</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">storage_server/sentence_lock.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:37"><code><span class="ln"><span class="t-k">int</span> <span class="t-f">lock_sentence</span>(<span class="t-k">const</span> <span class="t-k">char</span>* filename, <span class="t-k">int</span> sentence_index, <span class="t-k">const</span> <span class="t-k">char</span>* username) {</span><span class="ln">    <span class="t-t">pthread_mutex_lock</span>(&amp;list_mutex);</span><span class="ln">    </span><span class="ln">    <span class="t-t">SentenceLock</span>* lock = <span class="t-f">find_or_create_lock</span>(filename, sentence_index);</span><span class="ln">    </span><span class="ln">    <span class="t-k">if</span> (lock-&gt;is_locked) {</span><span class="ln">        <span class="t-t">pthread_mutex_unlock</span>(&amp;list_mutex);</span><span class="ln">        <span class="t-f">log_message</span>(<span class="t-t">LOG_LEVEL_WARNING</span>, <span class="t-s">&quot;Sentence %d in %s already locked by %s&quot;</span>,</span><span class="ln">                   sentence_index, filename, lock-&gt;locked_by);</span><span class="ln">        <span class="t-k">return</span> -<span class="t-n">1</span>;</span><span class="ln">    }</span><span class="ln">    </span><span class="ln">    lock-&gt;is_locked = <span class="t-k">true</span>;</span><span class="ln">    <span class="t-f">strncpy</span>(lock-&gt;locked_by, username, <span class="t-k">sizeof</span>(lock-&gt;locked_by) - <span class="t-n">1</span>);</span><span class="ln">    </span><span class="ln">    <span class="t-t">pthread_mutex_unlock</span>(&amp;list_mutex);</span><span class="ln">    </span><span class="ln">    <span class="t-f">log_message</span>(<span class="t-t">LOG_LEVEL_INFO</span>, <span class="t-s">&quot;Locked sentence %d in %s for %s&quot;</span>,</span><span class="ln">               sentence_index, filename, username);</span><span class="ln">    <span class="t-k">return</span> <span class="t-n">0</span>;</span><span class="ln">}</span></code></pre>
+  <p class="code-note">A lock per file and sentence, looked up under one mutex and owned by a user.</p>
+</figure>
+    <div>
+      <ul class="points" data-reveal><li>Sentences end at a full stop, an exclamation mark or a question mark. A WRITE names one sentence, and the storage server locks just that one, so two people can edit different sentences of the same file at the same time.</li><li>Inside the lock the user sends words with their position, one MSG_WRITE_UPDATE each, and finishes with ETIRW. Writing a full stop in the middle splits the sentence in two.</li><li>Before the lock is taken, the server saves an undo snapshot. After the write it saves a new numbered version.</li><li>A second writer on a locked sentence gets ERR_SENTENCE_LOCKED straight away rather than waiting.</li></ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="p-field">
+<section class="p-sec  "  aria-labelledby="when-a-server-goes-quiet-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="when-a-server-goes-quiet-h" data-reveal>When a server goes quiet</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>A monitor thread on the name server checks every five seconds. A storage server that hasn't been heard from for 15 seconds is marked inactive. A closed socket marks it inactive at once.</p><p>When a new storage server joins, the name server copies every file held on other active servers onto it and records it as a replica. A read whose primary is down goes to the first active replica instead, and the console logs it as a failover.</p></div>
+      <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">name_server/heartbeat.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:0"><code><span class="ln"><span class="t-p">#define HEARTBEAT_INTERVAL 5    // Check every 5 seconds</span></span><span class="ln"><span class="t-p">#define HEARTBEAT_TIMEOUT 15000 // 15 seconds timeout in milliseconds</span></span><span class="ln"><span class="t-c">// ...</span></span><span class="ln">    <span class="t-k">while</span> (monitoring_active) {</span><span class="ln">        <span class="t-f">sleep</span>(<span class="t-t">HEARTBEAT_INTERVAL</span>);</span><span class="ln">        </span><span class="ln">        <span class="t-t">pthread_rwlock_rdlock</span>(&amp;ss_lock);</span><span class="ln">        <span class="t-t">StorageServer</span>* current = ss_list_head;</span><span class="ln">        </span><span class="ln">        <span class="t-k">while</span> (current) {</span><span class="ln">            <span class="t-k">if</span> (current-&gt;is_active) {</span><span class="ln">                <span class="t-k">long</span> <span class="t-k">long</span> now = <span class="t-f">get_current_time_ms</span>();</span><span class="ln">                <span class="t-k">long</span> <span class="t-k">long</span> time_since_heartbeat = now - current-&gt;last_heartbeat;</span><span class="ln">                </span><span class="ln">                <span class="t-k">if</span> (time_since_heartbeat &gt; <span class="t-t">HEARTBEAT_TIMEOUT</span>) {</span><span class="ln">                    <span class="t-t">pthread_rwlock_unlock</span>(&amp;ss_lock);</span><span class="ln">                    </span><span class="ln">                    <span class="t-c">// Mark as inactive</span></span><span class="ln">                    <span class="t-f">mark_storage_server_inactive</span>(current-&gt;id);</span><span class="ln">                    <span class="t-c">// ...</span></span><span class="ln">                    <span class="t-t">pthread_rwlock_rdlock</span>(&amp;ss_lock);</span><span class="ln">                }</span><span class="ln">            }</span><span class="ln">            current = current-&gt;next;</span><span class="ln">        }</span><span class="ln">        </span><span class="ln">        <span class="t-t">pthread_rwlock_unlock</span>(&amp;ss_lock);</span><span class="ln">    }</span></code></pre>
+  <p class="code-note">The read lock is dropped before marking a server inactive, which takes the write lock.</p>
+</figure>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">name_server/client_handler.c</span><span class="spacer"></span><span>c</span></figcaption>
+  <pre class="code" style="--start:187"><code><span class="ln">    <span class="t-c">// Try primary storage server first</span></span><span class="ln">    <span class="t-t">StorageServer</span>* ss = <span class="t-f">get_storage_server</span>(metadata-&gt;storage_server_id);</span><span class="ln">    </span><span class="ln">    <span class="t-c">// FAULT TOLERANCE: If primary SS is down, try replicas</span></span><span class="ln">    <span class="t-k">if</span> (!ss || !ss-&gt;is_active) {</span><span class="ln">        <span class="t-c">// ...</span></span><span class="ln">        <span class="t-c">// Get replica SS IDs</span></span><span class="ln">        <span class="t-k">int</span> replica_ids[<span class="t-n">2</span>];</span><span class="ln">        <span class="t-k">int</span> num_replicas = <span class="t-f">get_file_replicas</span>(msg-&gt;filename, replica_ids, <span class="t-n">2</span>);</span><span class="ln">        </span><span class="ln">        <span class="t-k">bool</span> found_replica = <span class="t-k">false</span>;</span><span class="ln">        <span class="t-k">for</span> (<span class="t-k">int</span> i = <span class="t-n">0</span>; i &lt; num_replicas; i++) {</span><span class="ln">            ss = <span class="t-f">get_storage_server</span>(replica_ids[i]);</span><span class="ln">            <span class="t-k">if</span> (ss &amp;&amp; ss-&gt;is_active) {</span><span class="ln">                <span class="t-f">log_message</span>(<span class="t-t">LOG_LEVEL_INFO</span>, <span class="t-s">&quot;Using replica SS %d for file %s&quot;</span>, ss-&gt;id, msg-&gt;filename);</span><span class="ln">                <span class="t-f">printf</span>(<span class="t-s">&quot;[FAILOVER] Using replica SS %d for '%s'\n&quot;</span>, ss-&gt;id, msg-&gt;filename);</span><span class="ln">                found_replica = <span class="t-k">true</span>;</span><span class="ln">                <span class="t-k">break</span>;</span><span class="ln">            }</span><span class="ln">        }</span><span class="ln">        <span class="t-c">// ...</span></span><span class="ln">    }</span><span class="ln">    </span><span class="ln">    <span class="t-c">// Return SS info to client</span></span><span class="ln">    <span class="t-t">SSInfoMsg</span> ss_info;</span><span class="ln">    <span class="t-f">strncpy</span>(ss_info.ss_ip, ss-&gt;ip, <span class="t-n">15</span>);</span><span class="ln">    ss_info.client_port = ss-&gt;client_port;</span><span class="ln">    </span><span class="ln">    <span class="t-f">send_message</span>(client-&gt;sockfd, <span class="t-t">MSG_SS_INFO</span>, &amp;ss_info, <span class="t-k">sizeof</span>(ss_info));</span></code></pre>
+  <p class="code-note">Primary first, then replicas; the client gets back whichever address is alive.</p>
+</figure>
+  </div>
+</div>
+</section>
+</div>
+
+<section class="p-sec  "  aria-labelledby="what-the-client-can-do-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="what-the-client-can-do-h" data-reveal>What the client can do</h2></div>
+  <div class="p-sec-body">
+  <div class="table-wrap" data-reveal><table class="results">
+  <caption>Commands as client/command_parser.c implements them; they're case-insensitive</caption>
+  <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+  <tbody><tr><td><span class="mono">VIEW -a -l</span></td><td>List files, all or with details</td></tr><tr><td><span class="mono">READ, STREAM</span></td><td>Read a file, or stream it word by word</td></tr><tr><td><span class="mono">CREATE, DELETE, INFO</span></td><td>Manage a file; only the owner deletes</td></tr><tr><td><span class="mono">WRITE file n</span></td><td>Edit sentence n, word by word, until ETIRW</td></tr><tr><td><span class="mono">UNDO</span></td><td>Revert the last change to a file</td></tr><tr><td><span class="mono">ADDACCESS -R|-W, REMACCESS</span></td><td>Grant or remove access for a user</td></tr><tr><td><span class="mono">EXEC</span></td><td>Run each sentence of a file as a shell command</td></tr><tr><td><span class="mono">CHECKPOINT, REVERT, VERSION, RESTORE</span></td><td>Snapshots and version history</td></tr><tr><td><span class="mono">REQUESTACCESS, APPROVE, DENY</span></td><td>Ask an owner for access, and answer</td></tr><tr><td><span class="mono">CREATEFOLDER, MOVE, VIEWFOLDER</span></td><td>Folders</td></tr></tbody>
+</table></div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="trade-offs-and-limits-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="trade-offs-and-limits-h" data-reveal>Trade-offs and limits</h2></div>
+  <div class="p-sec-body"><div class="decisions"><div class="decision" data-reveal="row">
+    <h3>Undo keeps one snapshot</h3>
+    <p>The snapshot is taken when a write starts, so undo reverts only the latest change to a file, and other people's interleaved writes aren't part of it.</p>
+    <p class="src">storage_server/ss_server.c</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>A simple cache, on purpose</h3>
+    <p>Metadata lookups go through a 100-entry LRU cache built as a linked list with linear search. A comment notes a hash map would replace it in production.</p>
+    <p class="src">name_server/cache.c</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>One name server</h3>
+    <p>Every request starts at the name server, so it's the bottleneck and a single point of failure. The README suggests clustering it and moving metadata to a database at scale.</p>
+    <p class="src">README.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Locks live in memory</h3>
+    <p>Sentence locks are an in-memory list on each storage server, so they don't survive a restart.</p>
+    <p class="src">storage_server/sentence_lock.c</p>
+  </div></div></div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="built-with-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="built-with-h" data-reveal>Built with</h2></div>
+  <div class="p-sec-body"><dl class="stack" data-reveal><div><dt>Language</dt><dd>C99 with POSIX sockets</dd></div><div><dt>Concurrency</dt><dd>pthreads: detached threads, mutexes, a read-write lock</dd></div><div><dt>I/O</dt><dd>select() with a 1 second timeout, popen for EXEC</dd></div><div><dt>Storage</dt><dd>Plain files: metadata, ACLs, versions and logs on disk</dd></div></dl></div>
+</section>
+
+<nav class="pnav" aria-label="More projects">
+  <a class="pnav-cell tone-violet" href="../../projects/event-platform/">
+      <span class="pnav-dir small muted">Previous project</span>
+      <span class="pnav-title">Felicity event platform</span>
+      <span class="pnav-what small muted">MongoDB, Express, React</span>
+    </a>
+  <a class="pnav-cell pnav-all" href="../../#work">
+    <span class="pnav-dir small muted">Back to</span>
+    <span class="pnav-title">All work</span>
+  </a>
+  <a class="pnav-cell tone-coral" href="../../projects/livequiz/">
+      <span class="pnav-dir small muted">Next project</span>
+      <span class="pnav-title">LiveQuiz</span>
+      <span class="pnav-what small muted">Go, Redis, WebSockets</span>
+    </a>
+</nav>
+</main>
+<footer class="tiles" aria-label="Footer">
+  <div class="tile tile-word" aria-hidden="true"><span>Kambhampati</span></div>
+  <a class="tile tile-go" href="mailto:krithik3001@gmail.com?subject=Hello%20from%20your%20site">
+    <p>Write to me</p>
+    <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" aria-hidden="true"><path d="M14 42 42 14M20 14h22v22"/></svg>
+  </a>
+  <div class="tile tile-statement">
+    <p>I build systems that keep their state straight when many things happen at once.</p>
+    <div class="small muted">
+      <p>© 2026 Krithik Kambhampati. Site built by hand in HTML, CSS and GSAP.</p>
+      
+    </div>
+  </div>
+  <nav class="tile tile-nav" aria-label="Footer">
+    <p class="tile-label">Pages</p>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../#work">Work</a></li>
+      <li><a href="../../#record">Record</a></li>
+      <li><a href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <div class="tile tile-time">
+    <p class="tile-label">Hyderabad</p>
+    <p><span class="clock" data-clock>IST</span><br><span class="small muted">India Standard Time</span></p>
+  </div>
+  <div class="tile tile-mail">
+    <p class="tile-label">Email</p>
+    <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
+  </div>
+</footer>
+</body>
+</html>

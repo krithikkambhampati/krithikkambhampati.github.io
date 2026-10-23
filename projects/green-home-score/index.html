@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Green Home Score: home energy scoring with LightGBM, by Krithik Kambhampati</title>
+<meta name="description" content="Scores how energy-efficient a UK home is and which retrofits are worth it, from models trained on 2.9 million real certificates. Team 37 at Megathon X, for Lloyds.">
+<meta property="og:title" content="Green Home Score: home energy scoring with LightGBM, by Krithik Kambhampati">
+<meta property="og:description" content="Scores how energy-efficient a UK home is and which retrofits are worth it, from models trained on 2.9 million real certificates. Team 37 at Megathon X, for Lloyds.">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0B0D11">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Mona+Sans:wdth,wght@100..125,300..700&display=swap">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<link rel="stylesheet" href="../../assets/css/project.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+<script src="../../assets/js/project.js" defer></script>
+</head>
+<body class="project tone-teal">
+<a class="skip" href="#main">Skip to the write-up</a>
+<header class="bar">
+  <div class="bar-row">
+    <a class="wordmark" href="../../">Krithik<span class="wm-last"> Kambhampati</span></a>
+    <p class="crumb"><a href="../../#work">work</a> / <b>green-home-score</b></p>
+    <nav class="bar-nav" aria-label="Site">
+      <a href="../../#work">Work</a>
+      <a href="../../#record">Record</a>
+      <a href="../../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main class="p-main" id="main">
+
+<section class="p-hero" aria-labelledby="p-title">
+  <div class="p-title-block">
+    <h1 class="p-title" id="p-title" style="view-transition-name: t-green-home-score"><span class="dot" aria-hidden="true"></span>Green Home Score</h1>
+    <p class="p-lede">A UK home gets a 0 to 100 score, a ranked list of retrofits and an estimate of what each would save. The models are trained on 2.9 million real energy certificates, and a language model explains the result without ever producing a number of its own.</p>
+  </div>
+  <dl class="p-meta">
+    <div><dt>Project</dt><dd>Megathon X, Team 37, Oct 2026</dd></div>
+    <div><dt>Context</dt><dd>Megathon X: Singularity, problem statement 2, set by Lloyds</dd></div><div><dt>Team</dt><dd>Team 37. The work was split into five parts: data, engine, models, LLM and product.</dd></div><div><dt>Built with</dt><dd>Python, LightGBM, FastAPI, React, gpt-oss-120b on Groq</dd></div>
+    <div class="p-meta-links"><dt>Links</dt><dd class="p-links">
+      <a class="btn btn-small btn-accent" href="https://github.com/krithikkambhampati/Megathon-2026" target="_blank" rel="noopener">Source on GitHub</a>
+    </dd></div>
+  </dl>
+  <figure class="p-visual"><div class="shutter"><img src="../../assets/img/green-home/architecture.webp" alt="Architecture diagram in five columns: data foundation, models, core engine, LLM layer and product, connected by labelled arrows." width="2300" height="1200" decoding="async"></div>
+<figcaption>The architecture from the repo: public data feeds four model groups, the engine computes every number, the LLM layer only explains them, and a number checker sits between the LLM and the screen.</figcaption></figure>
+</section>
+
+<section class="p-sec  "  aria-labelledby="the-problem-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="the-problem-h" data-reveal>The problem</h2></div>
+  <div class="p-sec-body">
+  <div class="prose" data-reveal><p>Lloyds asked for a way to tell a homeowner how green their home is and what to do about it. That needs three things a single model can't give honestly: a score people can audit, predictions of what each change would save, and a plain-language explanation.</p><p>The team's answer splits those jobs apart. The score is arithmetic with published weights, so it can be checked by hand. The predictions come from models trained on real certificates and sales. The explanation comes from a language model that is handed the computed facts and checked against them before anything reaches the screen.</p></div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="a-score-you-can-check-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="a-score-you-can-check-h" data-reveal>A score you can check</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>The Green Home Score is a fixed weighted sum of seven sub-scores: energy efficiency 25%, consumption intensity 20%, insulation 15%, heating 15%, glazing 10%, renewables 10% and smart controls 5%. The problem statement set the weights, so the team didn't tune them. No model and no LLM computes the score.</p><p>Consumption intensity is a straight line between the 5th and 95th percentile of the training homes, 85 and 230 kWh per square metre a year. When an owner doesn't know an answer, the engine doesn't guess. It tries every possible value of each unknown field and reports the score as a range.</p></div>
+      <div class="lab" data-lab="intensity" data-reveal>
+        <div class="lab-row"><label for="intensity">Energy use per m² a year</label></div>
+        <div class="lab-row"><input id="intensity" type="range" min="40" max="300" step="1" value="160"><output class="lab-out" for="intensity" data-lab-out>160 kWh/m² gives a sub-score of <b>48.3</b></output></div>
+        <p class="small muted" style="margin-top:12px">Runs the same formula as <span class="mono">_intensity_sub_score</span>, with the repo's bounds.</p>
+      </div>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">greenhome/core/score.py</span><span class="spacer"></span><span>python</span></figcaption>
+  <pre class="code" style="--start:76"><code><span class="ln"><span class="t-k">def</span> <span class="t-f">_intensity_sub_score</span>(intensity_kwh_m2: <span class="t-t">float</span> | <span class="t-k">None</span>) -&gt; <span class="t-t">float</span> | <span class="t-k">None</span>:</span><span class="ln">    <span class="t-k">if</span> intensity_kwh_m2 <span class="t-k">is</span> <span class="t-k">None</span>:</span><span class="ln">        <span class="t-k">return</span> <span class="t-k">None</span></span><span class="ln">    b = <span class="t-f">get_config</span>().intensity_bounds</span><span class="ln">    frac = (b.i_worst - intensity_kwh_m2) / (b.i_worst - b.i_best)</span><span class="ln">    <span class="t-k">return</span> <span class="t-n">100</span> * <span class="t-f">min</span>(<span class="t-f">max</span>(frac, <span class="t-n">0.0</span>), <span class="t-n">1.0</span>)</span></code></pre>
+  <p class="code-note">The intensity sub-score: a clipped line between the train-split bounds.</p>
+</figure>
+  </div>
+  <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">greenhome/core/score.py</span><span class="spacer"></span><span>python</span></figcaption>
+  <pre class="code" style="--start:129"><code><span class="ln"><span class="t-k">def</span> <span class="t-f">_ranges</span>(</span><span class="ln">    values: <span class="t-t">dict</span>[<span class="t-t">str</span>, <span class="t-t">Any</span>], unknown: <span class="t-t">set</span>[<span class="t-t">str</span>]</span><span class="ln">) -&gt; <span class="t-t">tuple</span>[<span class="t-t">dict</span>[<span class="t-t">str</span>, <span class="t-t">tuple</span>[<span class="t-t">float</span>, <span class="t-t">float</span>]], <span class="t-t">tuple</span>[<span class="t-t">int</span>, <span class="t-t">int</span>]]:</span><span class="ln">    <span class="t-s">&quot;&quot;&quot;Exact enumeration over every value of each unknown score field (and an imputed rating ± spread).&quot;&quot;&quot;</span></span><span class="ln">    cfg = <span class="t-f">get_config</span>()</span><span class="ln">    options = {</span><span class="ln">        f: [e.value <span class="t-k">for</span> e <span class="t-k">in</span> _ENUMS[f]] <span class="t-k">for</span> f <span class="t-k">in</span> cfg.engine.validation.score_feature_fields <span class="t-k">if</span> f <span class="t-k">in</span> unknown</span><span class="ln">    }</span><span class="ln">    <span class="t-k">if</span> <span class="t-s">&quot;energy_rating&quot;</span> <span class="t-k">in</span> unknown:</span><span class="ln">        bands = [r.value <span class="t-k">for</span> r <span class="t-k">in</span> <span class="t-t">EnergyRating</span>]</span><span class="ln">        i, k = bands.<span class="t-f">index</span>(values[<span class="t-s">&quot;energy_rating&quot;</span>]), cfg.score.score_range[<span class="t-s">&quot;rating_band_spread&quot;</span>]</span><span class="ln">        options[<span class="t-s">&quot;energy_rating&quot;</span>] = bands[<span class="t-f">max</span>(i - k, <span class="t-n">0</span>) : i + k + <span class="t-n">1</span>]</span><span class="ln">    totals: <span class="t-t">list</span>[<span class="t-t">int</span>] = []</span><span class="ln">    seen: <span class="t-t">dict</span>[<span class="t-t">str</span>, <span class="t-t">list</span>[<span class="t-t">float</span>]] = {k: [] <span class="t-k">for</span> k <span class="t-k">in</span> _COMPONENT_FIELDS}</span><span class="ln">    <span class="t-k">for</span> combo <span class="t-k">in</span> itertools.<span class="t-f">product</span>(*options.<span class="t-f">values</span>()):</span><span class="ln">        subs = <span class="t-f">_sub_scores</span>(values | <span class="t-t">dict</span>(<span class="t-f">zip</span>(options, combo, strict=<span class="t-k">True</span>)))</span><span class="ln">        <span class="t-k">if</span> <span class="t-k">None</span> <span class="t-k">in</span> subs.<span class="t-f">values</span>():  <span class="t-c"># e.g. a roof type that needs a roof_insulation we don't have</span></span><span class="ln">            <span class="t-k">continue</span></span><span class="ln">        totals.<span class="t-f">append</span>(<span class="t-f">round_score</span>(<span class="t-f">sum</span>(<span class="t-f">_contributions</span>(subs).<span class="t-f">values</span>())))</span><span class="ln">        <span class="t-k">for</span> k, v <span class="t-k">in</span> subs.<span class="t-f">items</span>():</span><span class="ln">            seen[k].<span class="t-f">append</span>(v)</span><span class="ln">    varied = [k <span class="t-k">for</span> k, fs <span class="t-k">in</span> _COMPONENT_FIELDS.<span class="t-f">items</span>() <span class="t-k">if</span> <span class="t-t">set</span>(fs) &amp; options.<span class="t-f">keys</span>()]</span><span class="ln">    <span class="t-k">return</span> {k: (<span class="t-f">min</span>(seen[k]), <span class="t-f">max</span>(seen[k])) <span class="t-k">for</span> k <span class="t-k">in</span> varied}, (<span class="t-f">min</span>(totals), <span class="t-f">max</span>(totals))</span></code></pre>
+  <p class="code-note">Unknown answers become a range by exact enumeration over every value they could take, with the imputed rating allowed to move one band either way.</p>
+</figure>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="four-models-one-feature-builder-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="four-models-one-feature-builder-h" data-reveal>Four models, one feature builder</h2></div>
+  <div class="p-sec-body">
+  <div class="table-wrap" data-reveal><table class="results">
+  <caption>Trained with LightGBM. One feature builder, greenhome.ml.features, serves both training and inference.</caption>
+  <thead><tr><th>Model</th><th>Predicts</th><th>Trained on</th><th class="num">Files</th></tr></thead>
+  <tbody><tr><td>M4 rating</td><td>SAP rating and band</td><td>2.89 million real EPC certificates</td><td class="num">1</td></tr><tr><td>M1 energy</td><td>Energy after a retrofit package, per fuel</td><td>305,000 simulated home and package outcomes</td><td class="num">2</td></tr><tr><td>M2 recommender</td><td>Whether an assessor would suggest each of 7 retrofits</td><td>9.4 million real assessor labels</td><td class="num">7</td></tr><tr><td>M3 value</td><td>Sale price range</td><td>618,000 real Land Registry sales, 20-member ensemble</td><td class="num">20</td></tr></tbody>
+</table></div>
+  <ul class="points" data-reveal><li>Monotone constraints keep the models physically sensible: better insulation can never lower the predicted rating, and no retrofit can raise predicted gas use.</li><li>Altogether 30 files, 18,255 trees and about 61 MB, loaded once at start-up.</li><li>The data pipeline streams the 98 GB national certificate archive one file at a time.</li></ul>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="an-llm-that-can-t-invent-numbers-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="an-llm-that-can-t-invent-numbers-h" data-reveal>An LLM that can't invent numbers</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>The language model only ever sees a fact sheet: numbers already computed by the engine, formatted exactly as the screens show them. Its reply goes through a checker that pulls out every number and matches it against the fact sheet, including whether a change goes up or down.</p><p>If the check fails, the model gets one retry. If that fails too, or the model is unavailable, the page shows a template answer instead. Each answer has a 25 second budget, and the model is never on the critical path.</p></div>
+      <div class="table-wrap" data-reveal><table class="results">
+  <caption>80 test scenarios, gpt-oss-120b, reports/llm_eval.md</caption>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody><tr><td>Numbers grounded in facts, first draft</td><td class="num">70.5%</td></tr><tr class="is-best"><td>Numbers grounded in facts, answer shown</td><td class="num">100%</td></tr><tr><td>Intent and scenario accuracy</td><td class="num">100%</td></tr><tr><td>Median and p95 latency</td><td class="num">1.83 s, 3.63 s</td></tr></tbody>
+</table></div>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">greenhome/llm/checker.py</span><span class="spacer"></span><span>python</span></figcaption>
+  <pre class="code" style="--start:369"><code><span class="ln"><span class="t-k">def</span> <span class="t-f">check</span>(text: <span class="t-t">str</span>, sheet: <span class="t-t">FactSheet</span>, *, extra_allowed: <span class="t-t">list</span>[<span class="t-t">Fact</span>] | <span class="t-k">None</span> = <span class="t-k">None</span>) -&gt; <span class="t-t">CheckReport</span>:</span><span class="ln">    <span class="t-c"># ...</span></span><span class="ln">    allowed = <span class="t-f">_allowed</span>(sheet, <span class="t-t">list</span>(extra_allowed <span class="t-k">or</span> []))</span><span class="ln">    found: <span class="t-t">list</span>[<span class="t-t">str</span>] = []</span><span class="ln">    unsupported: <span class="t-t">list</span>[<span class="t-t">str</span>] = []</span><span class="ln">    <span class="t-k">for</span> m <span class="t-k">in</span> <span class="t-f">extract_numbers</span>(text):</span><span class="ln">        found.<span class="t-f">append</span>(m.raw)</span><span class="ln">        hits = <span class="t-f">_matches</span>(m, allowed) <span class="t-k">or</span> (<span class="t-f">_hedged</span>(m, text) <span class="t-k">and</span> <span class="t-f">_matches</span>(m, allowed, approx=<span class="t-k">True</span>))</span><span class="ln">        <span class="t-k">if</span> <span class="t-k">not</span> hits:</span><span class="ln">            <span class="t-k">if</span> <span class="t-k">not</span> <span class="t-f">_structural</span>(m, text):</span><span class="ln">                unsupported.<span class="t-f">append</span>(m.raw)</span><span class="ln">            <span class="t-k">continue</span></span><span class="ln">        <span class="t-k">if</span> <span class="t-f">all</span>(h.direction == <span class="t-s">&quot;up&quot;</span> <span class="t-k">for</span> h <span class="t-k">in</span> hits) <span class="t-k">and</span> <span class="t-k">not</span> <span class="t-f">_direction_ok</span>(text, m.span):</span><span class="ln">            unsupported.<span class="t-f">append</span>(f<span class="t-s">&quot;{m.raw} (direction)&quot;</span>)</span><span class="ln">        <span class="t-k">elif</span> <span class="t-f">all</span>(h.direction == <span class="t-s">&quot;down&quot;</span> <span class="t-k">for</span> h <span class="t-k">in</span> hits) <span class="t-k">and</span> <span class="t-k">not</span> <span class="t-f">_direction_ok</span>(text, m.span, <span class="t-s">&quot;down&quot;</span>):</span><span class="ln">            unsupported.<span class="t-f">append</span>(f<span class="t-s">&quot;{m.raw} (saving)&quot;</span>)</span><span class="ln">    <span class="t-k">for</span> rx <span class="t-k">in</span> _NEVER_CLAIMS:</span><span class="ln">        unsupported += [f<span class="t-s">&quot;{mt.group(0).strip()} (no such figure)&quot;</span> <span class="t-k">for</span> mt <span class="t-k">in</span> rx.<span class="t-f">finditer</span>(text)]</span><span class="ln">    banned = <span class="t-f">banned_phrases</span>(text)</span><span class="ln">    banned += [f<span class="t-s">&quot;recommending {n}{INFEASIBLE_SUFFIX}&quot;</span> <span class="t-k">for</span> n <span class="t-k">in</span> <span class="t-f">recommended_infeasible</span>(text, sheet)]</span><span class="ln">    <span class="t-k">return</span> <span class="t-t">CheckReport</span>(</span><span class="ln">        passed=<span class="t-k">not</span> unsupported <span class="t-k">and</span> <span class="t-k">not</span> banned,</span><span class="ln">        <span class="t-c"># ...</span></span><span class="ln">    )</span></code></pre>
+  <p class="code-note">Every number in a reply must match a fact, and must move in the same direction.</p>
+</figure>
+  </div>
+</div>
+</section>
+
+<div class="p-field">
+<section class="p-sec  "  aria-labelledby="results-on-held-out-homes-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="results-on-held-out-homes-h" data-reveal>Results on held-out homes</h2></div>
+  <div class="p-sec-body">
+  <div class="table-wrap" data-reveal><table class="results">
+  <caption>Test split, against the repo's baselines (reports/evaluation.md)</caption>
+  <thead><tr><th>Model</th><th>Measure</th><th class="num">Model</th><th class="num">Baseline</th></tr></thead>
+  <tbody><tr><td>M4 rating</td><td>Mean absolute error, SAP points</td><td class="num">4.68</td><td class="num">7.99</td></tr><tr><td>M4 rating</td><td>Within one band</td><td class="num">98.7%</td><td class="num"></td></tr><tr><td>M1 energy</td><td>Mean absolute error of net saving, kWh a year</td><td class="num">249.4</td><td class="num">415.2</td></tr><tr><td>M1 energy</td><td>Same, multi-retrofit packages</td><td class="num">286.0</td><td class="num">645.2</td></tr><tr><td>M3 value</td><td>Median absolute error of price</td><td class="num">15.7%</td><td class="num">18.5%</td></tr></tbody>
+</table></div>
+  <div class="table-wrap" data-reveal><table class="results">
+  <caption>M2 recommender: ROC AUC per retrofit, against recommending by popularity</caption>
+  <thead><tr><th>Retrofit</th><th class="num">Model</th><th class="num">Popularity</th></tr></thead>
+  <tbody><tr><td>Loft insulation</td><td class="num">0.843</td><td class="num">0.561</td></tr><tr><td>Cavity wall insulation</td><td class="num">0.736</td><td class="num">0.586</td></tr><tr><td>Solid wall insulation</td><td class="num">0.755</td><td class="num">0.624</td></tr><tr><td>Double glazing</td><td class="num">0.844</td><td class="num">0.523</td></tr><tr><td>Air source heat pump</td><td class="num">0.995</td><td class="num">0.784</td></tr><tr><td>Solar PV</td><td class="num">0.935</td><td class="num">0.592</td></tr><tr><td>Smart thermostat</td><td class="num">0.968</td><td class="num">0.604</td></tr></tbody>
+</table></div>
+  <div class="figs">
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/green-home/retrofit-gain.webp" alt="Bar chart of observed median SAP gain from single-change repeat certificates." width="1200" height="512" loading="lazy" decoding="async">
+  <figcaption>What each retrofit really added on homes certified twice: solid wall insulation +11 SAP points, a heat pump +10, smart thermostats +4.</figcaption>
+</figure>
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/green-home/band-mix.webp" alt="Bar chart comparing EPC band mix of the sample with England and Wales." width="1200" height="512" loading="lazy" decoding="async">
+  <figcaption>The sample's band mix against the national picture: C and D dominate both.</figcaption>
+</figure>
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/green-home/calibration-gas.webp" alt="Dot plot of synthetic against real annual gas use by property type and age band." width="1200" height="960" loading="lazy" decoding="async">
+  <figcaption>Synthetic monthly energy calibrated to NEED: medians line up across property types and ages.</figcaption>
+</figure>
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/green-home/parse-coverage.webp" alt="Horizontal bars of how many certificates each parsed field covers." width="1200" height="544" loading="lazy" decoding="async">
+  <figcaption>Free-text certificate fields turned into categories: 99.9% of glazing descriptions, down to 89.9% for wall type.</figcaption>
+</figure>
+  </div>
+</div>
+</section>
+</div>
+
+<section class="p-sec  "  aria-labelledby="decisions-the-repo-explains-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="decisions-the-repo-explains-h" data-reveal>Decisions the repo explains</h2></div>
+  <div class="p-sec-body"><div class="decisions"><div class="decision" data-reveal="row">
+    <h3>Simulated labels without circularity</h3>
+    <p>Energy savings aren't labelled anywhere, so the team simulated them. The simulator uses hidden household factors like thermostat setpoint and occupancy, so the model can't simply learn the simulator back.</p>
+    <p class="src">docs/MODELS.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Each fuel predicts its own target</h3>
+    <p>Normalising both fuels by combined energy leaked errors across them: loft insulation appeared to raise electricity use.</p>
+    <p class="src">docs/MODELS.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Value is associational, not causal</h3>
+    <p>The value model never sees fields a retrofit can change. When it did, it learned confounded premiums, like +10% for a package that left the band unchanged. Uplift is shown as indicative.</p>
+    <p class="src">docs/MODELS.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Heat pumps need recent certificates</h3>
+    <p>Assessment software only started recommending heat pumps in 2025, so the recommender for them trains on 2025 certificates only.</p>
+    <p class="src">docs/MODELS.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Savings that add up exactly</h3>
+    <p>Retrofits are applied as growing prefix packages, so each one's incremental saving sums to the package total. An assertion checks the drift.</p>
+    <p class="src">greenhome/core/orchestrator.py</p>
+  </div></div></div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="where-it-falls-short-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="where-it-falls-short-h" data-reveal>Where it falls short</h2></div>
+  <div class="p-sec-body">
+  <ul class="points" data-reveal><li>On ordering retrofits, recommending by popularity still wins: NDCG@3 of 0.874 against the model's 0.859, because assessors list measures in a fixed order. The model's strength is picking which homes need a measure.</li><li>Against real NEED data, the model overstates gas savings from cavity wall insulation: 14.1% against an observed 8.4 to 9.2%.</li><li>The sample covers 11 local authorities, is city-heavy, and covers England and Wales only.</li><li>23% of repeat-certificate pairs were thrown out as inconsistent before training.</li></ul>
+  <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">greenhome/core/orchestrator.py</span><span class="spacer"></span><span>python</span></figcaption>
+  <pre class="code" style="--start:277"><code><span class="ln">        packages = [<span class="t-f">frozenset</span>(order[: k + <span class="t-n">1</span>]) <span class="t-k">for</span> k <span class="t-k">in</span> <span class="t-f">range</span>(<span class="t-f">len</span>(order))] + [<span class="t-f">frozenset</span>(candidates)]</span><span class="ln">        afters = <span class="t-k">self</span>.models.energy.<span class="t-f">predict_after</span>([clean] * <span class="t-f">len</span>(packages), packages)</span><span class="ln">        prev, incremental = baseline, {}</span><span class="ln">        <span class="t-k">for</span> r, after <span class="t-k">in</span> <span class="t-f">zip</span>(order, afters[:-<span class="t-n">1</span>], strict=<span class="t-k">True</span>):</span><span class="ln">            incremental[r] = <span class="t-f">_saving</span>(prev, after)</span><span class="ln">            prev = after</span><span class="ln">        saving = <span class="t-f">_saving</span>(baseline, prev)</span><span class="ln">        drift = <span class="t-f">abs</span>(<span class="t-f">sum</span>(s.net_kwh <span class="t-k">for</span> s <span class="t-k">in</span> incremental.<span class="t-f">values</span>()) - saving.net_kwh)</span><span class="ln">        <span class="t-k">assert</span> drift &lt;= _TELESCOPE_TOL_KWH, f<span class="t-s">&quot;incremental savings drift {drift} kWh&quot;</span></span></code></pre>
+  <p class="code-note">Prefix packages make incremental savings telescope to the package total.</p>
+</figure>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="built-with-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="built-with-h" data-reveal>Built with</h2></div>
+  <div class="p-sec-body"><dl class="stack" data-reveal><div><dt>Models and data</dt><dd>LightGBM 4.7, scikit-learn, pandas, Polars, PyArrow</dd></div><div><dt>Engine and API</dt><dd>pydantic, FastAPI, Uvicorn, SQLite</dd></div><div><dt>LLM</dt><dd>gpt-oss-120b and 20b on Groq, Ollama offline</dd></div><div><dt>Front end</dt><dd>React 18 with htm, no build step</dd></div><div><dt>Testing</dt><dd>pytest, Hypothesis property tests, Ruff</dd></div></dl></div>
+</section>
+
+<nav class="pnav" aria-label="More projects">
+  <a class="pnav-cell tone-coral" href="../../projects/livequiz/">
+      <span class="pnav-dir small muted">Previous project</span>
+      <span class="pnav-title">LiveQuiz</span>
+      <span class="pnav-what small muted">Go, Redis, WebSockets</span>
+    </a>
+  <a class="pnav-cell pnav-all" href="../../#work">
+    <span class="pnav-dir small muted">Back to</span>
+    <span class="pnav-title">All work</span>
+  </a>
+  <a class="pnav-cell tone-amber" href="../../projects/garbage-monitoring/">
+      <span class="pnav-dir small muted">Next project</span>
+      <span class="pnav-title">Garbage monitoring on the edge</span>
+      <span class="pnav-what small muted">YOLO, Android, Qualcomm</span>
+    </a>
+</nav>
+</main>
+<footer class="tiles" aria-label="Footer">
+  <div class="tile tile-word" aria-hidden="true"><span>Kambhampati</span></div>
+  <a class="tile tile-go" href="mailto:krithik3001@gmail.com?subject=Hello%20from%20your%20site">
+    <p>Write to me</p>
+    <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" aria-hidden="true"><path d="M14 42 42 14M20 14h22v22"/></svg>
+  </a>
+  <div class="tile tile-statement">
+    <p>I build systems that keep their state straight when many things happen at once.</p>
+    <div class="small muted">
+      <p>© 2026 Krithik Kambhampati. Site built by hand in HTML, CSS and GSAP.</p>
+      
+    </div>
+  </div>
+  <nav class="tile tile-nav" aria-label="Footer">
+    <p class="tile-label">Pages</p>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../#work">Work</a></li>
+      <li><a href="../../#record">Record</a></li>
+      <li><a href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <div class="tile tile-time">
+    <p class="tile-label">Hyderabad</p>
+    <p><span class="clock" data-clock>IST</span><br><span class="small muted">India Standard Time</span></p>
+  </div>
+  <div class="tile tile-mail">
+    <p class="tile-label">Email</p>
+    <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
+  </div>
+</footer>
+</body>
+</html>

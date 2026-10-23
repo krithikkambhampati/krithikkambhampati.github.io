@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LiveQuiz: real-time multiplayer trivia in Go, by Krithik Kambhampati</title>
+<meta name="description" content="Kahoot-style multiplayer trivia. A host shares a four-character room code and everyone sees the same question, clock and leaderboard at the same moment.">
+<meta property="og:title" content="LiveQuiz: real-time multiplayer trivia in Go, by Krithik Kambhampati">
+<meta property="og:description" content="Kahoot-style multiplayer trivia. A host shares a four-character room code and everyone sees the same question, clock and leaderboard at the same moment.">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0B0D11">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Mona+Sans:wdth,wght@100..125,300..700&display=swap">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<link rel="stylesheet" href="../../assets/css/project.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+<script src="../../assets/js/project.js" defer></script>
+</head>
+<body class="project tone-coral">
+<a class="skip" href="#main">Skip to the write-up</a>
+<header class="bar">
+  <div class="bar-row">
+    <a class="wordmark" href="../../">Krithik<span class="wm-last"> Kambhampati</span></a>
+    <p class="crumb"><a href="../../#work">work</a> / <b>livequiz</b></p>
+    <nav class="bar-nav" aria-label="Site">
+      <a href="../../#work">Work</a>
+      <a href="../../#record">Record</a>
+      <a href="../../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main class="p-main" id="main">
+
+<section class="p-hero" aria-labelledby="p-title">
+  <div class="p-title-block">
+    <h1 class="p-title" id="p-title" style="view-transition-name: t-livequiz"><span class="dot" aria-hidden="true"></span>LiveQuiz</h1>
+    <p class="p-lede">A Kahoot-style quiz with no app and no sign-up. The host gets a four-character room code, everyone joins from a phone, and every question, clock, tally and leaderboard reaches all of them at the same moment, even across several servers.</p>
+  </div>
+  <dl class="p-meta">
+    
+    <div><dt>What runs it</dt><dd>Go with Gorilla WebSocket, Redis for state and pub/sub</dd></div><div><dt>Front end</dt><dd>Plain HTML, CSS and JavaScript, no build step</dd></div><div><dt>Tested by</dt><dd>A load tester that plays full games with simulated players</dd></div>
+    <div class="p-meta-links"><dt>Links</dt><dd class="p-links">
+      <a class="btn btn-small btn-accent" href="https://github.com/krithikkambhampati/trivia-game" target="_blank" rel="noopener">Source on GitHub</a>
+    </dd></div>
+  </dl>
+  <figure class="p-visual"><div class="quiz-lab lab" data-quiz>
+  <div class="quiz-code">
+    <p class="quiz-code-chars" data-quiz-code aria-live="polite" aria-label="Room code">K7QX</p>
+    <button class="btn btn-small btn-ghost" type="button" data-quiz-new>New code</button>
+    <p class="small muted quiz-alpha">Room codes are drawn from ABCDEFGHJKLMNPQRSTUVWXYZ23456789, so nobody squints at O or 0.</p>
+  </div>
+  <div class="quiz-score">
+    <div class="lab-row">
+      <label for="q-limit">Time limit</label>
+      <select id="q-limit" data-quiz-limit>
+        <option value="10">10 s</option><option value="20" selected>20 s</option><option value="30">30 s</option><option value="60">60 s</option>
+      </select>
+      <label for="q-taken">Answered after</label>
+      <input id="q-taken" type="range" min="0" max="20" step="0.1" value="6" data-quiz-taken>
+    </div>
+    <svg class="diagram quiz-plot" viewBox="0 0 600 260" aria-hidden="true">
+      <rect width="600" height="260" fill="#13161C"/>
+      <path d="M60 40H570M60 130H570M60 220H570" stroke="rgba(237,240,243,.1)"/>
+      <text x="50" y="44" text-anchor="end" class="d-muted">1000</text><text x="50" y="134" text-anchor="end" class="d-muted">500</text><text x="50" y="224" text-anchor="end" class="d-muted">0</text>
+      <path class="d-line-tone" d="M60 40L570 130" stroke-width="3"/>
+      <path d="M60 220H570" stroke="#A0A8B3" stroke-width="2" stroke-dasharray="5 5"/>
+      <circle r="8" cx="213" cy="67" class="d-fill-tone" data-quiz-dot/>
+      <text x="570" y="250" text-anchor="end" class="d-muted">time limit</text><text x="60" y="250" class="d-muted">instant</text>
+    </svg>
+    <p class="lab-out" data-quiz-out aria-live="polite">Correct after 6.0 s of 20 s scores <b>850</b> points. A wrong answer scores 0.</p>
+  </div>
+</div><figcaption>Both run the repo's own logic: the room-code alphabet from generateRoomCode, and the points formula from scoreForAnswer.</figcaption></figure>
+</section>
+
+<section class="p-sec  "  aria-labelledby="what-has-to-stay-fair-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="what-has-to-stay-fair-h" data-reveal>What has to stay fair</h2></div>
+  <div class="p-sec-body">
+  <div class="prose" data-reveal><p>A quiz on a dozen phones is a small distributed system. Everyone must see a question at the same time, nobody's local clock should decide whether an answer counted, and two answers arriving in the same millisecond mustn't overwrite each other's score.</p><p>So the server owns everything. Phones only render what they're sent, and send back one thing: an answer.</p></div>
+  <ul class="points" data-reveal><li>The countdown is a time.AfterFunc on the server. A question always runs its full time, even if everyone has answered.</li><li>The question sent to phones leaves out the correct option. It only goes out with the results, so reading the network traffic doesn't help.</li><li>A player's first answer stands. A second one for the same question is ignored.</li><li>Faster correct answers score more, from 1000 points for an instant answer down to 500 at the buzzer.</li></ul>
+  <div class="p-split is-even">
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">game_loop.go</span><span class="spacer"></span><span>go</span></figcaption>
+  <pre class="code" style="--start:57"><code><span class="ln"><span class="t-k">const</span> answerPoints = <span class="t-n">1000</span> <span class="t-c">// max points for an instant correct answer</span></span><span class="ln"><span class="t-c">// ...</span></span><span class="ln"><span class="t-k">func</span> <span class="t-f">scoreForAnswer</span>(q <span class="t-t">Question</span>, answer <span class="t-t">SubmittedAnswer</span>) <span class="t-t">int</span> {</span><span class="ln">    <span class="t-k">if</span> !answer.<span class="t-t">Correct</span> {</span><span class="ln">        <span class="t-k">return</span> <span class="t-n">0</span></span><span class="ln">    }</span><span class="ln">    limit := time.<span class="t-t">Duration</span>(q.<span class="t-t">TimeLimitSec</span>) * time.<span class="t-t">Second</span></span><span class="ln">    <span class="t-k">if</span> limit &lt;= <span class="t-n">0</span> {</span><span class="ln">        <span class="t-k">return</span> answerPoints</span><span class="ln">    }</span><span class="ln">    timeTaken := time.<span class="t-t">Duration</span>(answer.<span class="t-t">TimeTakenMs</span>) * time.<span class="t-t">Millisecond</span></span><span class="ln">    fraction := <span class="t-n">1.0</span> - <span class="t-t">float64</span>(timeTaken)/<span class="t-t">float64</span>(limit)</span><span class="ln">    <span class="t-k">if</span> fraction &lt; <span class="t-n">0</span> {</span><span class="ln">        fraction = <span class="t-n">0</span></span><span class="ln">    }</span><span class="ln">    <span class="t-k">return</span> <span class="t-t">int</span>(<span class="t-t">float64</span>(answerPoints/<span class="t-n">2</span>) + fraction*<span class="t-t">float64</span>(answerPoints/<span class="t-n">2</span>))</span><span class="ln">}</span></code></pre>
+  <p class="code-note">Half the points for being right, half for being quick.</p>
+</figure>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">game.go</span><span class="spacer"></span><span>go</span></figcaption>
+  <pre class="code" style="--start:61"><code><span class="ln"><span class="t-k">func</span> <span class="t-f">generateRoomCode</span>() <span class="t-t">string</span> {</span><span class="ln">    <span class="t-k">const</span> chars = <span class="t-s">&quot;ABCDEFGHJKLMNPQRSTUVWXYZ23456789&quot;</span> <span class="t-c">// no O/0/I/1 to avoid confusion</span></span><span class="ln">    b := <span class="t-f">make</span>([]<span class="t-t">byte</span>, <span class="t-n">4</span>)</span><span class="ln">    <span class="t-k">for</span> i := <span class="t-k">range</span> b {</span><span class="ln">        b[i] = chars[rand.<span class="t-t">Intn</span>(<span class="t-f">len</span>(chars))]</span><span class="ln">    }</span><span class="ln">    <span class="t-k">return</span> <span class="t-t">string</span>(b)</span><span class="ln">}</span></code></pre>
+  <p class="code-note">Four characters, 32 symbols, retried against Redis on a collision.</p>
+</figure>
+  </div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="state-every-server-shares-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="state-every-server-shares-h" data-reveal>State every server shares</h2></div>
+  <div class="p-sec-body">
+  <figure class="p-fig" data-reveal="mask"><svg class="diagram" viewBox="0 0 1100 420" role="img" aria-label="Two server instances share one Redis: game state lives under game:CODE and broadcasts go through the channel room:CODE:events, so players on different instances see the same events.">
+  <rect width="1100" height="420" fill="#13161C"/>
+  
+    <rect class="d-box-tone" x="80" y="40" width="340" height="150" rx="4"/>
+    <text x="100" y="72">Go server, instance 1</text>
+    <text x="100" y="100" class="d-muted">POST /api/games, /join</text>
+    <text x="100" y="124" class="d-muted">GET /ws/{code}?player_id=</text>
+    <text x="100" y="156" class="d-muted">timer: time.AfterFunc</text>
+    <text x="100" y="178" class="d-muted">writePump per connection</text>
+    <rect class="d-box" x="110" y="320" width="80" height="60" rx="4"/><text x="150" y="356" text-anchor="middle" class="d-muted">phone</text><path class="d-line d-dash" d="M150 320V190"/><rect class="d-box" x="210" y="320" width="80" height="60" rx="4"/><text x="250" y="356" text-anchor="middle" class="d-muted">phone</text><path class="d-line d-dash" d="M250 320V190"/><rect class="d-box" x="310" y="320" width="80" height="60" rx="4"/><text x="350" y="356" text-anchor="middle" class="d-muted">phone</text><path class="d-line d-dash" d="M350 320V190"/>
+  
+    <rect class="d-box-tone" x="500" y="40" width="340" height="150" rx="4"/>
+    <text x="520" y="72">Go server, instance 2</text>
+    <text x="520" y="100" class="d-muted">POST /api/games, /join</text>
+    <text x="520" y="124" class="d-muted">GET /ws/{code}?player_id=</text>
+    <text x="520" y="156" class="d-muted">timer: time.AfterFunc</text>
+    <text x="520" y="178" class="d-muted">writePump per connection</text>
+    <rect class="d-box" x="530" y="320" width="80" height="60" rx="4"/><text x="570" y="356" text-anchor="middle" class="d-muted">phone</text><path class="d-line d-dash" d="M570 320V190"/><rect class="d-box" x="630" y="320" width="80" height="60" rx="4"/><text x="670" y="356" text-anchor="middle" class="d-muted">phone</text><path class="d-line d-dash" d="M670 320V190"/><rect class="d-box" x="730" y="320" width="80" height="60" rx="4"/><text x="770" y="356" text-anchor="middle" class="d-muted">phone</text><path class="d-line d-dash" d="M770 320V190"/>
+  
+  <rect class="d-box" x="880" y="40" width="190" height="150" rx="4"/>
+  <text x="900" y="72">Redis</text>
+  <text x="900" y="100" class="d-muted">game:CODE</text>
+  <text x="900" y="122" class="d-muted">JSON, 6 h TTL</text>
+  <text x="900" y="156" class="d-muted">room:CODE:events</text>
+  <text x="900" y="178" class="d-muted">pub/sub</text>
+  <path class="d-line-tone" d="M420 115H500M840 115H880"/>
+  <text x="430" y="104" class="d-muted">publish</text>
+  <path class="d-line-tone" d="M250 190 C 250 240, 975 240, 975 190"/>
+  <text x="520" y="258" class="d-muted">every instance subscribes and delivers to its own players</text>
+</svg><figcaption>Any instance can serve any player. A phone that reconnects to a different instance gets the current question replayed with the time it has left.</figcaption></figure>
+  <div class="prose" data-reveal><p>Each game is a single JSON document in Redis under its room code. Broadcasts don't go straight to sockets. They're published to the room's Redis channel, and every instance with players in that room delivers them. If publishing fails, the instance still delivers to its own players rather than dropping the message.</p><p>Each connection has a 16-message send buffer. A phone that falls that far behind misses messages rather than slowing everyone else down.</p></div>
+  <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">ws.go</span><span class="spacer"></span><span>go</span></figcaption>
+  <pre class="code" style="--start:90"><code><span class="ln"><span class="t-k">func</span> (r *room) <span class="t-f">subscribeLoop</span>() {</span><span class="ln">    pubsub := r.rdb.<span class="t-t">Subscribe</span>(ctx, <span class="t-f">roomChannel</span>(r.code))</span><span class="ln">    <span class="t-k">defer</span> pubsub.<span class="t-t">Close</span>()</span><span class="ln"> </span><span class="ln">    ch := pubsub.<span class="t-t">Channel</span>()</span><span class="ln">    <span class="t-k">for</span> redisMsg := <span class="t-k">range</span> ch {</span><span class="ln">        <span class="t-k">var</span> msg wsMessage</span><span class="ln">        <span class="t-k">if</span> err := json.<span class="t-t">Unmarshal</span>([]<span class="t-t">byte</span>(redisMsg.<span class="t-t">Payload</span>), &amp;msg); err != <span class="t-k">nil</span> {</span><span class="ln">            log.<span class="t-t">Println</span>(<span class="t-s">&quot;subscribeLoop: unmarshal error:&quot;</span>, err)</span><span class="ln">            <span class="t-k">continue</span></span><span class="ln">        }</span><span class="ln">        r.<span class="t-f">localBroadcast</span>(msg)</span><span class="ln">    }</span><span class="ln">}</span><span class="ln"> </span><span class="ln"><span class="t-c">// broadcast publishes a message to the room's Redis channel so it reaches</span></span><span class="ln"><span class="t-c">// every server instance with players in this room, not just this process.</span></span><span class="ln"><span class="t-c">// Callers (game_loop.go, handleWS) should always use this, never</span></span><span class="ln"><span class="t-c">// localBroadcast directly - localBroadcast is only for the subscriber loop.</span></span><span class="ln"><span class="t-k">func</span> (r *room) <span class="t-f">broadcast</span>(msg wsMessage) {</span><span class="ln">    data, err := json.<span class="t-t">Marshal</span>(msg)</span><span class="ln">    <span class="t-k">if</span> err != <span class="t-k">nil</span> {</span><span class="ln">        log.<span class="t-t">Println</span>(<span class="t-s">&quot;broadcast: marshal error:&quot;</span>, err)</span><span class="ln">        <span class="t-k">return</span></span><span class="ln">    }</span><span class="ln">    <span class="t-k">if</span> err := r.rdb.<span class="t-t">Publish</span>(ctx, <span class="t-f">roomChannel</span>(r.code), data).<span class="t-t">Err</span>(); err != <span class="t-k">nil</span> {</span><span class="ln">        log.<span class="t-t">Println</span>(<span class="t-s">&quot;broadcast: redis publish error, falling back to local-only:&quot;</span>, err)</span><span class="ln">        <span class="t-c">// If Redis is briefly unreachable, still deliver to players on this</span></span><span class="ln">        <span class="t-c">// instance rather than silently dropping the message everywhere.</span></span><span class="ln">        r.<span class="t-f">localBroadcast</span>(msg)</span><span class="ln">    }</span><span class="ln">}</span></code></pre>
+  
+</figure>
+</div>
+</section>
+
+<div class="p-field">
+<section class="p-sec  "  aria-labelledby="many-phones-one-document-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="many-phones-one-document-h" data-reveal>Many phones, one document</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>Joining, answering and leaving the lobby all read the game, change it and write it back. With many phones doing that at once, the writes race.</p><p>Those paths use Redis optimistic locking: WATCH the key, make the change, and commit in a transaction that fails if anyone else wrote first. A failed commit retries after a random 5 to 24 millisecond pause, up to 20 times for joins, so the retries don't all collide again.</p></div>
+      <div class="table-wrap" data-reveal><table class="results">
+  <caption>What the load tester checks on every run (loadtest/main.go)</caption>
+  <thead><tr><th>Check</th></tr></thead>
+  <tbody><tr><td>Every simulated player connected</td></tr><tr><td>The host received game_over after the expected rounds</td></tr><tr><td>Leaderboards are sorted, highest first</td></tr><tr><td>Each round adds 0 for a wrong or missing answer and more than 0 for a right one</td></tr><tr><td>Every player's final score matches the host's</td></tr></tbody>
+</table></div>
+      <div class="prose" data-reveal><p>According to the README, the load tester has already found a Redis contention problem in the join path, and helped fix it.</p></div>
+    </div>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">game.go</span><span class="spacer"></span><span>go</span></figcaption>
+  <pre class="code" style="--start:147"><code><span class="ln">    <span class="t-k">const</span> maxRetries = <span class="t-n">20</span></span><span class="ln">    <span class="t-k">for</span> i := <span class="t-n">0</span>; i &lt; maxRetries; i++ {</span><span class="ln">        err := rdb.<span class="t-t">Watch</span>(ctx, <span class="t-k">func</span>(tx *redis.<span class="t-t">Tx</span>) <span class="t-t">error</span> {</span><span class="ln">            data, err := tx.<span class="t-t">Get</span>(ctx, <span class="t-f">gameKey</span>(code)).<span class="t-t">Bytes</span>()</span><span class="ln">            <span class="t-c">// ...</span></span><span class="ln">            <span class="t-k">var</span> g <span class="t-t">Game</span></span><span class="ln">            <span class="t-k">if</span> err := json.<span class="t-t">Unmarshal</span>(data, &amp;g); err != <span class="t-k">nil</span> {</span><span class="ln">                <span class="t-k">return</span> err</span><span class="ln">            }</span><span class="ln">            <span class="t-k">if</span> g.<span class="t-t">Status</span> != <span class="t-s">&quot;lobby&quot;</span> {</span><span class="ln">                <span class="t-k">return</span> errors.<span class="t-t">New</span>(<span class="t-s">&quot;game already started&quot;</span>)</span><span class="ln">            }</span><span class="ln">            g.<span class="t-t">Players</span> = <span class="t-f">append</span>(g.<span class="t-t">Players</span>, p)</span><span class="ln">            data, err = <span class="t-f">encodeGame</span>(&amp;g)</span><span class="ln">            <span class="t-c">// ...</span></span><span class="ln">            _, err = tx.<span class="t-t">TxPipelined</span>(ctx, <span class="t-k">func</span>(pipe redis.<span class="t-t">Pipeliner</span>) <span class="t-t">error</span> {</span><span class="ln">                pipe.<span class="t-t">Set</span>(ctx, <span class="t-f">gameKey</span>(g.<span class="t-t">Code</span>), data, <span class="t-n">6</span>*time.<span class="t-t">Hour</span>)</span><span class="ln">                <span class="t-k">return</span> <span class="t-k">nil</span></span><span class="ln">            })</span><span class="ln">            <span class="t-c">// ...</span></span><span class="ln">        }, <span class="t-f">gameKey</span>(code))</span><span class="ln">        <span class="t-k">if</span> err == <span class="t-k">nil</span> {</span><span class="ln">            <span class="t-k">return</span> saved, &amp;p, <span class="t-k">nil</span></span><span class="ln">        }</span><span class="ln">        <span class="t-k">if</span> !errors.<span class="t-t">Is</span>(err, redis.<span class="t-t">TxFailedErr</span>) {</span><span class="ln">            <span class="t-k">return</span> <span class="t-k">nil</span>, <span class="t-k">nil</span>, err</span><span class="ln">        }</span><span class="ln">        <span class="t-c">// Contention: back off briefly with jitter before retrying,</span></span><span class="ln">        <span class="t-c">// instead of hammering WATCH again immediately.</span></span><span class="ln">        backoff := time.<span class="t-t">Duration</span>(rand.<span class="t-t">Intn</span>(<span class="t-n">20</span>)+<span class="t-n">5</span>) * time.<span class="t-t">Millisecond</span></span><span class="ln">        time.<span class="t-t">Sleep</span>(backoff)</span><span class="ln">    }</span><span class="ln">    <span class="t-k">return</span> <span class="t-k">nil</span>, <span class="t-k">nil</span>, errors.<span class="t-t">New</span>(<span class="t-s">&quot;failed to join game: too much contention&quot;</span>)</span></code></pre>
+  <p class="code-note">WATCH, change, commit; on conflict, back off with jitter and try again.</p>
+</figure>
+  </div>
+</div>
+</section>
+</div>
+
+<section class="p-sec  "  aria-labelledby="limits-the-readme-lists-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="limits-the-readme-lists-h" data-reveal>Limits the README lists</h2></div>
+  <div class="p-sec-body"><div class="decisions"><div class="decision" data-reveal="row">
+    <h3>No rate limiting</h3>
+    <p>Nothing stops a client from flooding the server with requests.</p>
+    <p class="src">README.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Custom quizzes are temporary</h3>
+    <p>They aren't saved, and there's no cap on their size.</p>
+    <p class="src">README.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Reconnecting is rough</h3>
+    <p>The server can replay state to a returning phone, but the page drops back to the join screen instead of showing that it's reconnecting.</p>
+    <p class="src">README.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>One process under test</h3>
+    <p>The load tester runs against a single instance, so the cross-instance pub/sub path isn't load-tested yet, and nor are latency or packet loss.</p>
+    <p class="src">README.md</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Open WebSocket origins</h3>
+    <p>Any origin may connect, which is fine for playing with friends and wrong for a public deployment.</p>
+    <p class="src">ws.go</p>
+  </div></div></div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="built-with-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="built-with-h" data-reveal>Built with</h2></div>
+  <div class="p-sec-body"><dl class="stack" data-reveal><div><dt>Server</dt><dd>Go 1.24, net/http routing, Gorilla WebSocket</dd></div><div><dt>State</dt><dd>Redis: JSON documents, WATCH transactions, pub/sub</dd></div><div><dt>Client</dt><dd>HTML, CSS and JavaScript, avatars drawn in CSS</dd></div><div><dt>Testing</dt><dd>A separate Go load-test module</dd></div></dl></div>
+</section>
+
+<nav class="pnav" aria-label="More projects">
+  <a class="pnav-cell tone-blue" href="../../projects/network-file-system/">
+      <span class="pnav-dir small muted">Previous project</span>
+      <span class="pnav-title">Distributed network file system</span>
+      <span class="pnav-what small muted">C, sockets, threads</span>
+    </a>
+  <a class="pnav-cell pnav-all" href="../../#work">
+    <span class="pnav-dir small muted">Back to</span>
+    <span class="pnav-title">All work</span>
+  </a>
+  <a class="pnav-cell tone-teal" href="../../projects/green-home-score/">
+      <span class="pnav-dir small muted">Next project</span>
+      <span class="pnav-title">Green Home Score</span>
+      <span class="pnav-what small muted">LightGBM, FastAPI, LLM</span>
+    </a>
+</nav>
+</main>
+<footer class="tiles" aria-label="Footer">
+  <div class="tile tile-word" aria-hidden="true"><span>Kambhampati</span></div>
+  <a class="tile tile-go" href="mailto:krithik3001@gmail.com?subject=Hello%20from%20your%20site">
+    <p>Write to me</p>
+    <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" aria-hidden="true"><path d="M14 42 42 14M20 14h22v22"/></svg>
+  </a>
+  <div class="tile tile-statement">
+    <p>I build systems that keep their state straight when many things happen at once.</p>
+    <div class="small muted">
+      <p>© 2026 Krithik Kambhampati. Site built by hand in HTML, CSS and GSAP.</p>
+      
+    </div>
+  </div>
+  <nav class="tile tile-nav" aria-label="Footer">
+    <p class="tile-label">Pages</p>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../#work">Work</a></li>
+      <li><a href="../../#record">Record</a></li>
+      <li><a href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <div class="tile tile-time">
+    <p class="tile-label">Hyderabad</p>
+    <p><span class="clock" data-clock>IST</span><br><span class="small muted">India Standard Time</span></p>
+  </div>
+  <div class="tile tile-mail">
+    <p class="tile-label">Email</p>
+    <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
+  </div>
+</footer>
+</body>
+</html>

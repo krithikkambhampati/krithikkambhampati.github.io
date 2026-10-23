@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garbage monitoring on the edge: edge segmentation on Qualcomm QIDK, by Krithik Kambhampati</title>
+<meta name="description" content="Segments waste, people and animals in CCTV frames on a Qualcomm dev kit, then measures how much of the street is covered. A four-person team project, followed by a separate comparison of two segmentation models.">
+<meta property="og:title" content="Garbage monitoring on the edge: edge segmentation on Qualcomm QIDK, by Krithik Kambhampati">
+<meta property="og:description" content="Segments waste, people and animals in CCTV frames on a Qualcomm dev kit, then measures how much of the street is covered. A four-person team project, followed by a separate comparison of two segmentation models.">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0B0D11">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Mona+Sans:wdth,wght@100..125,300..700&display=swap">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<link rel="stylesheet" href="../../assets/css/project.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+<script src="../../assets/js/project.js" defer></script>
+</head>
+<body class="project tone-amber">
+<a class="skip" href="#main">Skip to the write-up</a>
+<header class="bar">
+  <div class="bar-row">
+    <a class="wordmark" href="../../">Krithik<span class="wm-last"> Kambhampati</span></a>
+    <p class="crumb"><a href="../../#work">work</a> / <b>garbage-monitoring</b></p>
+    <nav class="bar-nav" aria-label="Site">
+      <a href="../../#work">Work</a>
+      <a href="../../#record">Record</a>
+      <a href="../../#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main class="p-main" id="main">
+
+<section class="p-hero" aria-labelledby="p-title">
+  <div class="p-title-block">
+    <h1 class="p-title" id="p-title" style="view-transition-name: t-garbage-monitoring"><span class="dot" aria-hidden="true"></span>Garbage monitoring on the edge</h1>
+    <p class="p-lede">City cameras watch the corners where garbage gets dumped. This system segments every frame into waste, people and animals on a Qualcomm dev kit, then reports how much of the scene is covered, without sending video anywhere.</p>
+  </div>
+  <dl class="p-meta">
+    <div><dt>Project</dt><dd>Team Phoenix, IIIT Hyderabad, Nov 2025</dd></div>
+    <div><dt>Team</dt><dd>Krishna Kaundinya Peddibhotla, Nikhith Reddy K, Phanindra Gollapalli and Krithik Kambhampati. Advised by Dr. Sachin Chaudari.</dd></div><div><dt>Hardware</dt><dd>Qualcomm Intelligent Development Kit (QIDK), and a Raspberry Pi 4 for comparison</dd></div><div><dt>Built with</dt><dd>Kotlin, TensorFlow Lite, YOLOv11, Qualcomm AI Hub, Firebase</dd></div>
+    <div class="p-meta-links"><dt>Links</dt><dd class="p-links">
+      <a class="btn btn-small btn-accent" href="https://github.com/krithikkambhampati/Garbage-Vulnerable-Points-Monitoring-System" target="_blank" rel="noopener">Android app and report</a><a class="btn btn-small btn-ghost" href="https://github.com/krithikkambhampati/GVP" target="_blank" rel="noopener">Model comparison</a><a class="btn btn-small btn-ghost" href="https://github.com/krithikkambhampati/Garbage-Vulnerable-Points-Monitoring-System/blob/HEAD/Demos/demo.mp4" target="_blank" rel="noopener">Demo video</a>
+    </dd></div>
+  </dl>
+  <figure class="p-visual"><div class="shutter"><img src="../../assets/img/garbage/annotated-street.webp" alt="A CCTV frame of a roadside dump with waste polygons in yellow, a person on a scooter and two animals annotated." width="1154" height="600" decoding="async"></div>
+<figcaption>One annotated CCTV frame from the training data: waste in yellow, people in green, animals in red.</figcaption></figure>
+</section>
+
+<section class="p-sec  "  aria-labelledby="the-problem-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="the-problem-h" data-reveal>The problem</h2></div>
+  <div class="p-sec-body">
+  <div class="prose" data-reveal><p>Garbage vulnerable points are the spots where waste keeps being dumped. The brief was to watch them with a camera and measure the area and amount of garbage, and how dumping changes over time, on a QIDK board with low enough latency to run continuously.</p><p>Measuring area rules out the usual answer. Bounding boxes around irregular piles of rubbish swallow the road around them: on this data, boxes overestimated the garbage area by 65.2%. So the system segments pixels instead of drawing boxes.</p></div>
+  <div class="table-wrap" data-reveal><table class="results">
+  <caption>Pixels labelled per class, segmentation against bounding boxes (presentation slide 5)</caption>
+  <thead><tr><th>Class</th><th class="num">Segmentation pixels</th><th class="num">Bounding-box pixels</th></tr></thead>
+  <tbody><tr><td>Waste</td><td class="num">44,222,559</td><td class="num">over 132 million</td></tr><tr><td>Person</td><td class="num">4,183,114</td><td class="num">7,897,934</td></tr><tr><td>Animal</td><td class="num">1,364,056</td><td class="num">2,218,330</td></tr></tbody>
+</table></div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="data-and-five-models-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="data-and-five-models-h" data-reveal>Data and five models</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <div>
+      <div class="prose" data-reveal><p>The dataset came from three places: over 1,500 CCTV frames from two dumping spots in the city, provided by the course, over 100 photos taken on campus, and over 100 from the web for variety. The team annotated all of them in Label Studio into three classes.</p><p>Five segmentation models were trained through Qualcomm AI Hub and compared on mean IoU and F1. YOLOv11 won, though only narrowly on F1 over YOLOv8. It was chosen for its accuracy together with its speed, memory footprint and support on Qualcomm's NPU.</p></div>
+      <div class="table-wrap" data-reveal><table class="results">
+  <caption>Model comparison from the project report</caption>
+  <thead><tr><th>Model</th><th class="num">Mean IoU</th><th class="num">F1</th></tr></thead>
+  <tbody><tr class="is-best"><td>YOLOv11</td><td class="num">0.75</td><td class="num">0.69</td></tr><tr><td>YOLOv8</td><td class="num">0.72</td><td class="num">0.69</td></tr><tr><td>FCN ResNet50</td><td class="num">0.61</td><td class="num">0.66</td></tr><tr><td>DDRNet23-Slim</td><td class="num">0.50</td><td class="num">0.66</td></tr><tr><td>U-Net</td><td class="num">0.49</td><td class="num">0.60</td></tr></tbody>
+</table></div>
+    </div>
+    <figure class="p-fig p-clip" data-reveal="mask">
+  <video muted loop playsinline preload="none" poster="../../assets/video/garbage-runner-poster.webp" aria-label="The desktop runner segmenting a waste pile with each model in turn." data-loop><source src="../../assets/video/garbage-runner.mp4" type="video/mp4"></video>
+  <figcaption>From the team's demo video: the desktop runner puts every model on the same image for a side-by-side check.</figcaption>
+</figure>
+  </div>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="on-the-device-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="on-the-device-h" data-reveal>On the device</h2></div>
+  <div class="p-sec-body">
+  <figure class="p-fig p-clip" data-reveal="mask">
+  <video muted loop playsinline preload="none" poster="../../assets/video/garbage-phone-poster.webp" aria-label="The app on a QIDK device segmenting a photo, then showing coverage and NPU timings." data-loop><source src="../../assets/video/garbage-phone.mp4" type="video/mp4"></video>
+  <figcaption>From the demo video: picking a photo on the QIDK, segmenting it, and reading back coverage and the NPU's preprocess, inference and post-process times.</figcaption>
+</figure>
+  <div class="figs">
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/garbage/qidk-phones.webp" alt="Two QIDK devices running the app with green waste masks." width="1080" height="686" loading="lazy" decoding="async">
+  <figcaption>The app on QIDK v1 and v2. On average v2's NPU segments an image about 200 ms faster.</figcaption>
+</figure>
+    <figure class="p-fig  is-phone" data-reveal="mask">
+  <img src="../../assets/img/garbage/android-app.webp" alt="The Android app screen with a segmented image, capture buttons and the current delegate NNAPI." width="303" height="638" loading="lazy" decoding="async">
+  <figcaption>The app shows the mask, coverage, pixel counts and which accelerator ran it.</figcaption>
+</figure>
+  </div>
+  <ul class="points" data-reveal><li>The Kotlin app captures with CameraX or takes a gallery image, letterboxes it to 640 by 640, and runs a memory-mapped YOLOv11 TensorFlow Lite model.</li><li>It sets up three interpreters and prefers the GPU delegate, then NNAPI, then the CPU, because accelerator support varies from device to device.</li><li>Each result is saved locally as an image and a CSV row, and pushed to Firebase with the coverage, timing, delegate and per-class breakdown. An auto-capture timer keeps it running unattended.</li></ul>
+  <div class="p-split is-even">
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">SegmentationHelper.kt</span><span class="spacer"></span><span>kotlin</span></figcaption>
+  <pre class="code" style="--start:85"><code><span class="ln">    init {</span><span class="ln">        <span class="t-k">try</span> {</span><span class="ln">            <span class="t-f">logDeviceInfo</span>()</span><span class="ln">            <span class="t-k">val</span> modelFile = <span class="t-f">loadModelFile</span>(context)</span><span class="ln"> </span><span class="ln">            <span class="t-c">// Setup TFLite GPU delegate (OpenGL/Vulkan)</span></span><span class="ln">            <span class="t-f">setupTFLiteGpuInterpreter</span>(modelFile)</span><span class="ln"> </span><span class="ln">            <span class="t-c">// Setup NNAPI (may route to vendor accelerator if available)</span></span><span class="ln">            <span class="t-f">setupNNAPIInterpreter</span>(modelFile)</span><span class="ln"> </span><span class="ln">            <span class="t-c">// Always setup CPU as fallback</span></span><span class="ln">            <span class="t-f">setupCPUInterpreter</span>(modelFile)</span><span class="ln"> </span><span class="ln">            <span class="t-c">// Set initial delegate based on availability (prefer TFLite GPU &gt; NNAPI &gt; CPU)</span></span><span class="ln">            currentDelegate = <span class="t-k">when</span> {</span><span class="ln">                gpuAvailable -&gt; <span class="t-t">DelegateType</span>.<span class="t-t">GPU</span></span><span class="ln">                nnapiAvailable -&gt; <span class="t-t">DelegateType</span>.<span class="t-t">NNAPI</span></span><span class="ln">                <span class="t-k">else</span> -&gt; <span class="t-t">DelegateType</span>.<span class="t-t">CPU</span></span><span class="ln">            }</span></code></pre>
+  <p class="code-note">Three interpreters, one preference order: GPU, then NNAPI, then CPU.</p>
+</figure>
+    <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">SegmentationHelper.kt</span><span class="spacer"></span><span>kotlin</span></figcaption>
+  <pre class="code" style="--start:455"><code><span class="ln">    <span class="t-k">private</span> <span class="t-k">fun</span> <span class="t-f">postProcessOutputs</span>(</span><span class="ln">        originalBitmap: <span class="t-t">Bitmap</span>,</span><span class="ln">        detections: <span class="t-t">Array</span>&lt;<span class="t-t">FloatArray</span>&gt;,</span><span class="ln">        masks: <span class="t-t">Array</span>&lt;<span class="t-t">Array</span>&lt;<span class="t-t">FloatArray</span>&gt;&gt;</span><span class="ln">    ): <span class="t-t">Bitmap</span> {</span><span class="ln">        <span class="t-k">val</span> detectedObjects = <span class="t-k">mutableListOf</span>&lt;<span class="t-t">Detection</span>&gt;()</span><span class="ln">        <span class="t-k">val</span> confidenceThreshold = <span class="t-n">0.05f</span></span><span class="ln">        <span class="t-k">val</span> iouThreshold = <span class="t-n">0.45f</span></span><span class="ln">        <span class="t-k">val</span> numClasses = classLabels.size</span><span class="ln">        <span class="t-k">val</span> numCoefficients = <span class="t-n">32</span></span><span class="ln"> </span><span class="ln">        <span class="t-k">for</span> (i <span class="t-k">in</span> <span class="t-n">0</span> <span class="t-k">until</span> <span class="t-n">8400</span>) {</span><span class="ln">            <span class="t-k">val</span> x = detections[<span class="t-n">0</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln">            <span class="t-k">val</span> y = detections[<span class="t-n">1</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln">            <span class="t-k">val</span> w = detections[<span class="t-n">2</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln">            <span class="t-k">val</span> h = detections[<span class="t-n">3</span>][i] * <span class="t-t">INPUT_SIZE</span></span><span class="ln"> </span><span class="ln">            <span class="t-k">var</span> maxScore = -<span class="t-n">1.0f</span></span><span class="ln">            <span class="t-k">var</span> classId = -<span class="t-n">1</span></span><span class="ln">            <span class="t-k">for</span> (j <span class="t-k">in</span> <span class="t-n">0</span> <span class="t-k">until</span> numClasses) {</span><span class="ln">                <span class="t-k">val</span> score = detections[<span class="t-n">4</span> + j][i]</span><span class="ln">                <span class="t-k">if</span> (score &gt; maxScore) {</span><span class="ln">                    maxScore = score</span><span class="ln">                    classId = j</span><span class="ln">                }</span><span class="ln">            }</span><span class="ln"> </span><span class="ln">            <span class="t-k">if</span> (maxScore &gt; confidenceThreshold) {</span><span class="ln">                <span class="t-k">val</span> maskCoeffs = <span class="t-t">FloatArray</span>(numCoefficients) { k -&gt; detections[<span class="t-n">4</span> + numClasses + k][i] }</span><span class="ln">                detectedObjects.<span class="t-f">add</span>(<span class="t-t">Detection</span>(x, y, w, h, maxScore, classId, maskCoeffs))</span><span class="ln">            }</span><span class="ln">        }</span><span class="ln"> </span><span class="ln">        <span class="t-k">val</span> finalDetections = <span class="t-f">applyNMS</span>(detectedObjects, iouThreshold)</span><span class="ln">        <span class="t-k">return</span> <span class="t-f">drawMasksOnly</span>(originalBitmap, finalDetections, masks)</span></code></pre>
+  <p class="code-note">Decoding YOLO's 8,400 candidates, each with class scores and 32 mask coefficients, before non-maximum suppression.</p>
+</figure>
+  </div>
+</div>
+</section>
+
+<div class="p-field">
+<section class="p-sec  "  aria-labelledby="in-the-field-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="in-the-field-h" data-reveal>In the field</h2></div>
+  <div class="p-sec-body">
+  <div class="p-split">
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/garbage/campus-deployment.webp" alt="The model's green masks over a dump under trees on campus." width="629" height="755" loading="lazy" decoding="async">
+  <figcaption>Deployed on campus and left running for several hours on a continuous power supply.</figcaption>
+</figure>
+    <div>
+      <div class="prose" data-reveal><p>The app logged coverage through the evening, from about a quarter to six until nearly eight. The report also timed the whole pipeline on each device.</p></div>
+      <div class="table-wrap" data-reveal><table class="results">
+  <caption>Processing time per image (report, table II)</caption>
+  <thead><tr><th>Device</th><th class="num">Time</th></tr></thead>
+  <tbody><tr class="is-best"><td>QIDK, NPU</td><td class="num">2,076 ms</td></tr><tr><td>QIDK, CPU</td><td class="num">2,206 ms</td></tr><tr><td>Raspberry Pi 4</td><td class="num">17,054 ms</td></tr></tbody>
+</table></div>
+      <div class="prose" data-reveal><p>The QIDK came out about eight times faster than the Raspberry Pi 4, which the report puts down to the Pi's older CPU and its lack of optimised ML kernels.</p></div>
+    </div>
+  </div>
+  <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/garbage/coverage-over-time.webp" alt="Line plot of garbage coverage against time during the field test, falling from about 15% to a few percent." width="1300" height="731" loading="lazy" decoding="async">
+  <figcaption>Coverage against time during the field test, in IST, from the team's presentation.</figcaption>
+</figure>
+</div>
+</section>
+</div>
+
+<section class="p-sec  "  aria-labelledby="a-second-experiment-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="a-second-experiment-h" data-reveal>A second experiment</h2></div>
+  <div class="p-sec-body">
+  <div class="prose" data-reveal><p>The GVP repo carries the work on as a separate, cleaner comparison on about 1,600 images with a fixed 70/15/15 split: an instance model, YOLO11s-seg, against a semantic one, a UNet with a ResNet34 encoder. To score them the same way, YOLO's instance masks are collapsed into a single class mask and both are measured with the same pixel IoU on the test set.</p><p>Its numbers are not comparable with the table above: different data, split and metric.</p></div>
+  <div class="table-wrap" data-reveal><table class="results">
+  <caption>Pixel IoU on the test split (results/comparison_summary.json)</caption>
+  <thead><tr><th>Class</th><th class="num">YOLO11s-seg</th><th class="num">UNet ResNet34</th></tr></thead>
+  <tbody><tr><td>Waste</td><td class="num">0.567</td><td class="num">0.648</td></tr><tr><td>Person</td><td class="num">0.440</td><td class="num">0.335</td></tr><tr><td>Animal</td><td class="num">0.325</td><td class="num">0.053</td></tr><tr class="is-best"><td>Mean, without background</td><td class="num">0.444</td><td class="num">0.345</td></tr></tbody>
+</table></div>
+  <div class="prose" data-reveal><p>Animals are 0.07% of all pixels, and a plain per-pixel UNet almost never learned them. YOLO, which finds objects first, did far better there. UNet edged ahead on waste, the large dense regions per-pixel classification suits.</p></div>
+  <div class="figs">
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/garbage/yolo-val-predictions.webp" alt="YOLO11s-seg predictions on four validation CCTV frames, labelled waste and person with confidence scores." width="960" height="550" loading="lazy" decoding="async">
+  <figcaption>YOLO11s-seg on validation frames.</figcaption>
+</figure>
+    <figure class="p-fig  " data-reveal="mask">
+  <img src="../../assets/img/garbage/yolo-confusion.webp" alt="Normalised confusion matrix for animal, waste, person and background." width="1200" height="900" loading="lazy" decoding="async">
+  <figcaption>Normalised confusion matrix: animal 0.78, waste 0.70, person 0.71 on the diagonal.</figcaption>
+</figure>
+  </div>
+  <figure class="pane p-code" data-reveal data-ui>
+  <figcaption class="pane-bar"><span class="file">backend/inference.py</span><span class="spacer"></span><span>python</span></figcaption>
+  <pre class="code" style="--start:79"><code><span class="ln"><span class="t-k">def</span> <span class="t-f">run_yolo_inference</span>(img_bgr):</span><span class="ln">    h, w = img_bgr.shape[:<span class="t-n">2</span>]</span><span class="ln">    results = _yolo_model.<span class="t-f">predict</span>(source=img_bgr, verbose=<span class="t-k">False</span>)</span><span class="ln">    r = results[<span class="t-n">0</span>]</span><span class="ln"> </span><span class="ln">    class_mask = np.<span class="t-f">zeros</span>((h, w), dtype=np.uint8)</span><span class="ln">    instance_count = {name: <span class="t-n">0</span> <span class="t-k">for</span> name <span class="t-k">in</span> <span class="t-t">CLASS_MAP</span>.<span class="t-f">values</span>()}</span><span class="ln"> </span><span class="ln">    <span class="t-k">if</span> r.masks <span class="t-k">is</span> <span class="t-k">not</span> <span class="t-k">None</span>:</span><span class="ln">        <span class="t-k">for</span> mask, cls <span class="t-k">in</span> <span class="t-f">zip</span>(r.masks.data, r.boxes.cls):</span><span class="ln">            cls_id = <span class="t-t">int</span>(cls)</span><span class="ln">            m = cv2.<span class="t-f">resize</span>(mask.<span class="t-f">cpu</span>().<span class="t-f">numpy</span>(), (w, h))</span><span class="ln">            class_mask[m &gt; <span class="t-n">0.5</span>] = cls_id + <span class="t-n">1</span></span><span class="ln">            instance_count[<span class="t-t">CLASS_MAP</span>[cls_id]] += <span class="t-n">1</span></span><span class="ln"> </span><span class="ln">    overlay = <span class="t-f">_make_overlay</span>(img_bgr, class_mask)</span><span class="ln">    stats = <span class="t-f">_compute_stats</span>(class_mask)</span></code></pre>
+  <p class="code-note">The demo app's API collapses instance masks into one class mask, the same way the comparison does.</p>
+</figure>
+</div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="decisions-the-team-documented-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="decisions-the-team-documented-h" data-reveal>Decisions the team documented</h2></div>
+  <div class="p-sec-body"><div class="decisions"><div class="decision" data-reveal="row">
+    <h3>Segment, don't box</h3>
+    <p>Boxes overestimated waste area by 65.2%, and area is the number the project exists to measure.</p>
+    <p class="src">Report, section III.B</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>YOLOv11 for the hardware, not the score</h3>
+    <p>F1 was level, so the choice came down to speed, memory and NPU support on the target hardware.</p>
+    <p class="src">Report, section VII.B</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>Three sources of images</h3>
+    <p>Two fixed CCTV spots would overfit, so campus and web photos were added for different scenes.</p>
+    <p class="src">Report, section III.A</p>
+  </div><div class="decision" data-reveal="row">
+    <h3>A fallback chain for accelerators</h3>
+    <p>GPU, NNAPI and CPU interpreters are all prepared with warm-up runs, and the user can switch between them.</p>
+    <p class="src">SegmentationHelper.kt</p>
+  </div></div></div>
+</section>
+
+<section class="p-sec  "  aria-labelledby="built-with-h" data-reveal-group>
+  <div class="p-sec-head"><h2 id="built-with-h" data-reveal>Built with</h2></div>
+  <div class="p-sec-body"><dl class="stack" data-reveal><div><dt>Android</dt><dd>Kotlin, CameraX, TensorFlow Lite with GPU and NNAPI delegates</dd></div><div><dt>Models</dt><dd>YOLOv11, YOLOv8, FCN ResNet50, DDRNet23-Slim, U-Net via Qualcomm AI Hub</dd></div><div><dt>Comparison</dt><dd>Ultralytics, PyTorch, segmentation-models-pytorch, FastAPI, React</dd></div><div><dt>Data</dt><dd>Label Studio, Firebase Realtime Database and Storage</dd></div></dl></div>
+</section>
+
+<nav class="pnav" aria-label="More projects">
+  <a class="pnav-cell tone-teal" href="../../projects/green-home-score/">
+      <span class="pnav-dir small muted">Previous project</span>
+      <span class="pnav-title">Green Home Score</span>
+      <span class="pnav-what small muted">LightGBM, FastAPI, LLM</span>
+    </a>
+  <a class="pnav-cell pnav-all" href="../../#work">
+    <span class="pnav-dir small muted">Back to</span>
+    <span class="pnav-title">All work</span>
+  </a>
+  <a class="pnav-cell tone-rose" href="../../projects/c-shell-c-shark/">
+      <span class="pnav-dir small muted">Next project</span>
+      <span class="pnav-title">C-Shell and C-Shark</span>
+      <span class="pnav-what small muted">C, POSIX, libpcap</span>
+    </a>
+</nav>
+</main>
+<footer class="tiles" aria-label="Footer">
+  <div class="tile tile-word" aria-hidden="true"><span>Kambhampati</span></div>
+  <a class="tile tile-go" href="mailto:krithik3001@gmail.com?subject=Hello%20from%20your%20site">
+    <p>Write to me</p>
+    <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" aria-hidden="true"><path d="M14 42 42 14M20 14h22v22"/></svg>
+  </a>
+  <div class="tile tile-statement">
+    <p>I build systems that keep their state straight when many things happen at once.</p>
+    <div class="small muted">
+      <p>© 2026 Krithik Kambhampati. Site built by hand in HTML, CSS and GSAP.</p>
+      
+    </div>
+  </div>
+  <nav class="tile tile-nav" aria-label="Footer">
+    <p class="tile-label">Pages</p>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../../#work">Work</a></li>
+      <li><a href="../../#record">Record</a></li>
+      <li><a href="https://github.com/krithikkambhampati" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/krithik-kambhampati" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <div class="tile tile-time">
+    <p class="tile-label">Hyderabad</p>
+    <p><span class="clock" data-clock>IST</span><br><span class="small muted">India Standard Time</span></p>
+  </div>
+  <div class="tile tile-mail">
+    <p class="tile-label">Email</p>
+    <a class="link" href="mailto:krithik3001@gmail.com">krithik3001@gmail.com</a>
+  </div>
+</footer>
+</body>
+</html>
